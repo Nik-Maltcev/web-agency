@@ -48,8 +48,20 @@ Railway автоматически:
 ### railway.json
 Файл `railway.json` в корне проекта содержит конфигурацию для Railway:
 - Использует Nixpacks builder
+- Команда сборки: `npm install && npm run build`
 - Команда запуска: `npm start`
 - Политика перезапуска при ошибках
+
+### nixpacks.toml
+Файл `nixpacks.toml` настраивает процесс сборки:
+- Использует Node.js 20 и npm
+- Команда установки: `npm ci --no-optional`
+- Команда сборки: `npm run build`
+
+### Пакетный менеджер
+Проект использует npm (не pnpm), поэтому убедитесь что:
+- Есть файл `package-lock.json`
+- Нет файла `pnpm-lock.yaml` в репозитории
 
 ### Переменные окружения
 Railway автоматически подставляет переменные окружения из .env.local в продакшен.
