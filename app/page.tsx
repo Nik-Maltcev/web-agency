@@ -53,7 +53,7 @@ export default function AISandboxPage() {
   const [promptInput, setPromptInput] = useState('');
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     {
-      content: 'Welcome! I can help you generate code with full context of your sandbox files and structure. Just start chatting - I\'ll automatically create a sandbox for you if needed!\n\nTip: If you see package errors like "react-router-dom not found", just type "npm install" or "check packages" to automatically install missing packages.',
+      content: 'Добро пожаловать! Я могу помочь вам сгенерировать код с полным контекстом файлов и структуры вашего проекта. Просто начните общаться - я автоматически создам песочницу для вас, если это необходимо!\n\nСовет: Если вы видите ошибки пакетов типа "react-router-dom не найден", просто напишите "npm install" или "проверить пакеты" для автоматической установки недостающих пакетов.',
       type: 'system',
       timestamp: new Date()
     }
@@ -375,7 +375,7 @@ export default function AISandboxPage() {
     console.log('[createSandbox] Starting sandbox creation...');
     setLoading(true);
     setShowLoadingBackground(true);
-    updateStatus('Creating sandbox...', false);
+    updateStatus('Создание песочницы...', false);
     setResponseArea([]);
     setScreenshotError(null);
     
@@ -392,7 +392,7 @@ export default function AISandboxPage() {
       if (data.success) {
         setSandboxData(data);
         updateStatus('Sandbox active', true);
-        log('Sandbox created successfully!');
+        log('Песочница создана успешно!');
         log(`Sandbox ID: ${data.sandboxId}`);
         log(`URL: ${data.url}`);
         
@@ -1100,7 +1100,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                     {generationProgress.isThinking ? (
                       <>
                         <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse" />
-                        AI is thinking...
+                        ИИ думает...
                       </>
                     ) : (
                       <>
@@ -1180,8 +1180,8 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                             <div className="absolute inset-0 border-4 border-green-500 rounded-full animate-spin border-t-transparent"></div>
                           </div>
                         </div>
-                        <h3 className="text-xl font-medium text-white mb-2">AI is analyzing your request</h3>
-                        <p className="text-gray-400 text-sm">{generationProgress.status || 'Preparing to generate code...'}</p>
+                        <h3 className="text-xl font-medium text-white mb-2">ИИ анализирует ваш запрос</h3>
+                        <p className="text-gray-400 text-sm">{generationProgress.status || 'Подготовка к генерации кода...'}</p>
                       </div>
                     </div>
                   ) : (
@@ -1189,7 +1189,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                       <div className="px-4 py-2 bg-gray-100 text-gray-900 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-3 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
-                          <span className="font-mono text-sm">Streaming code...</span>
+                          <span className="font-mono text-sm">Потоковая генерация кода...</span>
                         </div>
                       </div>
                       <div className="p-4 bg-gray-900 rounded">
@@ -1204,7 +1204,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                           }}
                           showLineNumbers={true}
                         >
-                          {generationProgress.streamedCode || 'Starting code generation...'}
+                          {generationProgress.streamedCode || 'Начало генерации кода...'}
                         </SyntaxHighlighter>
                         <span className="inline-block w-2 h-4 bg-orange-400 ml-1 animate-pulse" />
                       </div>
@@ -1387,14 +1387,14 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                 <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto"></div>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {loadingStage === 'gathering' && 'Gathering website information...'}
-                {loadingStage === 'planning' && 'Planning your design...'}
-                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Generating your application...'}
+                {loadingStage === 'gathering' && 'Сбор информации о веб-сайте...'}
+                {loadingStage === 'planning' && 'Планирование вашего дизайна...'}
+                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Генерация вашего приложения...'}
               </h3>
               <p className="text-gray-600 text-sm">
-                {loadingStage === 'gathering' && 'Analyzing the website structure and content'}
-                {loadingStage === 'planning' && 'Creating the optimal React component architecture'}
-                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Writing clean, modern code for your app'}
+                {loadingStage === 'gathering' && 'Анализ структуры и содержания веб-сайта'}
+                {loadingStage === 'planning' && 'Создание оптимальной архитектуры React компонентов'}
+                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Написание чистого, современного кода для вашего приложения'}
               </p>
             </div>
           </div>
@@ -1439,7 +1439,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
           <div className="flex items-center justify-center h-full bg-gray-900">
             <div className="text-center">
               <div className="w-12 h-12 border-3 border-gray-600 border-t-white rounded-full animate-spin mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white">Gathering website information</h3>
+              <h3 className="text-lg font-medium text-white">Сбор информации о веб-сайте</h3>
             </div>
           </div>
         );
@@ -1456,11 +1456,11 @@ Tip: I automatically detect and install npm packages from your code imports (lik
           ) : sandboxData ? (
             <div className="text-gray-500">
               <div className="w-8 h-8 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-sm">Loading preview...</p>
+              <p className="text-sm">Загрузка предварительного просмотра...</p>
             </div>
           ) : (
             <div className="text-gray-500 text-center">
-              <p className="text-sm">Start chatting to create your first app</p>
+              <p className="text-sm">Начните общение, чтобы создать ваше первое приложение</p>
             </div>
           )}
         </div>
@@ -1498,7 +1498,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
     
     if (!sandboxData) {
       sandboxCreating = true;
-      addChatMessage('Creating sandbox while I plan your app...', 'system');
+      addChatMessage('Создание песочницы во время планирования вашего приложения...', 'system');
       sandboxPromise = createSandbox(true).catch((error: any) => {
         addChatMessage(`Failed to create sandbox: ${error.message}`, 'system');
         throw error;
@@ -1986,7 +1986,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
   const clearChatHistory = () => {
     setChatMessages([{
-      content: 'Chat history cleared. How can I help you?',
+      content: 'История чата очищена. Как я могу помочь вам?',
       type: 'system',
       timestamp: new Date()
     }]);
@@ -2052,11 +2052,11 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       // Start sandbox creation in parallel with code generation
       let sandboxPromise: Promise<void> | null = null;
       if (!sandboxData) {
-        addChatMessage('Creating sandbox while generating your React app...', 'system');
+        addChatMessage('Создание песочницы во время генерации вашего React приложения...', 'system');
         sandboxPromise = createSandbox(true);
       }
       
-      addChatMessage('Analyzing and generating React recreation...', 'system');
+      addChatMessage('Анализ и генерация React воссоздания...', 'system');
       
       const recreatePrompt = `I scraped this website and want you to recreate it as a modern React application.
 
@@ -2260,7 +2260,7 @@ Focus on the key sections and content, making it clean and modern while preservi
         await applyGeneratedCode(generatedCode, false);
         
         addChatMessage(
-          `Successfully recreated ${url} as a modern React app${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The scraped content is now in my context, so you can ask me to modify specific sections or add features based on the original site.`, 
+          `Успешно воссоздал ${url} как современное React приложение${homeContextInput ? ` с вашим запрошенным контекстом: "${homeContextInput}"` : ''}! Содержимое сайта теперь в моем контексте, поэтому вы можете попросить меня изменить определенные разделы или добавить функции на основе оригинального сайта.`, 
           'ai',
           {
             scrapedUrl: url,
@@ -2678,7 +2678,7 @@ Focus on the key sections and content, making it clean and modern.`;
           await applyGeneratedCode(generatedCode, false);
           
           addChatMessage(
-            `Successfully recreated ${url} as a modern React app${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The scraped content is now in my context, so you can ask me to modify specific sections or add features based on the original site.`, 
+            `Успешно воссоздал ${url} как современное React приложение${homeContextInput ? ` с вашим запрошенным контекстом: "${homeContextInput}"` : ''}! Содержимое сайта теперь в моем контексте, поэтому вы можете попросить меня изменить определенные разделы или добавить функции на основе оригинального сайта.`, 
             'ai',
             {
               scrapedUrl: url,
@@ -2799,7 +2799,7 @@ Focus on the key sections and content, making it clean and modern.`;
               className="inline-flex items-center gap-2 bg-[#36322F] text-white px-3 py-2 rounded-[10px] text-sm font-medium [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)] transition-all duration-200"
             >
               <FiGithub className="w-4 h-4" />
-              <span>Use this template</span>
+              <span>Использовать этот шаблон</span>
             </a>
           </div>
           
@@ -2819,7 +2819,7 @@ Focus on the key sections and content, making it clean and modern.`;
                   }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  Re-imagine any website, in seconds.
+                  Пересоздайте любой веб-сайт за секунды.
                 </motion.p>
               </div>
               
@@ -2881,17 +2881,17 @@ Focus on the key sections and content, making it clean and modern.`;
                         showStyleSelector ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
                       }`}>
                     <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-sm">
-                      <p className="text-sm text-gray-600 mb-3 font-medium">How do you want your site to look?</p>
+                      <p className="text-sm text-gray-600 mb-3 font-medium">Как вы хотите, чтобы выглядел ваш сайт?</p>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         {[
-                          { name: 'Neobrutalist', description: 'Bold colors, thick borders' },
-                          { name: 'Glassmorphism', description: 'Frosted glass effects' },
-                          { name: 'Minimalist', description: 'Clean and simple' },
-                          { name: 'Dark Mode', description: 'Dark theme' },
-                          { name: 'Gradient', description: 'Colorful gradients' },
-                          { name: 'Retro', description: '80s/90s aesthetic' },
-                          { name: 'Modern', description: 'Contemporary design' },
-                          { name: 'Monochrome', description: 'Black and white' }
+                          { name: 'Необрутализм', description: 'Яркие цвета, толстые границы' },
+                          { name: 'Глассморфизм', description: 'Эффект матового стекла' },
+                          { name: 'Минимализм', description: 'Чистый и простой' },
+                          { name: 'Темная тема', description: 'Темная тема' },
+                          { name: 'Градиент', description: 'Яркие градиенты' },
+                          { name: 'Ретро', description: 'Эстетика 80-90х' },
+                          { name: 'Современный', description: 'Современный дизайн' },
+                          { name: 'Монохром', description: 'Черно-белый' }
                         ].map((style) => (
                           <button
                             key={style.name}
@@ -2961,7 +2961,7 @@ Focus on the key sections and content, making it clean and modern.`;
                               }
                             }
                           }}
-                          placeholder="Add more details: specific features, color preferences..."
+                          placeholder="Добавьте больше деталей: специфические функции, цветовые предпочтения..."
                           className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100 transition-all duration-200"
                         />
                       </div>
@@ -3109,7 +3109,7 @@ Focus on the key sections and content, making it clean and modern.`;
           <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-1 scrollbar-hide" ref={chatMessagesRef}>
             {chatMessages.map((msg, idx) => {
               // Check if this message is from a successful generation
-              const isGenerationComplete = msg.content.includes('Successfully recreated') || 
+              const isGenerationComplete = msg.content.includes('Успешно воссоздал') || 
                                          msg.content.includes('AI recreation generated!') ||
                                          msg.content.includes('Code generated!');
               
@@ -3164,7 +3164,7 @@ Focus on the key sections and content, making it clean and modern.`;
                       {msg.metadata?.appliedFiles && msg.metadata.appliedFiles.length > 0 && (
                     <div className="mt-2 inline-block bg-gray-100 rounded-[10px] p-3">
                       <div className="text-xs font-medium mb-1 text-gray-700">
-                        {msg.content.includes('Applied') ? 'Files Updated:' : 'Generated Files:'}
+                        {msg.content.includes('Applied') ? 'Файлы обновлены:' : 'Сгенерированные файлы:'}
                       </div>
                       <div className="flex flex-wrap items-start gap-1">
                         {msg.metadata.appliedFiles.map((filePath, fileIdx) => {
@@ -3197,7 +3197,7 @@ Focus on the key sections and content, making it clean and modern.`;
                       {/* Show generated files for completion messages - but only if no appliedFiles already shown */}
                       {isGenerationComplete && generationProgress.files.length > 0 && idx === chatMessages.length - 1 && !msg.metadata?.appliedFiles && !chatMessages.some(m => m.metadata?.appliedFiles) && (
                     <div className="mt-2 inline-block bg-gray-100 rounded-[10px] p-3">
-                      <div className="text-xs font-medium mb-1 text-gray-700">Generated Files:</div>
+                      <div className="text-xs font-medium mb-1 text-gray-700">Сгенерированные файлы:</div>
                       <div className="flex flex-wrap items-start gap-1">
                         {generationProgress.files.map((file, fileIdx) => (
                           <div
@@ -3379,7 +3379,7 @@ Focus on the key sections and content, making it clean and modern.`;
                     {generationProgress.isGenerating ? (
                       <>
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                        {generationProgress.isEdit ? 'Editing code' : 'Live code generation'}
+                        {generationProgress.isEdit ? 'Редактирование кода' : 'Генерация кода в реальном времени'}
                       </>
                     ) : (
                       <>
