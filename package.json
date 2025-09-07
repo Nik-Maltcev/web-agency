@@ -22,9 +22,9 @@
     "@e2b/code-interpreter": "^1.5.1",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.5",
+    "@tailwindcss/postcss": "^4.1.13",
     "@types/react-syntax-highlighter": "^15.5.13",
     "ai": "^5.0.0",
-    "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
@@ -45,13 +45,12 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.3",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.1.13",
     "typescript": "^5"
   }
 }
