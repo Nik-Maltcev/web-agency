@@ -1155,7 +1155,18 @@ CRITICAL: When files are provided in the context:
         const isAnthropic = model.startsWith('anthropic/');
         const isGoogle = model.startsWith('google/');
         const isOpenAI = model.startsWith('openai/gpt-5');
-        const modelProvider = isAnthropic ? anthropic : (isOpenAI ? openai : (isGoogle ? googleGenerativeAI : groq));
+        
+        let modelProvider;
+        if (isAnthropic) {
+          modelProvider = anthropic;
+        } else if (isOpenAI) {
+          modelProvider = openai;
+        } else if (isGoogle) {
+          modelProvider = googleGenerativeAI;
+        } else {
+          modelProvider = groq;
+        }
+        
         const actualModel = isAnthropic ? model.replace('anthropic/', '') : 
                            (model === 'openai/gpt-5') ? 'gpt-5' :
                            (isGoogle ? model.replace('google/', '') : model);
@@ -1595,7 +1606,7 @@ Provide the complete file content without any truncation. Include all necessary 
                 }
                 
                 const completionResult = await streamText({
-                  model: completionClient(modelMapping[model] || model),
+                  model: completionClient(model.replace('anthropic/', '').replace('openai/', '').replace('google/', '')),
                   messages: [
                     { 
                       role: 'system', 
@@ -1603,8 +1614,7 @@ Provide the complete file content without any truncation. Include all necessary 
                     },
                     { role: 'user', content: completionPrompt }
                   ],
-                  temperature: isGPT5 ? undefined : appConfig.ai.defaultTemperature,
-                  maxTokens: appConfig.ai.truncationRecoveryMaxTokens
+                  temperature: model.includes('gpt-5') ? undefined : appConfig.ai.defaultTemperature
                 });
                 
                 // Get the full text from the stream
