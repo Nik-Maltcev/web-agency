@@ -3001,6 +3001,121 @@ Focus on the key sections and content, making it clean and modern.`;
                   ))}
                 </select>
               </div>
+              
+              {/* Pricing Section */}
+              <div className="mt-12 animate-[fadeIn_1.2s_ease-out]">
+                <h2 className="text-2xl font-semibold text-center text-[#36322F] mb-8">
+                  Тарифы
+                </h2>
+                <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  {/* Базовый тариф */}
+                  <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-orange-200">
+                    <div className="text-center">
+                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Базовый</h3>
+                      <div className="mb-4">
+                        <span className="text-3xl font-bold text-[#36322F]">299</span>
+                        <span className="text-gray-500 ml-1">₽</span>
+                      </div>
+                      <div className="text-sm text-gray-600 mb-6">
+                        5 запросов - хватит на полноценный сайт
+                      </div>
+                      <ul className="text-left text-sm text-gray-600 space-y-2 mb-6">
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Создание сайта с AI
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Скачать код сайта
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Тестовый домен бесплатно
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Бесплатный хостинг
+                        </li>
+                      </ul>
+                      <button className="w-full bg-[#36322F] text-white px-6 py-3 rounded-[10px] font-medium hover:bg-[#2a2520] transition-colors duration-200 [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)]">
+                        Выбрать план
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Профессиональный тариф */}
+                  <div className="bg-white rounded-2xl p-6 border-2 border-orange-300 shadow-xl relative hover:shadow-2xl transition-all duration-300">
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-1 rounded-full text-xs font-medium">
+                        Популярный
+                      </span>
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Профессиональный</h3>
+                      <div className="mb-4">
+                        <span className="text-3xl font-bold text-[#36322F]">499</span>
+                        <span className="text-gray-500 ml-1">₽</span>
+                      </div>
+                      <div className="text-sm text-gray-600 mb-6">
+                        15 запросов - хватит на многостраничный сайт
+                      </div>
+                      <ul className="text-left text-sm text-gray-600 space-y-2 mb-6">
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Создание сложных сайтов
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Скачать код сайта
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Тестовый домен бесплатно
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Бесплатный хостинг
+                        </li>
+                        <li className="flex items-center">
+                          <svg className="w-4 h-4 text-orange-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          Свой домен (+100₽/мес)
+                        </li>
+                      </ul>
+                      <button className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-[10px] font-medium hover:from-orange-500 hover:to-orange-600 transition-all duration-200 [box-shadow:inset_0px_-2px_0px_0px_#ea580c,_0px_1px_6px_0px_rgba(234,_88,_12,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#ea580c,_0px_1px_3px_0px_rgba(234,_88,_12,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#ea580c,_0px_1px_2px_0px_rgba(234,_88,_12,_30%)]">
+                        Выбрать план
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Дополнительная информация */}
+                <div className="mt-8 text-center text-sm text-gray-500 max-w-2xl mx-auto">
+                  <p className="mb-2">
+                    🏠 <strong>Свой домен:</strong> Подключите свой домен за 100₽/месяц
+                  </p>
+                  <p>
+                    🚀 <strong>Бесплатный хостинг:</strong> Размещение вашего сайта в интернете без дополнительных затрат
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
