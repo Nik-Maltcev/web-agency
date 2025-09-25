@@ -75,6 +75,7 @@ function AISandboxPageContent() {
   const [homeScreenFading, setHomeScreenFading] = useState(false);
   const [homeUrlInput, setHomeUrlInput] = useState('');
   const [homeContextInput, setHomeContextInput] = useState('');
+  const [homeIndustryInput, setHomeIndustryInput] = useState('');
   const [activeTab, setActiveTab] = useState<'generation' | 'preview'>('preview');
   const [showStyleSelector, setShowStyleSelector] = useState(false);
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
@@ -94,11 +95,13 @@ function AISandboxPageContent() {
     appliedCode: Array<{ files: string[]; timestamp: Date }>;
     currentProject: string;
     lastGeneratedCode?: string;
+    targetIndustry?: string;
   }>({
     scrapedWebsites: [],
     generatedComponents: [],
     appliedCode: [],
     currentProject: '',
+    targetIndustry: '',
     lastGeneratedCode: undefined
   });
   
@@ -1999,15 +2002,22 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
   const cloneWebsite = async () => {
     let url = urlInput.trim();
+    const targetIndustry = homeIndustryInput.trim();
     if (!url) {
       setUrlStatus(prev => [...prev, 'Please enter a URL']);
       return;
     }
-    
+
     if (!url.match(/^https?:\/\//i)) {
       url = 'https://' + url;
     }
-    
+
+    if (!targetIndustry) {
+      setUrlStatus(['Please enter the target industry or niche']);
+      addChatMessage('Please specify the industry you want this design adapted for before generating the site.', 'system');
+      return;
+    }
+
     setUrlStatus([`Using: ${url}`, 'Starting to scrape...']);
     
     setUrlOverlayVisible(false);
@@ -2050,7 +2060,8 @@ Tip: I automatically detect and install npm packages from your code imports (lik
           content: scrapeData,
           timestamp: new Date()
         }],
-        currentProject: `Clone of ${url}`
+        currentProject: `${targetIndustry} site inspired by ${url}`,
+        targetIndustry
       }));
       
       // Start sandbox creation in parallel with code generation
@@ -2062,9 +2073,12 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       
       addChatMessage('Анализ и генерация React воссоздания...', 'system');
       
-      const recreatePrompt = `I scraped this website and want you to recreate it as a modern React application.
+      const recreatePrompt = `I scraped this website and want you to recreate it as a modern React application that serves a different industry while keeping the original visual style.
 
 URL: ${url}
+
+TARGET INDUSTRY OR NICHE:
+${targetIndustry}
 
 SCRAPED CONTENT:
 ${scrapeData.content}
@@ -2078,15 +2092,16 @@ REQUIREMENTS:
 1. Create a COMPLETE React application with App.jsx as the main component
 2. App.jsx MUST import and render all other components
 3. Recreate the main sections and layout from the scraped content
-4. ${homeContextInput ? `Apply the user's context/theme: "${homeContextInput}"` : `Use a modern dark theme with excellent contrast:
+4. Rewrite all copy, CTAs, and content so they speak to the "${targetIndustry}" space while preserving the core layout and visual rhythm
+5. ${homeContextInput ? `Apply the user's context/theme: "${homeContextInput}"` : `Use a modern dark theme with excellent contrast:
    - Background: #0a0a0a
    - Text: #ffffff
    - Links: #60a5fa
    - Accent: #3b82f6`}
-5. Make it fully responsive
-6. Include hover effects and smooth transitions
-7. Create separate components for major sections (Header, Hero, Features, etc.)
-8. Use semantic HTML5 elements
+6. Make it fully responsive
+7. Include hover effects and smooth transitions
+8. Create separate components for major sections (Header, Hero, Features, etc.)
+9. Use semantic HTML5 elements
 
 IMPORTANT CONSTRAINTS:
 - DO NOT use React Router or any routing libraries
@@ -2097,6 +2112,8 @@ IMPORTANT CONSTRAINTS:
 - Use Tailwind CSS for ALL styling (no custom CSS files)
 - Make sure the app actually renders visible content
 - Create ALL components that you reference in imports
+- Replace brand names, product references, testimonials, and statistics with material that fits the "${targetIndustry}" niche
+- Mirror the original site's pacing, spacing, and visual hierarchy while adapting the story to the new industry
 
 IMAGE HANDLING RULES:
 - When the scraped content includes images, USE THE ORIGINAL IMAGE URLS whenever appropriate
@@ -2272,6 +2289,10 @@ Focus on the key sections and content, making it clean and modern while preservi
             generatedCode: generatedCode
           }
         );
+        addChatMessage(
+          `Delivered a ${targetIndustry} experience that mirrors ${cleanUrl}'s aesthetic system. Feel free to request tweaks or new sections designed for this niche.`,
+          'system'
+        );
         
         setUrlInput('');
         setUrlStatus([]);
@@ -2357,6 +2378,11 @@ Focus on the key sections and content, making it clean and modern while preservi
   const handleHomeScreenSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!homeUrlInput.trim()) return;
+    const targetIndustry = homeIndustryInput.trim();
+    if (!targetIndustry) {
+      addChatMessage('Please specify the industry or niche you want this design to target.', 'system');
+      return;
+    }
     
     setHomeScreenFading(true);
     
@@ -2445,10 +2471,14 @@ Focus on the key sections and content, making it clean and modern while preservi
             content: scrapeData,
             timestamp: new Date()
           }],
-          currentProject: `${url} Clone`
+          currentProject: `${targetIndustry} site inspired by ${url}`,
+          targetIndustry
         }));
-        
-        const prompt = `I want to recreate the ${url} website as a complete React application based on the scraped content below.
+
+        const prompt = `I want to recreate the ${url} website as a complete React application based on the scraped content below while tailoring it for a new audience.
+
+TARGET INDUSTRY OR NICHE:
+${targetIndustry}
 
 ${JSON.stringify(scrapeData, null, 2)}
 
@@ -2459,10 +2489,10 @@ Please incorporate these requirements into the design and implementation.` : ''}
 
 IMPORTANT INSTRUCTIONS:
 - Create a COMPLETE, working React application
-- Implement ALL sections and features from the original site
+- Mirror the layout, key sections, and interactive patterns from the original site, but rewrite every piece of copy to be authentic to "${targetIndustry}"
 - Use Tailwind CSS for all styling (no custom CSS files)
 - Make it responsive and modern
-- Ensure all text content matches the original
+- Replace brand names, offers, testimonials, and imagery references with equivalents that make sense for "${targetIndustry}" (no lorem ipsum)
 - Create proper component structure
 - Make sure the app actually renders visible content
 - Create ALL components that you reference in imports
@@ -2684,17 +2714,21 @@ Focus on the key sections and content, making it clean and modern.`;
           addChatMessage(
             `Успешно воссоздал ${url} как современное React приложение${homeContextInput ? ` с вашим запрошенным контекстом: "${homeContextInput}"` : ''}! Содержимое сайта теперь в моем контексте, поэтому вы можете попросить меня изменить определенные разделы или добавить функции на основе оригинального сайта.`, 
             'ai',
-            {
-              scrapedUrl: url,
-              scrapedContent: scrapeData,
-              generatedCode: generatedCode
-            }
-          );
-          
-          setConversationContext(prev => ({
-            ...prev,
-            generatedComponents: [],
-            appliedCode: [...prev.appliedCode, {
+          {
+            scrapedUrl: url,
+            scrapedContent: scrapeData,
+            generatedCode: generatedCode
+          }
+        );
+        addChatMessage(
+          `Delivered a ${targetIndustry} experience that mirrors ${cleanUrl}'s aesthetic system. Feel free to request tweaks or new sections designed for this niche.`,
+          'system'
+        );
+
+        setConversationContext(prev => ({
+          ...prev,
+          generatedComponents: [],
+          appliedCode: [...prev.appliedCode, {
               files: [],
               timestamp: new Date()
             }]
@@ -2938,6 +2972,23 @@ Focus on the key sections and content, making it clean and modern.`;
                         ))}
                       </div>
                       
+                      <div className="mt-4">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                          Target industry or niche
+                        </label>
+                        <input
+                          type="text"
+                          value={homeIndustryInput}
+                          onChange={(e) => setHomeIndustryInput(e.target.value)}
+                          placeholder="e.g. boutique law firm, wellness studio, fintech SaaS"
+                          required
+                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                        />
+                        <p className="mt-1 text-[11px] text-gray-400">
+                          We will keep the original layout and styling cues but rewrite the story for this industry.
+                        </p>
+                      </div>
+
                       {/* Additional context input - part of the style selector */}
                       <div className="mt-4 mb-2">
                         <input
