@@ -75,6 +75,8 @@ function AISandboxPageContent() {
   const [homeScreenFading, setHomeScreenFading] = useState(false);
   const [homeUrlInput, setHomeUrlInput] = useState('');
   const [homeContextInput, setHomeContextInput] = useState('');
+  const [homePromptInput, setHomePromptInput] = useState('');
+  const [homeMode, setHomeMode] = useState<'url' | 'prompt'>('url');
   const [homeIndustryInput, setHomeIndustryInput] = useState('');
   const [activeTab, setActiveTab] = useState<'generation' | 'preview'>('preview');
   const [showStyleSelector, setShowStyleSelector] = useState(false);
@@ -138,6 +140,24 @@ function AISandboxPageContent() {
     files: [],
     lastProcessedPosition: 0
   });
+
+  const handlePayment = async (plan: 'basic' | 'professional') => {
+    try {
+      const response = await fetch('/api/payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        window.open(data.paymentUrl, '_blank');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+    }
+  };
 
   // Clear old conversation data on component mount and create/restore sandbox
   useEffect(() => {
@@ -2342,6 +2362,14 @@ Focus on the key sections and content, making it clean and modern while preservi
     }
   };
 
+  const switchHomeMode = (mode: 'url' | 'prompt') => {
+    setHomeMode(mode);
+    if (mode === 'prompt') {
+      setShowStyleSelector(false);
+      setSelectedStyle(null);
+    }
+  };
+
   const captureUrlScreenshot = async (url: string) => {
     setIsCapturingScreenshot(true);
     setScreenshotError(null);
@@ -2375,131 +2403,297 @@ Focus on the key sections and content, making it clean and modern while preservi
     }
   };
 
+  const runGenerationRequest = async (promptText: string) => {
+    const aiResponse = await fetch('/api/generate-ai-code-stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: promptText,
+        model: aiModel,
+        context: {
+          sandboxId: sandboxData?.sandboxId,
+          structure: structureContent,
+          conversationContext: conversationContext
+        }
+      })
+    });
+
+    if (!aiResponse.ok || !aiResponse.body) {
+      throw new Error('Failed to generate code');
+    }
+
+    const reader = aiResponse.body.getReader();
+    const decoder = new TextDecoder();
+    let generatedCode = '';
+    let explanation = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n');
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+
+        try {
+          const data = JSON.parse(line.slice(6));
+
+          switch (data.type) {
+            case 'status':
+              setGenerationProgress(prev => ({ ...prev, status: data.message }));
+              break;
+            case 'thinking':
+              setGenerationProgress(prev => ({
+                ...prev,
+                isThinking: true,
+                thinkingText: (prev.thinkingText || '') + (data.text || '')
+              }));
+              break;
+            case 'thinking_complete':
+              setGenerationProgress(prev => ({
+                ...prev,
+                isThinking: false,
+                thinkingDuration: data.duration
+              }));
+              break;
+            case 'conversation': {
+              let textChunk = data.text || '';
+              textChunk = textChunk.replace(/<package>[^<]*<\/package>/g, '');
+              textChunk = textChunk.replace(/<packages>[^<]*<\/packages>/g, '');
+              if (!textChunk.includes('<file') &&
+                  !textChunk.includes('import React') &&
+                  !textChunk.includes('export default') &&
+                  !textChunk.includes('className=') &&
+                  textChunk.trim().length > 0) {
+                addChatMessage(textChunk.trim(), 'ai');
+              }
+              break;
+            }
+            case 'stream':
+              setGenerationProgress(prev => {
+                const newStreamedCode = prev.streamedCode + (data.text || '');
+
+                const updatedState = {
+                  ...prev,
+                  streamedCode: newStreamedCode,
+                  isStreaming: true,
+                  isThinking: false,
+                  status: 'Generating code...'
+                };
+
+                const fileRegex = /<file path="([^"]+)">([^]*?)<\/file>/g;
+                let match;
+                const processedFiles = new Set(prev.files.map(f => f.path));
+
+                while ((match = fileRegex.exec(newStreamedCode)) !== null) {
+                  const filePath = match[1];
+                  const fileContent = match[2];
+
+                  if (!processedFiles.has(filePath)) {
+                    const fileExt = filePath.split('.').pop() || '';
+                    const fileType = fileExt === 'jsx' || fileExt === 'js' ? 'javascript'
+                      : fileExt === 'css' ? 'css'
+                      : fileExt === 'json' ? 'json'
+                      : fileExt === 'html' ? 'html'
+                      : 'text';
+
+                    const existingFileIndex = updatedState.files.findIndex(f => f.path === filePath);
+
+                    if (existingFileIndex >= 0) {
+                      updatedState.files = [
+                        ...updatedState.files.slice(0, existingFileIndex),
+                        {
+                          ...updatedState.files[existingFileIndex],
+                          content: fileContent.trim(),
+                          type: fileType,
+                          completed: true,
+                        },
+                        ...updatedState.files.slice(existingFileIndex + 1)
+                      ];
+                    } else {
+                      updatedState.files = [
+                        ...updatedState.files,
+                        {
+                          path: filePath,
+                          content: fileContent.trim(),
+                          type: fileType,
+                          completed: true,
+                        }
+                      ];
+                    }
+
+                    if (!prev.isEdit) {
+                      updatedState.status = `Completed ${filePath}`;
+                    }
+                    processedFiles.add(filePath);
+                  }
+                }
+
+                const lastFileMatch = newStreamedCode.match(/<file path="([^"]+)">([^]*?)$/);
+                if (lastFileMatch && !lastFileMatch[0].includes('</file>')) {
+                  updatedState.currentFile = {
+                    path: lastFileMatch[1],
+                    content: lastFileMatch[2],
+                    type: 'text'
+                  };
+                } else {
+                  updatedState.currentFile = undefined;
+                }
+
+                return updatedState;
+              });
+              break;
+            case 'explanation':
+              explanation += data.text || '';
+              break;
+            case 'component':
+              setGenerationProgress(prev => ({
+                ...prev,
+                status: `Generated ${data.name}`,
+                components: [
+                  ...prev.components,
+                  {
+                    name: data.name,
+                    path: data.path,
+                    completed: true
+                  }
+                ],
+                currentComponent: data.index
+              }));
+              break;
+            case 'package':
+              setGenerationProgress(prev => ({
+                ...prev,
+                status: data.message || `Installing ${data.name}`
+              }));
+              break;
+            case 'complete': {
+              generatedCode = data.generatedCode || '';
+              explanation = data.explanation || explanation;
+
+              setConversationContext(prev => ({
+                ...prev,
+                lastGeneratedCode: generatedCode
+              }));
+
+              if (data.packagesToInstall && data.packagesToInstall.length > 0) {
+                (window as any).pendingPackages = data.packagesToInstall;
+              }
+
+              const fileRegex = /<file path="([^"]+)">([^]*?)<\/file>/g;
+              const parsedFiles: Array<{ path: string; content: string; type: string; completed: boolean }> = [];
+              let fileMatch;
+
+              while ((fileMatch = fileRegex.exec(generatedCode)) !== null) {
+                const filePath = fileMatch[1];
+                const fileContent = fileMatch[2];
+                const fileExt = filePath.split('.').pop() || '';
+                const fileType = fileExt === 'jsx' || fileExt === 'js' ? 'javascript'
+                  : fileExt === 'css' ? 'css'
+                  : fileExt === 'json' ? 'json'
+                  : fileExt === 'html' ? 'html'
+                  : 'text';
+
+                parsedFiles.push({
+                  path: filePath,
+                  content: fileContent.trim(),
+                  type: fileType,
+                  completed: true
+                });
+              }
+
+              setGenerationProgress(prev => ({
+                ...prev,
+                status: `Generated ${parsedFiles.length > 0 ? parsedFiles.length : prev.files.length} file${(parsedFiles.length > 0 ? parsedFiles.length : prev.files.length) !== 1 ? 's' : ''}!`,
+                isGenerating: false,
+                isStreaming: false,
+                isEdit: prev.isEdit,
+                files: prev.files.length > 0 ? prev.files : parsedFiles
+              }));
+              break;
+            }
+            case 'error':
+              throw new Error(data.error || 'Generation failed');
+          }
+        } catch (err) {
+          console.error('Failed to parse SSE data:', err);
+        }
+      }
+    }
+
+    if (explanation && explanation.trim()) {
+      addChatMessage(explanation, 'ai');
+    }
+
+    setPromptInput(generatedCode);
+
+    return { generatedCode, explanation };
+  };
+
   const handleHomeScreenSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!homeUrlInput.trim()) return;
+
+    const trimmedUrl = homeUrlInput.trim();
+    const trimmedPrompt = homePromptInput.trim();
     const targetIndustry = homeIndustryInput.trim();
-    if (!targetIndustry) {
-      addChatMessage('Please specify the industry or niche you want this design to target.', 'system');
-      return;
-    }
-    
-    setHomeScreenFading(true);
-    
-    // Clear messages and immediately show the cloning message
-    setChatMessages([]);
-    let displayUrl = homeUrlInput.trim();
-    if (!displayUrl.match(/^https?:\/\//i)) {
-      displayUrl = 'https://' + displayUrl;
-    }
-    // Remove protocol for cleaner display
-    const cleanUrl = displayUrl.replace(/^https?:\/\//i, '');
-    addChatMessage(`Starting to clone ${cleanUrl}...`, 'system');
-    
-    // Start creating sandbox and capturing screenshot immediately in parallel
-    const sandboxPromise = !sandboxData ? createSandbox(true) : Promise.resolve();
-    
-    // Only capture screenshot if we don't already have a sandbox (first generation)
-    // After sandbox is set up, skip the screenshot phase for faster generation
-    if (!sandboxData) {
-      captureUrlScreenshot(displayUrl);
-    }
-    
-    // Set loading stage immediately before hiding home screen
-    setLoadingStage('gathering');
-    // Also ensure we're on preview tab to show the loading overlay
-    setActiveTab('preview');
-    
-    setTimeout(async () => {
-      setShowHomeScreen(false);
-      setHomeScreenFading(false);
-      
-      // Wait for sandbox to be ready (if it's still creating)
-      await sandboxPromise;
-      
-      // Now start the clone process which will stream the generation
-      setUrlInput(homeUrlInput);
-      setUrlOverlayVisible(false); // Make sure overlay is closed
-      setUrlStatus(['Scraping website content...']);
-      
-      try {
-        // Scrape the website
-        let url = homeUrlInput.trim();
-        if (!url.match(/^https?:\/\//i)) {
-          url = 'https://' + url;
+    const additionalContext = homeContextInput.trim();
+
+    if (homeMode === 'prompt') {
+      if (!trimmedPrompt) {
+        addChatMessage('Please describe the website you want me to create.', 'system');
+        return;
+      }
+
+      setHomeScreenFading(true);
+
+      // Clear messages and immediately show the generation message
+      setChatMessages([]);
+      addChatMessage('Starting a fresh build from your prompt...', 'system');
+
+      setLoadingStage('gathering');
+      setActiveTab('generation');
+
+      setTimeout(async () => {
+        setShowHomeScreen(false);
+        setHomeScreenFading(false);
+
+        let sandboxPromise: Promise<void> | null = null;
+        if (!sandboxData) {
+          addChatMessage('Provisioning a new sandbox environment...', 'system');
+          sandboxPromise = createSandbox(true);
         }
-        
-        // Screenshot is already being captured in parallel above
-        
-        const scrapeResponse = await fetch('/api/scrape-url-enhanced', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
-        });
-        
-        if (!scrapeResponse.ok) {
-          throw new Error('Failed to scrape website');
+
+        try {
+          if (sandboxPromise) {
+            await sandboxPromise;
+          }
+        } catch (error: any) {
+          addChatMessage(`Sandbox creation failed: ${error.message}`, 'system');
+          setGenerationProgress(prev => ({
+            ...prev,
+            isGenerating: false,
+            isStreaming: false,
+            status: ''
+          }));
+          setLoadingStage(null);
+          return;
         }
-        
-        const scrapeData = await scrapeResponse.json();
-        
-        if (!scrapeData.success) {
-          throw new Error(scrapeData.error || 'Failed to scrape website');
-        }
-        
-        setUrlStatus(['Website scraped successfully!', 'Generating React app...']);
-        
-        // Clear preparing design state and switch to generation tab
+
         setIsPreparingDesign(false);
-        setUrlScreenshot(null); // Clear screenshot when starting generation
-        setTargetUrl(''); // Clear target URL
-        
-        // Update loading stage to planning
+        setUrlScreenshot(null);
+        setTargetUrl('');
         setLoadingStage('planning');
-        
-        // Brief pause before switching to generation tab
-        setTimeout(() => {
-          setLoadingStage('generating');
-          setActiveTab('generation');
-        }, 1500);
-        
-        // Store scraped data in conversation context
+
+        const promptLabel =
+          trimmedPrompt.length > 60 ? `${trimmedPrompt.slice(0, 60)}…` : trimmedPrompt;
         setConversationContext(prev => ({
           ...prev,
-          scrapedWebsites: [...prev.scrapedWebsites, {
-            url: url,
-            content: scrapeData,
-            timestamp: new Date()
-          }],
-          currentProject: `${targetIndustry} site inspired by ${url}`,
-          targetIndustry
+          currentProject: `Prompt build: ${promptLabel}`,
+          targetIndustry: targetIndustry || prev.targetIndustry || '',
         }));
 
-        const prompt = `I want to recreate the ${url} website as a complete React application based on the scraped content below while tailoring it for a new audience.
-
-TARGET INDUSTRY OR NICHE:
-${targetIndustry}
-
-${JSON.stringify(scrapeData, null, 2)}
-
-${homeContextInput ? `ADDITIONAL CONTEXT/REQUIREMENTS FROM USER:
-${homeContextInput}
-
-Please incorporate these requirements into the design and implementation.` : ''}
-
-IMPORTANT INSTRUCTIONS:
-- Create a COMPLETE, working React application
-- Mirror the layout, key sections, and interactive patterns from the original site, but rewrite every piece of copy to be authentic to "${targetIndustry}"
-- Use Tailwind CSS for all styling (no custom CSS files)
-- Make it responsive and modern
-- Replace brand names, offers, testimonials, and imagery references with equivalents that make sense for "${targetIndustry}" (no lorem ipsum)
-- Create proper component structure
-- Make sure the app actually renders visible content
-- Create ALL components that you reference in imports
-${homeContextInput ? '- Apply the user\'s context/theme requirements throughout the application' : ''}
-
-Focus on the key sections and content, making it clean and modern.`;
-        
         setGenerationProgress(prev => ({
           isGenerating: true,
           status: 'Initializing AI...',
@@ -2510,210 +2704,226 @@ Focus on the key sections and content, making it clean and modern.`;
           isThinking: false,
           thinkingText: undefined,
           thinkingDuration: undefined,
-          // Keep previous files until new ones are generated
           files: prev.files || [],
           currentFile: undefined,
           lastProcessedPosition: 0
         }));
-        
-        const aiResponse = await fetch('/api/generate-ai-code-stream', {
+
+        const promptPieces: string[] = [
+          'You are an AI front-end engineer tasked with building a complete single-page React application using Tailwind CSS.',
+          '',
+          'USER PROMPT:',
+          trimmedPrompt,
+          '',
+        ];
+        if (targetIndustry) {
+          promptPieces.push('TARGET INDUSTRY OR NICHE:', targetIndustry, '');
+        }
+        if (selectedStyle) {
+          promptPieces.push('DESIRED VISUAL STYLE:', `${selectedStyle} theme`, '');
+        }
+        if (additionalContext) {
+          promptPieces.push('ADDITIONAL CONTEXT FROM USER:', additionalContext, '');
+        }
+        promptPieces.push(
+          'REQUIREMENTS:',
+          '- Create a COMPLETE, working React application (no placeholders).',
+          '- Use Tailwind CSS utility classes for all styling.',
+          '- Organize major sections into dedicated components under src/components/ and render them from App.jsx.',
+          '- Ensure semantic HTML, responsive layout, and accessible contrast.',
+          '- Include dynamic copy, data points, and CTAs that align with the brief (no lorem ipsum).',
+          '- Provide smooth hover states and transitions where appropriate.',
+          '- Do not use React Router or navigation libraries; use anchor links for intra-page navigation.',
+          '- Only reference images or assets that you explicitly include in the output.'
+        );
+        const generationPrompt = promptPieces.join('\n');
+
+        try {
+          const { generatedCode } = await runGenerationRequest(generationPrompt);
+
+          await applyGeneratedCode(generatedCode, false);
+
+          addChatMessage(
+            `Created a brand new experience from your prompt${targetIndustry ? ` for the ${targetIndustry} space` : ''}. Let me know what to refine or expand next.`,
+            'system'
+          );
+
+          setConversationContext(prev => ({
+            ...prev,
+            generatedComponents: [],
+            appliedCode: [
+              ...prev.appliedCode,
+              { files: [], timestamp: new Date() }
+            ]
+          }));
+
+          setHomePromptInput('');
+          setHomeContextInput('');
+          setGenerationProgress(prev => ({
+            ...prev,
+            isGenerating: false,
+            isStreaming: false,
+            status: 'Generation complete!'
+          }));
+          setLoadingStage(null);
+
+          setTimeout(() => {
+            setActiveTab('preview');
+          }, 1000);
+        } catch (error: any) {
+          addChatMessage(`Failed to generate site from prompt: ${error.message}`, 'system');
+          setGenerationProgress(prev => ({
+            ...prev,
+            isGenerating: false,
+            isStreaming: false,
+            status: '',
+            files: prev.files
+          }));
+          setLoadingStage(null);
+        }
+      }, 500);
+
+      return;
+    }
+
+    if (!trimmedUrl) return;
+    if (!targetIndustry) {
+      addChatMessage('Please specify the industry or niche you want this design to target.', 'system');
+      return;
+    }
+
+    setHomeScreenFading(true);
+
+    // Clear messages and immediately show the cloning message
+    setChatMessages([]);
+    let displayUrl = trimmedUrl;
+    if (!displayUrl.match(/^https?:\/\//i)) {
+      displayUrl = 'https://' + displayUrl;
+    }
+    const cleanUrl = displayUrl.replace(/^https?:\/\//i, '');
+    addChatMessage(`Starting to clone ${cleanUrl}...`, 'system');
+
+    const sandboxPromise = !sandboxData ? createSandbox(true) : Promise.resolve();
+
+    if (!sandboxData) {
+      captureUrlScreenshot(displayUrl);
+    }
+
+    setLoadingStage('gathering');
+    setActiveTab('preview');
+
+    setTimeout(async () => {
+      setShowHomeScreen(false);
+      setHomeScreenFading(false);
+
+      await sandboxPromise;
+
+      setUrlInput(trimmedUrl);
+      setUrlOverlayVisible(false);
+      setUrlStatus(['Scraping website content...']);
+
+      try {
+        let url = trimmedUrl;
+        if (!url.match(/^https?:\/\//i)) {
+          url = 'https://' + url;
+        }
+
+        const scrapeResponse = await fetch('/api/scrape-url-enhanced', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            prompt,
-            model: aiModel,
-            context: {
-              sandboxId: sandboxData?.sandboxId,
-              structure: structureContent,
-              conversationContext: conversationContext
-            }
-          })
+          body: JSON.stringify({ url })
         });
-        
-        if (!aiResponse.ok || !aiResponse.body) {
-          throw new Error('Failed to generate code');
-        }
-        
-        const reader = aiResponse.body.getReader();
-        const decoder = new TextDecoder();
-        let generatedCode = '';
-        let explanation = '';
-        
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
-          
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                
-                if (data.type === 'status') {
-                  setGenerationProgress(prev => ({ ...prev, status: data.message }));
-                } else if (data.type === 'thinking') {
-                  setGenerationProgress(prev => ({ 
-                    ...prev, 
-                    isThinking: true,
-                    thinkingText: (prev.thinkingText || '') + data.text
-                  }));
-                } else if (data.type === 'thinking_complete') {
-                  setGenerationProgress(prev => ({ 
-                    ...prev, 
-                    isThinking: false,
-                    thinkingDuration: data.duration
-                  }));
-                } else if (data.type === 'conversation') {
-                  // Add conversational text to chat only if it's not code
-                  let text = data.text || '';
-                  
-                  // Remove package tags from the text
-                  text = text.replace(/<package>[^<]*<\/package>/g, '');
-                  text = text.replace(/<packages>[^<]*<\/packages>/g, '');
-                  
-                  // Filter out any XML tags and file content that slipped through
-                  if (!text.includes('<file') && !text.includes('import React') && 
-                      !text.includes('export default') && !text.includes('className=') &&
-                      text.trim().length > 0) {
-                    addChatMessage(text.trim(), 'ai');
-                  }
-                } else if (data.type === 'stream' && data.raw) {
-                  setGenerationProgress(prev => {
-                    const newStreamedCode = prev.streamedCode + data.text;
-                    
-                    // Tab is already switched after scraping
-                    
-                    const updatedState = { 
-                      ...prev, 
-                      streamedCode: newStreamedCode,
-                      isStreaming: true,
-                      isThinking: false,
-                      status: 'Generating code...'
-                    };
-                    
-                    // Process complete files from the accumulated stream
-                    const fileRegex = /<file path="([^"]+)">([^]*?)<\/file>/g;
-                    let match;
-                    const processedFiles = new Set(prev.files.map(f => f.path));
-                    
-                    while ((match = fileRegex.exec(newStreamedCode)) !== null) {
-                      const filePath = match[1];
-                      const fileContent = match[2];
-                      
-                      // Only add if we haven't processed this file yet
-                      if (!processedFiles.has(filePath)) {
-                        const fileExt = filePath.split('.').pop() || '';
-                        const fileType = fileExt === 'jsx' || fileExt === 'js' ? 'javascript' :
-                                        fileExt === 'css' ? 'css' :
-                                        fileExt === 'json' ? 'json' :
-                                        fileExt === 'html' ? 'html' : 'text';
-                        
-                        // Check if file already exists
-                        const existingFileIndex = updatedState.files.findIndex(f => f.path === filePath);
-                        
-                        if (existingFileIndex >= 0) {
-                          // Update existing file and mark as edited
-                          updatedState.files = [
-                            ...updatedState.files.slice(0, existingFileIndex),
-                            {
-                              ...updatedState.files[existingFileIndex],
-                              content: fileContent.trim(),
-                              type: fileType,
-                              completed: true,
 
-                            },
-                            ...updatedState.files.slice(existingFileIndex + 1)
-                          ];
-                        } else {
-                          // Add new file
-                          updatedState.files = [...updatedState.files, {
-                            path: filePath,
-                            content: fileContent.trim(),
-                            type: fileType,
-                            completed: true,
-
-                          }];
-                        }
-                        
-                        // Only show file status if not in edit mode
-                        if (!prev.isEdit) {
-                          updatedState.status = `Completed ${filePath}`;
-                        }
-                        processedFiles.add(filePath);
-                      }
-                    }
-                    
-                    // Check for current file being generated (incomplete file at the end)
-                    const lastFileMatch = newStreamedCode.match(/<file path="([^"]+)">([^]*?)$/);
-                    if (lastFileMatch && !lastFileMatch[0].includes('</file>')) {
-                      const filePath = lastFileMatch[1];
-                      const partialContent = lastFileMatch[2];
-                      
-                      if (!processedFiles.has(filePath)) {
-                        const fileExt = filePath.split('.').pop() || '';
-                        const fileType = fileExt === 'jsx' || fileExt === 'js' ? 'javascript' :
-                                        fileExt === 'css' ? 'css' :
-                                        fileExt === 'json' ? 'json' :
-                                        fileExt === 'html' ? 'html' : 'text';
-                        
-                        updatedState.currentFile = { 
-                          path: filePath, 
-                          content: partialContent, 
-                          type: fileType 
-                        };
-                        // Only show file status if not in edit mode
-                        if (!prev.isEdit) {
-                          updatedState.status = `Generating ${filePath}`;
-                        }
-                      }
-                    } else {
-                      updatedState.currentFile = undefined;
-                    }
-                    
-                    return updatedState;
-                  });
-                } else if (data.type === 'complete') {
-                  generatedCode = data.generatedCode;
-                  explanation = data.explanation;
-                  
-                  // Save the last generated code
-                  setConversationContext(prev => ({
-                    ...prev,
-                    lastGeneratedCode: generatedCode
-                  }));
-                }
-              } catch (e) {
-                console.error('Failed to parse SSE data:', e);
-              }
-            }
-          }
+        if (!scrapeResponse.ok) {
+          throw new Error('Failed to scrape website');
         }
-        
-        setGenerationProgress(prev => ({
+
+        const scrapeData = await scrapeResponse.json();
+
+        if (!scrapeData.success) {
+          throw new Error(scrapeData.error || 'Failed to scrape website');
+        }
+
+        setUrlStatus(['Website scraped successfully!', 'Generating React app...']);
+
+        setIsPreparingDesign(false);
+        setUrlScreenshot(null);
+        setTargetUrl('');
+
+        setLoadingStage('planning');
+
+        setTimeout(() => {
+          setLoadingStage('generating');
+          setActiveTab('generation');
+        }, 1500);
+
+        setConversationContext(prev => ({
           ...prev,
-          isGenerating: false,
-          isStreaming: false,
-          status: 'Generation complete!'
+          scrapedWebsites: [...prev.scrapedWebsites, {
+            url,
+            content: scrapeData,
+            timestamp: new Date()
+          }],
+          currentProject: `${targetIndustry} site inspired by ${url}`,
+          targetIndustry
         }));
-        
-        if (generatedCode) {
-          addChatMessage('AI recreation generated!', 'system');
-          
-          // Add the explanation to chat if available
-          if (explanation && explanation.trim()) {
-            addChatMessage(explanation, 'ai');
-          }
-          
-          setPromptInput(generatedCode);
-          
-          // First application for cloned site should not be in edit mode
-          await applyGeneratedCode(generatedCode, false);
-          
-          addChatMessage(
-            `Успешно воссоздал ${url} как современное React приложение${homeContextInput ? ` с вашим запрошенным контекстом: "${homeContextInput}"` : ''}! Содержимое сайта теперь в моем контексте, поэтому вы можете попросить меня изменить определенные разделы или добавить функции на основе оригинального сайта.`, 
-            'ai',
+
+        const promptLines: string[] = [
+          `I want to recreate the ${url} website as a complete React application based on the scraped content below while tailoring it for a new audience.`,
+          '',
+          'TARGET INDUSTRY OR NICHE:',
+          targetIndustry,
+          '',
+          JSON.stringify(scrapeData, null, 2),
+          ''
+        ];
+        if (additionalContext) {
+          promptLines.push(
+            'ADDITIONAL CONTEXT/REQUIREMENTS FROM USER:',
+            additionalContext,
+            '',
+            'Please incorporate these requirements into the design and implementation.',
+            ''
+          );
+        }
+        promptLines.push(
+          'IMPORTANT INSTRUCTIONS:',
+          '- Create a COMPLETE, working React application',
+          `- Mirror the layout, key sections, and interactive patterns from the original site, but rewrite every piece of copy to be authentic to "${targetIndustry}"`,
+          '- Use Tailwind CSS for all styling (no custom CSS files)',
+          '- Make it responsive and modern',
+          `- Replace brand names, offers, testimonials, and imagery references with equivalents that make sense for "${targetIndustry}" (no lorem ipsum)`,
+          '- Create proper component structure',
+          '- Make sure the app actually renders visible content',
+          '- Create ALL components that you reference in imports',
+          additionalContext ? "- Apply the user's context/theme requirements throughout the application" : '',
+          '',
+          'Focus on the key sections and content, making it clean and modern.'
+        );
+        const prompt = promptLines.filter(Boolean).join('\n');
+
+        setGenerationProgress(prev => ({
+          isGenerating: true,
+          status: 'Initializing AI...',
+          components: [],
+          currentComponent: 0,
+          streamedCode: '',
+          isStreaming: true,
+          isThinking: false,
+          thinkingText: undefined,
+          thinkingDuration: undefined,
+          files: prev.files || [],
+          currentFile: undefined,
+          lastProcessedPosition: 0
+        }));
+
+        const { generatedCode } = await runGenerationRequest(prompt);
+
+        await applyGeneratedCode(generatedCode, false);
+
+        addChatMessage(
+          `Successfully recreated ${url} as a modern React application styled like the source and adapted for the ${targetIndustry} space${additionalContext ? ` with your additional guidance: \"${additionalContext}\"` : ''}. The project is now ready for follow-up edits or enhancements.`,
+          'ai',
           {
             scrapedUrl: url,
             scrapedContent: scrapeData,
@@ -2732,51 +2942,42 @@ Focus on the key sections and content, making it clean and modern.`;
               files: [],
               timestamp: new Date()
             }]
-          }));
-        } else {
-          throw new Error('Failed to generate recreation');
-        }
-        
+        }));
+
         setUrlInput('');
         setUrlStatus([]);
         setHomeContextInput('');
-        
-        // Clear generation progress and all screenshot/design states
+
         setGenerationProgress(prev => ({
           ...prev,
           isGenerating: false,
           isStreaming: false,
           status: 'Generation complete!'
         }));
-        
-        // Clear screenshot and preparing design states to prevent them from showing on next run
+
         setUrlScreenshot(null);
         setIsPreparingDesign(false);
         setTargetUrl('');
         setScreenshotError(null);
-        setLoadingStage(null); // Clear loading stage
-        
+        setLoadingStage(null);
+
         setTimeout(() => {
-          // Switch back to preview tab but keep files
           setActiveTab('preview');
-        }, 1000); // Show completion briefly then switch
+        }, 1000);
       } catch (error: any) {
         addChatMessage(`Failed to clone website: ${error.message}`, 'system');
         setUrlStatus([]);
         setIsPreparingDesign(false);
-        // Also clear generation progress on error
         setGenerationProgress(prev => ({
           ...prev,
           isGenerating: false,
           isStreaming: false,
           status: '',
-          // Keep files to display in sidebar
           files: prev.files
         }));
       }
     }, 500);
   };
-
   return (
     <div className="font-sans bg-background text-foreground h-screen flex flex-col">
       {/* Theme Toggle */}
@@ -2862,168 +3063,203 @@ Focus on the key sections and content, making it clean and modern.`;
               </div>
               
               <form onSubmit={handleHomeScreenSubmit} className="mt-5 max-w-3xl mx-auto">
-                <div className="w-full relative group">
-                  <input
-                    type="text"
-                    value={homeUrlInput}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setHomeUrlInput(value);
-                      
-                      // Check if it's a valid domain
-                      const domainRegex = /^(https?:\/\/)?(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(\/?.*)?$/;
-                      if (domainRegex.test(value) && value.length > 5) {
-                        // Small delay to make the animation feel smoother
-                        setTimeout(() => setShowStyleSelector(true), 100);
-                      } else {
-                        setShowStyleSelector(false);
-                        setSelectedStyle(null);
-                      }
-                    }}
-                    placeholder=" "
-                    aria-placeholder="https://firecrawl.dev"
-                    className="h-[3.25rem] w-full resize-none focus-visible:outline-none focus-visible:ring-orange-500 focus-visible:ring-2 rounded-[18px] text-sm text-[#36322F] px-4 pr-12 border-[.75px] border-border bg-white"
-                    style={{
-                      boxShadow: '0 0 0 1px #e3e1de66, 0 1px 2px #5f4a2e14, 0 4px 6px #5f4a2e0a, 0 40px 40px -24px #684b2514',
-                      filter: 'drop-shadow(rgba(249, 224, 184, 0.3) -0.731317px -0.731317px 35.6517px)'
-                    }}
-                    autoFocus
-                  />
-                  <div 
-                    aria-hidden="true" 
-                    className={`absolute top-1/2 -translate-y-1/2 left-4 pointer-events-none text-sm text-opacity-50 text-start transition-opacity ${
-                      homeUrlInput ? 'opacity-0' : 'opacity-100'
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-6">
+                  <button
+                    type="button"
+                    onClick={() => switchHomeMode('url')}
+                    className={`flex-1 rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
+                      homeMode === 'url'
+                        ? 'bg-white text-[#36322F] shadow-sm border-orange-200'
+                        : 'bg-white/40 text-[#605A57]/80 border-transparent hover:bg-white/70'
                     }`}
                   >
-                    <span className="text-[#605A57]/50" style={{ fontFamily: 'monospace' }}>
-                      https://firecrawl.dev
-                    </span>
-                  </div>
+                    Use reference URL
+                  </button>
                   <button
-                    type="submit"
-                    disabled={!homeUrlInput.trim()}
-                    className="absolute top-1/2 transform -translate-y-1/2 right-2 flex h-10 items-center justify-center rounded-md px-3 text-sm font-medium text-zinc-500 hover:text-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    title={selectedStyle ? `Clone with ${selectedStyle} Style` : 'Clone Website'}
+                    type="button"
+                    onClick={() => switchHomeMode('prompt')}
+                    className={`flex-1 rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
+                      homeMode === 'prompt'
+                        ? 'bg-white text-[#36322F] shadow-sm border-orange-200'
+                        : 'bg-white/40 text-[#605A57]/80 border-transparent hover:bg-white/70'
+                    }`}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                      <polyline points="9 10 4 15 9 20"></polyline>
-                      <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
-                    </svg>
+                    Generate from prompt
                   </button>
                 </div>
-                  
-                  {/* Style Selector - Slides out when valid domain is entered */}
-                  {showStyleSelector && (
-                    <div className="overflow-hidden mt-4">
-                      <div className={`transition-all duration-500 ease-out transform ${
-                        showStyleSelector ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
-                      }`}>
-                    <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-sm">
-                      <p className="text-sm text-gray-600 mb-3 font-medium">Как вы хотите, чтобы выглядел ваш сайт?</p>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        {[
-                          { name: 'Необрутализм', description: 'Яркие цвета, толстые границы' },
-                          { name: 'Глассморфизм', description: 'Эффект матового стекла' },
-                          { name: 'Минимализм', description: 'Чистый и простой' },
-                          { name: 'Темная тема', description: 'Темная тема' },
-                          { name: 'Градиент', description: 'Яркие градиенты' },
-                          { name: 'Ретро', description: 'Эстетика 80-90х' },
-                          { name: 'Современный', description: 'Современный дизайн' },
-                          { name: 'Монохром', description: 'Черно-белый' }
-                        ].map((style) => (
-                          <button
-                            key={style.name}
-                            type="button"
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                // Submit the form
-                                const form = e.currentTarget.closest('form');
-                                if (form) {
-                                  form.requestSubmit();
-                                }
-                              }
-                            }}
-                            onClick={() => {
-                              if (selectedStyle === style.name) {
-                                // Deselect if clicking the same style
-                                setSelectedStyle(null);
-                                // Keep only additional context, remove the style theme part
-                                const currentAdditional = homeContextInput.replace(/^[^,]+theme\s*,?\s*/, '').trim();
-                                setHomeContextInput(currentAdditional);
-                              } else {
-                                // Select new style
-                                setSelectedStyle(style.name);
-                                // Extract any additional context (everything after the style theme)
-                                const currentAdditional = homeContextInput.replace(/^[^,]+theme\s*,?\s*/, '').trim();
-                                setHomeContextInput(style.name.toLowerCase() + ' theme' + (currentAdditional ? ', ' + currentAdditional : ''));
-                              }
-                            }}
-                            className={`p-3 rounded-lg border transition-all ${
-                              selectedStyle === style.name
-                                ? 'border-orange-400 bg-orange-50 text-gray-900 shadow-sm'
-                                : 'border-gray-200 bg-white hover:border-orange-200 hover:bg-orange-50/50 text-gray-700'
-                            }`}
-                          >
-                            <div className="text-sm font-medium">{style.name}</div>
-                            <div className="text-xs text-gray-500 mt-1">{style.description}</div>
-                          </button>
-                        ))}
-                      </div>
-                      
-                      <div className="mt-4">
-                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                          Target industry or niche
-                        </label>
-                        <input
-                          type="text"
-                          value={homeIndustryInput}
-                          onChange={(e) => setHomeIndustryInput(e.target.value)}
-                          placeholder="e.g. boutique law firm, wellness studio, fintech SaaS"
-                          required
-                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-                        />
-                        <p className="mt-1 text-[11px] text-gray-400">
-                          We will keep the original layout and styling cues but rewrite the story for this industry.
-                        </p>
-                      </div>
 
-                      {/* Additional context input - part of the style selector */}
-                      <div className="mt-4 mb-2">
-                        <input
-                          type="text"
-                          value={(() => {
-                            if (!selectedStyle) return homeContextInput;
-                            // Extract additional context by removing the style theme part
-                            const additional = homeContextInput.replace(new RegExp('^' + selectedStyle.toLowerCase() + ' theme\\s*,?\\s*', 'i'), '');
-                            return additional;
-                          })()}
-                          onChange={(e) => {
-                            const additionalContext = e.target.value;
-                            if (selectedStyle) {
-                              setHomeContextInput(selectedStyle.toLowerCase() + ' theme' + (additionalContext.trim() ? ', ' + additionalContext : ''));
-                            } else {
-                              setHomeContextInput(additionalContext);
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                              e.preventDefault();
-                              const form = e.currentTarget.closest('form');
-                              if (form) {
-                                form.requestSubmit();
-                              }
-                            }
-                          }}
-                          placeholder="Добавьте больше деталей: специфические функции, цветовые предпочтения..."
-                          className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100 transition-all duration-200"
-                        />
+                {homeMode === 'url' ? (
+                  <>
+                    <div className="w-full relative group">
+                      <input
+                        type="text"
+                        value={homeUrlInput}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setHomeUrlInput(value);
+
+                          const domainRegex = /^(https?:\/\/)?(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(\/?.*)?$/;
+                          if (domainRegex.test(value) && value.length > 5) {
+                            setTimeout(() => setShowStyleSelector(true), 100);
+                          } else {
+                            setShowStyleSelector(false);
+                            setSelectedStyle(null);
+                          }
+                        }}
+                        placeholder=" "
+                        aria-placeholder="https://firecrawl.dev"
+                        className="h-[3.25rem] w-full resize-none focus-visible:outline-none focus-visible:ring-orange-500 focus-visible:ring-2 rounded-[18px] text-sm text-[#36322F] px-4 pr-12 border-[.75px] border-border bg-white"
+                        style={{
+                          boxShadow: '0 0 0 1px #e3e1de66, 0 1px 2px #5f4a2e14, 0 4px 6px #5f4a2e0a, 0 40px 40px -24px #684b2514',
+                          filter: 'drop-shadow(rgba(249, 224, 184, 0.3) -0.731317px -0.731317px 35.6517px)'
+                        }}
+                        autoFocus
+                      />
+                      <div 
+                        aria-hidden="true" 
+                        className={`absolute top-1/2 -translate-y-1/2 left-4 pointer-events-none text-sm text-opacity-50 text-start transition-opacity ${
+                          homeUrlInput ? 'opacity-0' : 'opacity-100'
+                        }`}
+                      >
+                        <span className="text-[#605A57]/50" style={{ fontFamily: 'monospace' }}>
+                          https://firecrawl.dev
+                        </span>
                       </div>
+                      <button
+                        type="submit"
+                        disabled={!homeUrlInput.trim()}
+                        className="absolute top-1/2 transform -translate-y-1/2 right-2 flex h-10 items-center justify-center rounded-md px-3 text-sm font-medium text-zinc-500 hover:text-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        title={selectedStyle ? `Clone with ${selectedStyle} Style` : 'Clone Website'}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                          <polyline points="9 10 4 15 9 20"></polyline>
+                          <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                        </svg>
+                      </button>
                     </div>
+
+                    {homeMode === 'url' && showStyleSelector && (
+                      <div className="overflow-hidden mt-4">
+                        <div className={`transition-all duration-500 ease-out transform ${
+                          showStyleSelector ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
+                        }`}>
+                          <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-sm">
+                            <p className="text-sm text-gray-600 mb-3 font-medium">Pick a style for the recreation (optional):</p>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                              {[
+                                { name: 'Neobrutalism', description: 'Bold colors, chunky borders' },
+                                { name: 'Glassmorphism', description: 'Frosted glass panels with blur' },
+                                { name: 'Minimal', description: 'Clean layout with generous whitespace' },
+                                { name: 'Dark Mode', description: 'Moody palette with vibrant accents' },
+                                { name: 'Gradient Pop', description: 'Lively gradients and glow effects' },
+                                { name: 'Retro', description: 'Playful 80s-90s inspired aesthetic' },
+                                { name: 'Modern Corporate', description: 'Polished product design language' },
+                                { name: 'Monochrome', description: 'Single palette with high contrast' }
+                              ].map((style) => (
+                                <button
+                                  key={style.name}
+                                  type="button"
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      const form = e.currentTarget.closest('form');
+                                      if (form) {
+                                        form.requestSubmit();
+                                      }
+                                    }
+                                  }}
+                                  onClick={() => {
+                                    if (selectedStyle === style.name) {
+                                      setSelectedStyle(null);
+                                      const currentAdditional = homeContextInput.replace(/^[^,]+theme\s*,?\s*/, '').trim();
+                                      setHomeContextInput(currentAdditional);
+                                    } else {
+                                      setSelectedStyle(style.name);
+                                      const currentAdditional = homeContextInput.replace(/^[^,]+theme\s*,?\s*/, '').trim();
+                                      setHomeContextInput(style.name.toLowerCase() + ' theme' + (currentAdditional ? ', ' + currentAdditional : ''));
+                                    }
+                                  }}
+                                  className={`p-3 rounded-lg border transition-all ${
+                                    selectedStyle === style.name
+                                      ? 'border-orange-400 bg-orange-50 text-gray-900 shadow-sm'
+                                      : 'border-gray-200 bg-white hover:border-orange-200 hover:bg-orange-50/50 text-gray-700'
+                                  }`}
+                                >
+                                  <div className="text-sm font-medium">{style.name}</div>
+                                  <div className="text-xs text-gray-500 mt-1">{style.description}</div>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </>
+                ) : (
+                  <div className="space-y-3">
+                    <Textarea
+                      value={homePromptInput}
+                      onChange={(e) => setHomePromptInput(e.target.value)}
+                      placeholder="Describe the website you want (sections, tone, goals, key content)..."
+                      rows={5}
+                      required
+                      className="w-full rounded-2xl border border-gray-200 bg-white text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    />
+                    <p className="text-xs text-gray-500">
+                      Mention the vibe, key sections, audiences, and any must-have content. I'll handle layout, components, and Tailwind styling automatically.
+                    </p>
+                  </div>
+                )}
+
+                <div className="mt-4">
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                    Target industry or niche
+                  </label>
+                  <input
+                    type="text"
+                    value={homeIndustryInput}
+                    onChange={(e) => setHomeIndustryInput(e.target.value)}
+                    placeholder="e.g. boutique law firm, wellness studio, fintech SaaS"
+                    required={homeMode === 'url'}
+                    className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                  />
+                  <p className="mt-1 text-[11px] text-gray-400">
+                    I'll tailor copy and examples to this space while keeping the requested style.
+                  </p>
+                </div>
+
+                <div className="mt-4 mb-2">
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                    Additional instructions (optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={(() => {
+                      if (!selectedStyle) return homeContextInput;
+                      const additional = homeContextInput.replace(new RegExp('^' + selectedStyle.toLowerCase() + ' theme\\s*,?\\s*', 'i'), '');
+                      return additional;
+                    })()}
+                    onChange={(e) => {
+                      const additionalText = e.target.value;
+                      if (selectedStyle) {
+                        setHomeContextInput(selectedStyle.toLowerCase() + ' theme' + (additionalText.trim() ? ', ' + additionalText : ''));
+                      } else {
+                        setHomeContextInput(additionalText);
+                      }
+                    }}
+                    placeholder="Highlight priorities, tone, integrations, or content sources"
+                    className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100 transition-all duration-200"
+                  />
+                </div>
+
+                {homeMode === 'prompt' && (
+                  <div className="mt-6">
+                    <Button type="submit" className="w-full sm:w-auto">
+                      Generate site
+                    </Button>
+                  </div>
+                )}
               </form>
               
               {/* Model Selector */}
@@ -3096,7 +3332,9 @@ Focus on the key sections and content, making it clean and modern.`;
                           Бесплатный хостинг
                         </li>
                       </ul>
-                      <button className="w-full bg-[#36322F] text-white px-6 py-3 rounded-[10px] font-medium hover:bg-[#2a2520] transition-colors duration-200 [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)]">
+                      <button 
+                        onClick={() => handlePayment('basic')}
+                        className="w-full bg-[#36322F] text-white px-6 py-3 rounded-[10px] font-medium hover:bg-[#2a2520] transition-colors duration-200 [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)]">
                         Выбрать план
                       </button>
                     </div>
@@ -3150,7 +3388,9 @@ Focus on the key sections and content, making it clean and modern.`;
                           Свой домен (+100₽/мес)
                         </li>
                       </ul>
-                      <button className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-[10px] font-medium hover:from-orange-500 hover:to-orange-600 transition-all duration-200 [box-shadow:inset_0px_-2px_0px_0px_#ea580c,_0px_1px_6px_0px_rgba(234,_88,_12,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#ea580c,_0px_1px_3px_0px_rgba(234,_88,_12,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#ea580c,_0px_1px_2px_0px_rgba(234,_88,_12,_30%)]">
+                      <button 
+                        onClick={() => handlePayment('professional')}
+                        className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-[10px] font-medium hover:from-orange-500 hover:to-orange-600 transition-all duration-200 [box-shadow:inset_0px_-2px_0px_0px_#ea580c,_0px_1px_6px_0px_rgba(234,_88,_12,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#ea580c,_0px_1px_3px_0px_rgba(234,_88,_12,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#ea580c,_0px_1px_2px_0px_rgba(234,_88,_12,_30%)]">
                         Выбрать план
                       </button>
                     </div>
