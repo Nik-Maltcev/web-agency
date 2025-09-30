@@ -26,6 +26,11 @@ ANTHROPIC_API_KEY=your_anthropic_api_key  # Получить с https://console.
 OPENAI_API_KEY=your_openai_api_key  # Получить с https://platform.openai.com (GPT-5)
 GEMINI_API_KEY=your_gemini_api_key  # Получить с https://aistudio.google.com/app/apikey
 GROQ_API_KEY=your_groq_api_key  # Получить с https://console.groq.com (Быстрый вывод - рекомендуется Kimi K2)
+
+# Supabase (опционально)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url  # URL проекта Supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key  # Публичный ключ
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key  # Ключ для серверных операций
 ```
 
 3. **Запустить**
