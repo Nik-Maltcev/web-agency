@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { executeServerOperation } from '@/lib/supabase-helpers';
 
 /**
  * Example API endpoint demonstrating Supabase integration
@@ -8,7 +7,20 @@ import { executeServerOperation } from '@/lib/supabase-helpers';
  * POST /api/supabase-example - Example data operation
  */
 
+// Force dynamic rendering to avoid build-time execution
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json({
+      success: false,
+      error: 'Supabase is not configured. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your environment variables.'
+    }, { status: 503 });
+  }
+
+  // Lazy import to avoid build-time execution
+  const { executeServerOperation } = await import('@/lib/supabase-helpers');
   try {
     // Test Supabase connection
     const result = await executeServerOperation(async (client) => {
@@ -47,6 +59,17 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.json({
+      success: false,
+      error: 'Supabase is not configured. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your environment variables.'
+    }, { status: 503 });
+  }
+
+  // Lazy import to avoid build-time execution
+  const { executeServerOperation } = await import('@/lib/supabase-helpers');
+  
   try {
     const body = await request.json();
     const { action, table, data: requestData } = body;
