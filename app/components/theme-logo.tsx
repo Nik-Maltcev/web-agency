@@ -1,36 +1,26 @@
 "use client"
 
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import clsx from "clsx"
 
-export function ThemeLogo() {
-  const { theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+type ThemeLogoProps = {
+  className?: string
+}
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    // Return light theme logo by default to avoid hydration mismatch
-    return (
-      <img
-        src="/firecrawl-logo-with-fire.webp"
-        alt="Firecrawl"
-        className="h-8 w-auto"
-      />
-    )
-  }
-
-  const logoSrc = theme === "dark" 
-    ? "/firecrawl-logo-with-fire-dark.webp" 
-    : "/firecrawl-logo-with-fire.webp"
-
+export function ThemeLogo({ className }: ThemeLogoProps) {
   return (
-    <img
-      src={logoSrc}
-      alt="Firecrawl"
-      className="h-8 w-auto"
-    />
+    <div className={clsx("flex items-center gap-3", className)}>
+      <span
+        className="inline-flex items-center rounded-full border border-zinc-200/60 bg-white/80 px-4 py-2 text-sm font-black uppercase text-zinc-900 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.8)] transition-all duration-300 dark:border-white/10 dark:bg-white/5 dark:text-white"
+        style={{
+          fontFamily: "var(--font-display, inherit)",
+          letterSpacing: "0.55em",
+        }}
+      >
+        REBUILDR
+      </span>
+      <span className="hidden text-xs font-medium tracking-[0.2em] text-zinc-500 transition-colors duration-300 sm:inline dark:text-zinc-300">
+        adaptive web studio
+      </span>
+    </div>
   )
 }

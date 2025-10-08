@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -55,7 +55,7 @@ function AISandboxPageContent() {
   const [promptInput, setPromptInput] = useState('');
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     {
-      content: 'Добро пожаловать! Я могу помочь вам сгенерировать код с полным контекстом файлов и структуры вашего проекта. Просто начните общаться - я автоматически создам песочницу для вас, если это необходимо!\n\nСовет: Если вы видите ошибки пакетов типа "react-router-dom не найден", просто напишите "npm install" или "проверить пакеты" для автоматической установки недостающих пакетов.',
+      content: 'Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ! РЇ РјРѕРіСѓ РїРѕРјРѕС‡СЊ РІР°Рј СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РєРѕРґ СЃ РїРѕР»РЅС‹Рј РєРѕРЅС‚РµРєСЃС‚РѕРј С„Р°Р№Р»РѕРІ Рё СЃС‚СЂСѓРєС‚СѓСЂС‹ РІР°С€РµРіРѕ РїСЂРѕРµРєС‚Р°. РџСЂРѕСЃС‚Рѕ РЅР°С‡РЅРёС‚Рµ РѕР±С‰Р°С‚СЊСЃСЏ - СЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРѕР·РґР°Рј РїРµСЃРѕС‡РЅРёС†Сѓ РґР»СЏ РІР°СЃ, РµСЃР»Рё СЌС‚Рѕ РЅРµРѕР±С…РѕРґРёРјРѕ!\n\nРЎРѕРІРµС‚: Р•СЃР»Рё РІС‹ РІРёРґРёС‚Рµ РѕС€РёР±РєРё РїР°РєРµС‚РѕРІ С‚РёРїР° "react-router-dom РЅРµ РЅР°Р№РґРµРЅ", РїСЂРѕСЃС‚Рѕ РЅР°РїРёС€РёС‚Рµ "npm install" РёР»Рё "РїСЂРѕРІРµСЂРёС‚СЊ РїР°РєРµС‚С‹" РґР»СЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕР№ СѓСЃС‚Р°РЅРѕРІРєРё РЅРµРґРѕСЃС‚Р°СЋС‰РёС… РїР°РєРµС‚РѕРІ.',
       type: 'system',
       timestamp: new Date()
     }
@@ -400,7 +400,7 @@ function AISandboxPageContent() {
     console.log('[createSandbox] Starting sandbox creation...');
     setLoading(true);
     setShowLoadingBackground(true);
-    updateStatus('Создание песочницы...', false);
+    updateStatus('РЎРѕР·РґР°РЅРёРµ РїРµСЃРѕС‡РЅРёС†С‹...', false);
     setResponseArea([]);
     setScreenshotError(null);
     
@@ -417,7 +417,7 @@ function AISandboxPageContent() {
       if (data.success) {
         setSandboxData(data);
         updateStatus('Sandbox active', true);
-        log('Песочница создана успешно!');
+        log('РџРµСЃРѕС‡РЅРёС†Р° СЃРѕР·РґР°РЅР° СѓСЃРїРµС€РЅРѕ!');
         log(`Sandbox ID: ${data.sandboxId}`);
         log(`URL: ${data.url}`);
         
@@ -786,7 +786,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
           
           // If there are failed packages, add a message about checking for errors
           if (results.packagesFailed?.length > 0) {
-            addChatMessage(`⚠️ Some packages failed to install. Check the error banner above for details.`, 'system');
+            addChatMessage(`вљ пёЏ Some packages failed to install. Check the error banner above for details.`, 'system');
           }
           
           // Fetch updated file structure
@@ -959,7 +959,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
-          addChatMessage('✓ Vite dev server restarted successfully!', 'system');
+          addChatMessage('вњ“ Vite dev server restarted successfully!', 'system');
           
           // Refresh the iframe after a short delay
           setTimeout(() => {
@@ -1101,7 +1101,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                                       {fileInfo.edited && (
                                         <span className={`text-[10px] px-1 rounded ${
                                           isSelected ? 'bg-blue-400' : 'bg-orange-500 text-white'
-                                        }`}>✓</span>
+                                        }`}>вњ“</span>
                                       )}
                                     </span>
                                   </div>
@@ -1129,11 +1129,11 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                     {generationProgress.isThinking ? (
                       <>
                         <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse" />
-                        ИИ думает...
+                        РР РґСѓРјР°РµС‚...
                       </>
                     ) : (
                       <>
-                        <span className="text-purple-600">✓</span>
+                        <span className="text-purple-600">вњ“</span>
                         Thought for {generationProgress.thinkingDuration || 0} seconds
                       </>
                     )}
@@ -1209,8 +1209,8 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                             <div className="absolute inset-0 border-4 border-green-500 rounded-full animate-spin border-t-transparent"></div>
                           </div>
                         </div>
-                        <h3 className="text-xl font-medium text-white mb-2">ИИ анализирует ваш запрос</h3>
-                        <p className="text-gray-400 text-sm">{generationProgress.status || 'Подготовка к генерации кода...'}</p>
+                        <h3 className="text-xl font-medium text-white mb-2">РР Р°РЅР°Р»РёР·РёСЂСѓРµС‚ РІР°С€ Р·Р°РїСЂРѕСЃ</h3>
+                        <p className="text-gray-400 text-sm">{generationProgress.status || 'РџРѕРґРіРѕС‚РѕРІРєР° Рє РіРµРЅРµСЂР°С†РёРё РєРѕРґР°...'}</p>
                       </div>
                     </div>
                   ) : (
@@ -1218,7 +1218,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                       <div className="px-4 py-2 bg-gray-100 text-gray-900 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-3 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
-                          <span className="font-mono text-sm">Потоковая генерация кода...</span>
+                          <span className="font-mono text-sm">РџРѕС‚РѕРєРѕРІР°СЏ РіРµРЅРµСЂР°С†РёСЏ РєРѕРґР°...</span>
                         </div>
                       </div>
                       <div className="p-4 bg-gray-900 rounded">
@@ -1233,7 +1233,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                           }}
                           showLineNumbers={true}
                         >
-                          {generationProgress.streamedCode || 'Начало генерации кода...'}
+                          {generationProgress.streamedCode || 'РќР°С‡Р°Р»Рѕ РіРµРЅРµСЂР°С†РёРё РєРѕРґР°...'}
                         </SyntaxHighlighter>
                         <span className="inline-block w-2 h-4 bg-orange-400 ml-1 animate-pulse" />
                       </div>
@@ -1287,7 +1287,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                       <div key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                         <div className="px-4 py-2 bg-[#36322F] text-white flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <span className="text-green-500">✓</span>
+                            <span className="text-green-500">вњ“</span>
                             <span className="font-mono text-sm">{file.path}</span>
                           </div>
                           <span className={`px-2 py-0.5 text-xs rounded ${
@@ -1416,14 +1416,14 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                 <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto"></div>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {loadingStage === 'gathering' && 'Сбор информации о веб-сайте...'}
-                {loadingStage === 'planning' && 'Планирование вашего дизайна...'}
-                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Генерация вашего приложения...'}
+                {loadingStage === 'gathering' && 'РЎР±РѕСЂ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РІРµР±-СЃР°Р№С‚Рµ...'}
+                {loadingStage === 'planning' && 'РџР»Р°РЅРёСЂРѕРІР°РЅРёРµ РІР°С€РµРіРѕ РґРёР·Р°Р№РЅР°...'}
+                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Р“РµРЅРµСЂР°С†РёСЏ РІР°С€РµРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ...'}
               </h3>
               <p className="text-gray-600 text-sm">
-                {loadingStage === 'gathering' && 'Анализ структуры и содержания веб-сайта'}
-                {loadingStage === 'planning' && 'Создание оптимальной архитектуры React компонентов'}
-                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Написание чистого, современного кода для вашего приложения'}
+                {loadingStage === 'gathering' && 'РђРЅР°Р»РёР· СЃС‚СЂСѓРєС‚СѓСЂС‹ Рё СЃРѕРґРµСЂР¶Р°РЅРёСЏ РІРµР±-СЃР°Р№С‚Р°'}
+                {loadingStage === 'planning' && 'РЎРѕР·РґР°РЅРёРµ РѕРїС‚РёРјР°Р»СЊРЅРѕР№ Р°СЂС…РёС‚РµРєС‚СѓСЂС‹ React РєРѕРјРїРѕРЅРµРЅС‚РѕРІ'}
+                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'РќР°РїРёСЃР°РЅРёРµ С‡РёСЃС‚РѕРіРѕ, СЃРѕРІСЂРµРјРµРЅРЅРѕРіРѕ РєРѕРґР° РґР»СЏ РІР°С€РµРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ'}
               </p>
             </div>
           </div>
@@ -1468,7 +1468,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
           <div className="flex items-center justify-center h-full bg-gray-900">
             <div className="text-center">
               <div className="w-12 h-12 border-3 border-gray-600 border-t-white rounded-full animate-spin mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white">Сбор информации о веб-сайте</h3>
+              <h3 className="text-lg font-medium text-white">РЎР±РѕСЂ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РІРµР±-СЃР°Р№С‚Рµ</h3>
             </div>
           </div>
         );
@@ -1485,11 +1485,11 @@ Tip: I automatically detect and install npm packages from your code imports (lik
           ) : sandboxData ? (
             <div className="text-gray-500">
               <div className="w-8 h-8 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-sm">Загрузка предварительного просмотра...</p>
+              <p className="text-sm">Р—Р°РіСЂСѓР·РєР° РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕРіРѕ РїСЂРѕСЃРјРѕС‚СЂР°...</p>
             </div>
           ) : (
             <div className="text-gray-500 text-center">
-              <p className="text-sm">Начните общение, чтобы создать ваше первое приложение</p>
+              <p className="text-sm">РќР°С‡РЅРёС‚Рµ РѕР±С‰РµРЅРёРµ, С‡С‚РѕР±С‹ СЃРѕР·РґР°С‚СЊ РІР°С€Рµ РїРµСЂРІРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ</p>
             </div>
           )}
         </div>
@@ -1527,7 +1527,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
     
     if (!sandboxData) {
       sandboxCreating = true;
-      addChatMessage('Создание песочницы во время планирования вашего приложения...', 'system');
+      addChatMessage('РЎРѕР·РґР°РЅРёРµ РїРµСЃРѕС‡РЅРёС†С‹ РІРѕ РІСЂРµРјСЏ РїР»Р°РЅРёСЂРѕРІР°РЅРёСЏ РІР°С€РµРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ...', 'system');
       sandboxPromise = createSandbox(true).catch((error: any) => {
         addChatMessage(`Failed to create sandbox: ${error.message}`, 'system');
         throw error;
@@ -2015,7 +2015,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
   const clearChatHistory = () => {
     setChatMessages([{
-      content: 'История чата очищена. Как я могу помочь вам?',
+      content: 'РСЃС‚РѕСЂРёСЏ С‡Р°С‚Р° РѕС‡РёС‰РµРЅР°. РљР°Рє СЏ РјРѕРіСѓ РїРѕРјРѕС‡СЊ РІР°Рј?',
       type: 'system',
       timestamp: new Date()
     }]);
@@ -2089,11 +2089,11 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       // Start sandbox creation in parallel with code generation
       let sandboxPromise: Promise<void> | null = null;
       if (!sandboxData) {
-        addChatMessage('Создание песочницы во время генерации вашего React приложения...', 'system');
+        addChatMessage('РЎРѕР·РґР°РЅРёРµ РїРµСЃРѕС‡РЅРёС†С‹ РІРѕ РІСЂРµРјСЏ РіРµРЅРµСЂР°С†РёРё РІР°С€РµРіРѕ React РїСЂРёР»РѕР¶РµРЅРёСЏ...', 'system');
         sandboxPromise = createSandbox(true);
       }
       
-      addChatMessage('Анализ и генерация React воссоздания...', 'system');
+      addChatMessage('РђРЅР°Р»РёР· Рё РіРµРЅРµСЂР°С†РёСЏ React РІРѕСЃСЃРѕР·РґР°РЅРёСЏ...', 'system');
       
       const recreatePrompt = `I scraped this website and want you to recreate it as a modern React application that serves a different industry while keeping the original visual style.
 
@@ -2303,7 +2303,7 @@ Focus on the key sections and content, making it clean and modern while preservi
         await applyGeneratedCode(generatedCode, false);
         
         addChatMessage(
-          `Успешно воссоздал ${url} как современное React приложение${homeContextInput ? ` с вашим запрошенным контекстом: "${homeContextInput}"` : ''}! Содержимое сайта теперь в моем контексте, поэтому вы можете попросить меня изменить определенные разделы или добавить функции на основе оригинального сайта.`, 
+          `РЈСЃРїРµС€РЅРѕ РІРѕСЃСЃРѕР·РґР°Р» ${url} РєР°Рє СЃРѕРІСЂРµРјРµРЅРЅРѕРµ React РїСЂРёР»РѕР¶РµРЅРёРµ${homeContextInput ? ` СЃ РІР°С€РёРј Р·Р°РїСЂРѕС€РµРЅРЅС‹Рј РєРѕРЅС‚РµРєСЃС‚РѕРј: "${homeContextInput}"` : ''}! РЎРѕРґРµСЂР¶РёРјРѕРµ СЃР°Р№С‚Р° С‚РµРїРµСЂСЊ РІ РјРѕРµРј РєРѕРЅС‚РµРєСЃС‚Рµ, РїРѕСЌС‚РѕРјСѓ РІС‹ РјРѕР¶РµС‚Рµ РїРѕРїСЂРѕСЃРёС‚СЊ РјРµРЅСЏ РёР·РјРµРЅРёС‚СЊ РѕРїСЂРµРґРµР»РµРЅРЅС‹Рµ СЂР°Р·РґРµР»С‹ РёР»Рё РґРѕР±Р°РІРёС‚СЊ С„СѓРЅРєС†РёРё РЅР° РѕСЃРЅРѕРІРµ РѕСЂРёРіРёРЅР°Р»СЊРЅРѕРіРѕ СЃР°Р№С‚Р°.`, 
           'ai',
           {
             scrapedUrl: url,
@@ -2689,7 +2689,7 @@ Focus on the key sections and content, making it clean and modern while preservi
         setLoadingStage('planning');
 
         const promptLabel =
-          trimmedPrompt.length > 60 ? `${trimmedPrompt.slice(0, 60)}…` : trimmedPrompt;
+          trimmedPrompt.length > 60 ? `${trimmedPrompt.slice(0, 60)}вЂ¦` : trimmedPrompt;
         setConversationContext(prev => ({
           ...prev,
           currentProject: `Prompt build: ${promptLabel}`,
@@ -2989,25 +2989,11 @@ Focus on the key sections and content, making it clean and modern while preservi
       {showHomeScreen && (
         <div className={`fixed inset-0 z-50 transition-opacity duration-500 ${homeScreenFading ? 'opacity-0' : 'opacity-100'}`}>
           {/* Simple Sun Gradient Background */}
-          <div className="absolute inset-0 bg-white overflow-hidden">
-            {/* Main Sun - Pulsing */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-orange-400/50 via-orange-300/30 to-transparent rounded-full blur-[80px] animate-[sunPulse_4s_ease-in-out_infinite]" />
-            
-            {/* Inner Sun Core - Brighter */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-radial from-yellow-300/40 via-orange-400/30 to-transparent rounded-full blur-[40px] animate-[sunPulse_4s_ease-in-out_infinite_0.5s]" />
-            
-            {/* Outer Glow - Subtle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-gradient-radial from-orange-200/20 to-transparent rounded-full blur-[120px]" />
-            
-            {/* Giant Glowing Orb - Center Bottom */}
-            <div className="absolute bottom-0 left-1/2 w-[800px] h-[800px] animate-[orbShrink_3s_ease-out_forwards]" style={{ transform: 'translateX(-50%) translateY(45%)' }}>
-              <div className="relative w-full h-full">
-                <div className="absolute inset-0 bg-orange-600 rounded-full blur-[100px] opacity-30 animate-pulse"></div>
-                <div className="absolute inset-16 bg-orange-500 rounded-full blur-[80px] opacity-40 animate-pulse" style={{ animationDelay: '0.3s' }}></div>
-                <div className="absolute inset-32 bg-orange-400 rounded-full blur-[60px] opacity-50 animate-pulse" style={{ animationDelay: '0.6s' }}></div>
-                <div className="absolute inset-48 bg-yellow-300 rounded-full blur-[40px] opacity-60"></div>
-              </div>
-            </div>
+          <div className="absolute inset-0 overflow-hidden bg-[#f8fafc] transition-colors duration-700 dark:bg-[#050816]">
+            <div className="absolute inset-0 opacity-70 [mask-image:radial-gradient(circle_at_center,black,transparent_75%)] bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.22),transparent_60%)] dark:bg-[radial-gradient(circle_at_top,_rgba(191,219,254,0.35),transparent_60%)]" />
+            <div className="absolute -top-40 right-[-180px] h-[520px] w-[520px] rounded-full bg-gradient-to-br from-[#f97316]/40 via-[#fb7185]/30 to-transparent blur-3xl" />
+            <div className="absolute bottom-[-200px] left-[-120px] h-[420px] w-[420px] rounded-full bg-gradient-to-tr from-[#22d3ee]/30 via-transparent to-transparent blur-3xl" />
+            <div className="absolute inset-0 opacity-[0.085] [background:radial-gradient(circle_at_1px_1px,_rgba(15,23,42,0.4),transparent_0.8px)] [background-size:48px_48px]" />
           </div>
           
           
@@ -3036,52 +3022,59 @@ Focus on the key sections and content, making it clean and modern while preservi
           {/* Main content */}
           <div className="relative z-10 h-full flex items-center justify-center px-4">
             <div className="text-center max-w-4xl min-w-[600px] mx-auto">
-              {/* Firecrawl-style Header */}
-              <div className="text-center">
-                <h1 className="text-[2.5rem] lg:text-[3.8rem] text-center text-[#36322F] font-semibold tracking-tight leading-[0.9] animate-[fadeIn_0.8s_ease-out]">
-                  <span className="hidden md:inline">Open Lovable</span>
-                  <span className="md:hidden">Open Lovable</span>
+              {/* Hero */}
+              <div className="space-y-6 text-center">
+                <span className="inline-flex items-center justify-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-zinc-700 shadow-sm backdrop-blur-sm transition-colors duration-300 dark:border-white/10 dark:bg-white/10 dark:text-white/80">
+                  AI-FIRST DIGITAL STUDIO
+                </span>
+                <h1 className="font-display text-[2.5rem] leading-[1.03] text-zinc-900 transition-colors duration-700 md:text-[3.5rem] lg:text-[4rem] dark:text-white">
+                  Запускаем лендинги с чистой идеей и чувством бренда за 48 часов
                 </h1>
                 <motion.p 
-                  className="text-base lg:text-lg max-w-lg mx-auto mt-2.5 text-zinc-500 text-center text-balance"
+                  className="mx-auto max-w-2xl text-base text-zinc-600 text-balance sm:text-lg dark:text-zinc-300"
                   animate={{
-                    opacity: showStyleSelector ? 0.7 : 1
+                    opacity: showStyleSelector ? 0.75 : 1
                   }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                 >
-                  Пересоздайте любой веб-сайт за секунды.
+                  REBUILDR объединяет генеративный дизайн, ручной арт-дирекшн и исследование смысла — вы получаете живой прототип, готовый к тесту и презентации инвесторам.
                 </motion.p>
+                <div className="flex flex-wrap justify-center gap-3 text-xs font-medium uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МАРКЕТИНГ БЕЗ СЛАЙДОВ</span>
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">AI + ХЮМАН-КОНТРОЛЬ</span>
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МЕТРИКИ С ПЕРВОГО ДНЯ</span>
+                </div>
               </div>
               
-              <form onSubmit={handleHomeScreenSubmit} className="mt-5 max-w-3xl mx-auto">
+              <form onSubmit={handleHomeScreenSubmit} className="mt-8 max-w-3xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl border border-white/60 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.6)] p-6 dark:bg-white/[0.08] dark:border-white/10">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-6">
                   <button
                     type="button"
                     onClick={() => switchHomeMode('url')}
-                    className={`flex-1 rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
+                    className={`flex-1 rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${
                       homeMode === 'url'
-                        ? 'bg-white text-[#36322F] shadow-sm border-orange-200'
-                        : 'bg-white/40 text-[#605A57]/80 border-transparent hover:bg-white/70'
+                        ? 'border-transparent bg-zinc-900 text-white shadow-lg shadow-zinc-900/30 dark:bg-white dark:text-zinc-900'
+                        : 'border-white/40 bg-white/30 text-zinc-600 hover:bg-white/60 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10'
                     }`}
                   >
-                    Use reference URL
+                    Подтянуть референс
                   </button>
                   <button
                     type="button"
                     onClick={() => switchHomeMode('prompt')}
-                    className={`flex-1 rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
+                    className={`flex-1 rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${
                       homeMode === 'prompt'
-                        ? 'bg-white text-[#36322F] shadow-sm border-orange-200'
-                        : 'bg-white/40 text-[#605A57]/80 border-transparent hover:bg-white/70'
+                        ? 'border-transparent bg-zinc-900 text-white shadow-lg shadow-zinc-900/30 dark:bg-white dark:text-zinc-900'
+                        : 'border-white/40 bg-white/30 text-zinc-600 hover:bg-white/60 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10'
                     }`}
                   >
-                    Generate from prompt
+                    Сгенерировать по описанию
                   </button>
                 </div>
 
                 {homeMode === 'url' ? (
                   <>
-                    <div className="w-full relative group">
+                    <div className="relative w-full group">
                       <input
                         type="text"
                         value={homeUrlInput}
@@ -3098,12 +3091,8 @@ Focus on the key sections and content, making it clean and modern while preservi
                           }
                         }}
                         placeholder=" "
-                        aria-placeholder="https://firecrawl.dev"
-                        className="h-[3.25rem] w-full resize-none focus-visible:outline-none focus-visible:ring-orange-500 focus-visible:ring-2 rounded-[18px] text-sm text-[#36322F] px-4 pr-12 border-[.75px] border-border bg-white"
-                        style={{
-                          boxShadow: '0 0 0 1px #e3e1de66, 0 1px 2px #5f4a2e14, 0 4px 6px #5f4a2e0a, 0 40px 40px -24px #684b2514',
-                          filter: 'drop-shadow(rgba(249, 224, 184, 0.3) -0.731317px -0.731317px 35.6517px)'
-                        }}
+                        aria-placeholder="https://your-product.io"
+                        className="h-[3.5rem] w-full rounded-2xl border border-white/60 bg-white/80 px-5 pr-[9.5rem] text-sm font-medium text-zinc-900 shadow-[0_20px_70px_-35px_rgba(15,23,42,0.45)] backdrop-blur-xl transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/80 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/70"
                         autoFocus
                       />
                       <div 
@@ -3112,19 +3101,20 @@ Focus on the key sections and content, making it clean and modern while preservi
                           homeUrlInput ? 'opacity-0' : 'opacity-100'
                         }`}
                       >
-                        <span className="text-[#605A57]/50" style={{ fontFamily: 'monospace' }}>
-                          https://firecrawl.dev
+                        <span className="font-mono text-zinc-500/60 dark:text-white/40">
+                          https://your-product.io
                         </span>
                       </div>
                       <button
                         type="submit"
                         disabled={!homeUrlInput.trim()}
-                        className="absolute top-1/2 transform -translate-y-1/2 right-2 flex h-10 items-center justify-center rounded-md px-3 text-sm font-medium text-zinc-500 hover:text-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        title={selectedStyle ? `Clone with ${selectedStyle} Style` : 'Clone Website'}
+                        className="absolute top-1/2 right-3 flex h-[2.6rem] -translate-y-1/2 items-center gap-2 rounded-xl bg-zinc-900 px-4 text-sm font-semibold text-white shadow-lg shadow-zinc-900/25 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-zinc-900/20 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:focus-visible:ring-white/60"
+                        title={selectedStyle ? `Собрать с эстетикой ${selectedStyle}` : "Запустить REBUILDR"}
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                          <polyline points="9 10 4 15 9 20"></polyline>
-                          <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                        <span className="hidden sm:inline">Запустить</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                          <path d="M5 12h14"></path>
+                          <path d="M12 5l7 7-7 7"></path>
                         </svg>
                       </button>
                     </div>
@@ -3134,8 +3124,8 @@ Focus on the key sections and content, making it clean and modern while preservi
                         <div className={`transition-all duration-500 ease-out transform ${
                           showStyleSelector ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
                         }`}>
-                          <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-sm">
-                            <p className="text-sm text-gray-600 mb-3 font-medium">Pick a style for the recreation (optional):</p>
+                          <div className="rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.4)] backdrop-blur-xl dark:border-white/10 dark:bg-white/10">
+                            <p className="text-sm text-gray-600 mb-3 font-medium">Выберите визуальный стиль (опционально):</p>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                               {[
                                 { name: 'Neobrutalism', description: 'Bold colors, chunky borders' },
@@ -3192,10 +3182,10 @@ Focus on the key sections and content, making it clean and modern while preservi
                     <Textarea
                       value={homePromptInput}
                       onChange={(e) => setHomePromptInput(e.target.value)}
-                      placeholder="Describe the website you want (sections, tone, goals, key content)..."
+                      placeholder="Опишите задачу: разделы, тон, ключевая мысль, CTA..."
                       rows={5}
                       required
-                      className="w-full rounded-2xl border border-gray-200 bg-white text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                      className="w-full rounded-3xl border border-white/60 bg-white/80 px-5 py-4 text-sm text-zinc-900 shadow-[0_20px_70px_-35px_rgba(15,23,42,0.45)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/80 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/60"
                     />
                     <p className="text-xs text-gray-500">
                       Mention the vibe, key sections, audiences, and any must-have content. I'll handle layout, components, and Tailwind styling automatically.
@@ -3212,18 +3202,18 @@ Focus on the key sections and content, making it clean and modern while preservi
                     value={homeIndustryInput}
                     onChange={(e) => setHomeIndustryInput(e.target.value)}
                     placeholder="e.g. boutique law firm, wellness studio, fintech SaaS"
-                    required={homeMode === 'url'}
-                    className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    placeholder="Например: бутик-юристы, wellness студия, fintech SaaS"
+                    className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 shadow-sm backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/40"
                   />
                   <p className="mt-1 text-[11px] text-gray-400">
-                    I'll tailor copy and examples to this space while keeping the requested style.
+                    Настроим тексты и примеры под вашу нишу, сохранив выбранный стиль.
                   </p>
                 </div>
 
                 <div className="mt-4 mb-2">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
                     Additional instructions (optional)
-                  </label>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Дополнительные вводные (по желанию)</label>
                   <input
                     type="text"
                     value={(() => {
@@ -3238,9 +3228,9 @@ Focus on the key sections and content, making it clean and modern while preservi
                       } else {
                         setHomeContextInput(additionalText);
                       }
-                    }}
+                    placeholder="Опишите приоритеты, тон, интеграции или источники контента"
                     placeholder="Highlight priorities, tone, integrations, or content sources"
-                    className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100 transition-all duration-200"
+                    className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm backdrop-blur-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/40 dark:focus-visible:ring-white/40"
                   />
                 </div>
 
@@ -3248,10 +3238,53 @@ Focus on the key sections and content, making it clean and modern while preservi
                   <div className="mt-6">
                     <Button type="submit" className="w-full sm:w-auto">
                       Generate site
-                    </Button>
+                      Собрать лендинг
                   </div>
                 )}
               </form>
+
+              <div className="mt-10 text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400">
+                  Смыслы лендинга
+                </p>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {[
+                    {
+                      label: "Смысл 01",
+                      title: "Продуктовая гипотеза без воды",
+                      copy:
+                        "Проводим экспресс-интервью, формулируем оффер и сценарий, чтобы лендинг говорил с аудиторией на её языке.",
+                    },
+                    {
+                      label: "Смысл 02",
+                      title: "Гибрид AI + арт-дирекшн",
+                      copy:
+                        "Алгоритмы генерируют десятки вариантов, команда выстраивает композицию, правит UI и наполняет его вручную.",
+                    },
+                    {
+                      label: "Смысл 03",
+                      title: "Запуск с аналитикой",
+                      copy:
+                        "Встраиваем метрики, тепловые карты и тестовые сценарии, чтобы каждое решение было подкреплено данными.",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.title}
+                      className="group h-full rounded-3xl border border-white/60 bg-white/80 p-6 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.5)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-zinc-900/25 hover:shadow-[0_35px_80px_-50px_rgba(15,23,42,0.6)] dark:border-white/10 dark:bg-white/10 dark:hover:border-white/40"
+                    >
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500 transition-colors duration-300 group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-white/80">
+                        {item.label}
+                      </p>
+                      <h3 className="mt-3 font-display text-xl text-zinc-900 transition-colors duration-300 group-hover:text-zinc-950 dark:text-white">
+                        {item.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-zinc-600 transition-colors duration-300 group-hover:text-zinc-700 dark:text-zinc-300 dark:group-hover:text-zinc-200">
+                        {item.copy}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
               
               {/* Model Selector */}
               <div className="mt-6 flex items-center justify-center animate-[fadeIn_1s_ease-out]">
@@ -3283,118 +3316,118 @@ Focus on the key sections and content, making it clean and modern while preservi
               {/* Pricing Section */}
               <div className="mt-12 animate-[fadeIn_1.2s_ease-out]">
                 <h2 className="text-2xl font-semibold text-center text-[#36322F] mb-8">
-                  Тарифы
+                  РўР°СЂРёС„С‹
                 </h2>
                 <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                  {/* Базовый тариф */}
+                  {/* Р‘Р°Р·РѕРІС‹Р№ С‚Р°СЂРёС„ */}
                   <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-orange-200">
                     <div className="text-center">
-                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Базовый</h3>
+                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Р‘Р°Р·РѕРІС‹Р№</h3>
                       <div className="mb-4">
                         <span className="text-3xl font-bold text-[#36322F]">299</span>
-                        <span className="text-gray-500 ml-1">₽</span>
+                        <span className="text-gray-500 ml-1">в‚Ѕ</span>
                       </div>
                       <div className="text-sm text-gray-600 mb-6">
-                        5 запросов - хватит на полноценный сайт
+                        5 Р·Р°РїСЂРѕСЃРѕРІ - С…РІР°С‚РёС‚ РЅР° РїРѕР»РЅРѕС†РµРЅРЅС‹Р№ СЃР°Р№С‚
                       </div>
                       <ul className="text-left text-sm text-gray-600 space-y-2 mb-6">
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Создание сайта с AI
+                          РЎРѕР·РґР°РЅРёРµ СЃР°Р№С‚Р° СЃ AI
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Скачать код сайта
+                          РЎРєР°С‡Р°С‚СЊ РєРѕРґ СЃР°Р№С‚Р°
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Тестовый домен бесплатно
+                          РўРµСЃС‚РѕРІС‹Р№ РґРѕРјРµРЅ Р±РµСЃРїР»Р°С‚РЅРѕ
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Бесплатный хостинг
+                          Р‘РµСЃРїР»Р°С‚РЅС‹Р№ С…РѕСЃС‚РёРЅРі
                         </li>
                       </ul>
                       <button 
                         onClick={() => handlePayment('basic')}
                         className="w-full bg-[#36322F] text-white px-6 py-3 rounded-[10px] font-medium hover:bg-[#2a2520] transition-colors duration-200 [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)]">
-                        Выбрать план
+                        Р’С‹Р±СЂР°С‚СЊ РїР»Р°РЅ
                       </button>
                     </div>
                   </div>
                   
-                  {/* Профессиональный тариф */}
+                  {/* РџСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅС‹Р№ С‚Р°СЂРёС„ */}
                   <div className="bg-white rounded-2xl p-6 border-2 border-orange-300 shadow-xl relative hover:shadow-2xl transition-all duration-300">
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <span className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-1 rounded-full text-xs font-medium">
-                        Популярный
+                        РџРѕРїСѓР»СЏСЂРЅС‹Р№
                       </span>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Профессиональный</h3>
+                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">РџСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅС‹Р№</h3>
                       <div className="mb-4">
                         <span className="text-3xl font-bold text-[#36322F]">499</span>
-                        <span className="text-gray-500 ml-1">₽</span>
+                        <span className="text-gray-500 ml-1">в‚Ѕ</span>
                       </div>
                       <div className="text-sm text-gray-600 mb-6">
-                        15 запросов - хватит на многостраничный сайт
+                        15 Р·Р°РїСЂРѕСЃРѕРІ - С…РІР°С‚РёС‚ РЅР° РјРЅРѕРіРѕСЃС‚СЂР°РЅРёС‡РЅС‹Р№ СЃР°Р№С‚
                       </div>
                       <ul className="text-left text-sm text-gray-600 space-y-2 mb-6">
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Создание сложных сайтов
+                          РЎРѕР·РґР°РЅРёРµ СЃР»РѕР¶РЅС‹С… СЃР°Р№С‚РѕРІ
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Скачать код сайта
+                          РЎРєР°С‡Р°С‚СЊ РєРѕРґ СЃР°Р№С‚Р°
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Тестовый домен бесплатно
+                          РўРµСЃС‚РѕРІС‹Р№ РґРѕРјРµРЅ Р±РµСЃРїР»Р°С‚РЅРѕ
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Бесплатный хостинг
+                          Р‘РµСЃРїР»Р°С‚РЅС‹Р№ С…РѕСЃС‚РёРЅРі
                         </li>
                         <li className="flex items-center">
                           <svg className="w-4 h-4 text-orange-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
-                          Свой домен (+100₽/мес)
+                          РЎРІРѕР№ РґРѕРјРµРЅ (+100в‚Ѕ/РјРµСЃ)
                         </li>
                       </ul>
                       <button 
                         onClick={() => handlePayment('professional')}
                         className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-[10px] font-medium hover:from-orange-500 hover:to-orange-600 transition-all duration-200 [box-shadow:inset_0px_-2px_0px_0px_#ea580c,_0px_1px_6px_0px_rgba(234,_88,_12,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#ea580c,_0px_1px_3px_0px_rgba(234,_88,_12,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#ea580c,_0px_1px_2px_0px_rgba(234,_88,_12,_30%)]">
-                        Выбрать план
+                        Р’С‹Р±СЂР°С‚СЊ РїР»Р°РЅ
                       </button>
                     </div>
                   </div>
                 </div>
                 
-                {/* Дополнительная информация */}
+                {/* Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ */}
                 <div className="mt-8 text-center text-sm text-gray-500 max-w-2xl mx-auto">
                   <p className="mb-2">
-                    🏠 <strong>Свой домен:</strong> Подключите свой домен за 100₽/месяц
+                    рџЏ  <strong>РЎРІРѕР№ РґРѕРјРµРЅ:</strong> РџРѕРґРєР»СЋС‡РёС‚Рµ СЃРІРѕР№ РґРѕРјРµРЅ Р·Р° 100в‚Ѕ/РјРµСЃСЏС†
                   </p>
                   <p>
-                    🚀 <strong>Бесплатный хостинг:</strong> Размещение вашего сайта в интернете без дополнительных затрат
+                    рџљЂ <strong>Р‘РµСЃРїР»Р°С‚РЅС‹Р№ С…РѕСЃС‚РёРЅРі:</strong> Р Р°Р·РјРµС‰РµРЅРёРµ РІР°С€РµРіРѕ СЃР°Р№С‚Р° РІ РёРЅС‚РµСЂРЅРµС‚Рµ Р±РµР· РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… Р·Р°С‚СЂР°С‚
                   </p>
                 </div>
               </div>
@@ -3510,7 +3543,7 @@ Focus on the key sections and content, making it clean and modern while preservi
           <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-1 scrollbar-hide" ref={chatMessagesRef}>
             {chatMessages.map((msg, idx) => {
               // Check if this message is from a successful generation
-              const isGenerationComplete = msg.content.includes('Успешно воссоздал') || 
+              const isGenerationComplete = msg.content.includes('РЈСЃРїРµС€РЅРѕ РІРѕСЃСЃРѕР·РґР°Р»') || 
                                          msg.content.includes('AI recreation generated!') ||
                                          msg.content.includes('Code generated!');
               
@@ -3565,7 +3598,7 @@ Focus on the key sections and content, making it clean and modern while preservi
                       {msg.metadata?.appliedFiles && msg.metadata.appliedFiles.length > 0 && (
                     <div className="mt-2 inline-block bg-gray-100 rounded-[10px] p-3">
                       <div className="text-xs font-medium mb-1 text-gray-700">
-                        {msg.content.includes('Applied') ? 'Файлы обновлены:' : 'Сгенерированные файлы:'}
+                        {msg.content.includes('Applied') ? 'Р¤Р°Р№Р»С‹ РѕР±РЅРѕРІР»РµРЅС‹:' : 'РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Рµ С„Р°Р№Р»С‹:'}
                       </div>
                       <div className="flex flex-wrap items-start gap-1">
                         {msg.metadata.appliedFiles.map((filePath, fileIdx) => {
@@ -3598,7 +3631,7 @@ Focus on the key sections and content, making it clean and modern while preservi
                       {/* Show generated files for completion messages - but only if no appliedFiles already shown */}
                       {isGenerationComplete && generationProgress.files.length > 0 && idx === chatMessages.length - 1 && !msg.metadata?.appliedFiles && !chatMessages.some(m => m.metadata?.appliedFiles) && (
                     <div className="mt-2 inline-block bg-gray-100 rounded-[10px] p-3">
-                      <div className="text-xs font-medium mb-1 text-gray-700">Сгенерированные файлы:</div>
+                      <div className="text-xs font-medium mb-1 text-gray-700">РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Рµ С„Р°Р№Р»С‹:</div>
                       <div className="flex flex-wrap items-start gap-1">
                         {generationProgress.files.map((file, fileIdx) => (
                           <div
@@ -3780,7 +3813,7 @@ Focus on the key sections and content, making it clean and modern while preservi
                     {generationProgress.isGenerating ? (
                       <>
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                        {generationProgress.isEdit ? 'Редактирование кода' : 'Генерация кода в реальном времени'}
+                        {generationProgress.isEdit ? 'Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РєРѕРґР°' : 'Р“РµРЅРµСЂР°С†РёСЏ РєРѕРґР° РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё'}
                       </>
                     ) : (
                       <>
@@ -3828,7 +3861,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
 export default function AISandboxPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Загрузка...</div>}>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Р—Р°РіСЂСѓР·РєР°...</div>}>
       <AISandboxPageContent />
     </Suspense>
   );
