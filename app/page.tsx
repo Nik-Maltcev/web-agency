@@ -3041,11 +3041,11 @@ Focus on the key sections and content, making it clean and modern while preservi
                   }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
                 >
-                  REBUILDR объединяет генеративный дизайн, ручной арт-дирекшн и исследование смысла — вы получаете живой прототип, готовый к тесту и презентации инвесторам.
+                  REBUILDR объединяет генеративный дизайн, ручной арт-дирекшн и исследование смысла — вы получаете живой прототип, готовый к тесту и питчу инвесторам.
                 </motion.p>
-                <div className="flex flex-wrap justify-center gap-3 text-xs font-medium uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
                   <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МАРКЕТИНГ БЕЗ СЛАЙДОВ</span>
                   <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">AI + ХЮМАН-КОНТРОЛЬ</span>
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МЕТРИКИ С ПЕРВОГО ДНЯ</span>
                   <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МЕТРИКИ С ПЕРВОГО ДНЯ</span>
                 </div>
               </div>
@@ -3074,7 +3074,7 @@ Focus on the key sections and content, making it clean and modern while preservi
                         ? 'border-transparent bg-zinc-900 text-white shadow-lg shadow-zinc-900/30 dark:bg-white dark:text-zinc-900'
                         : 'border-white/40 bg-white/30 text-zinc-600 hover:bg-white/60 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10'
                     }`}
-                  >
+                    Сгенерировать по описанию
                     Сгенерировать по описанию
                   </button>
                 </div>
@@ -3195,27 +3195,27 @@ Focus on the key sections and content, making it clean and modern while preservi
                       className="w-full rounded-3xl border border-white/60 bg-white/80 px-5 py-4 text-sm text-zinc-900 shadow-[0_20px_70px_-35px_rgba(15,23,42,0.45)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/80 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/60"
                     />
                     <p className="text-xs text-zinc-500 text-left sm:text-center">
-                      Расскажите про атмосферу, ключевые блоки, аудитории и обязательный контент — остальное мы оформим за вас.
+                    Расскажите про атмосферу, ключевые блоки, аудитории и обязательный контент — остальное мы оформим за вас.
                     </p>
                   </div>
                 )}
 
-                <div className="mt-6 text-left">
                   <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
+                    Целевая ниша или рынок
                     Целевая ниша или рынок
                   </label>
                   <input
-                    type="text"
+                    placeholder="Например: бутик-юристы, wellness студия, fintech SaaS"
                     value={homeIndustryInput}
                     onChange={(e) => setHomeIndustryInput(e.target.value)}
                     placeholder="Например: бутик-юристы, wellness студия, fintech SaaS"
-                    className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 shadow-sm backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/40"
-                  />
+                  <p className="mt-2 text-[11px] text-zinc-500">
+                    Настроим тексты и примеры под вашу нишу, сохранив выбранный стиль.
                   <p className="mt-2 text-[11px] text-zinc-500">
                     Настроим тексты и примеры под вашу нишу, сохранив выбранный стиль.
                   </p>
-                </div>
-
+                  <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
+                    Дополнительные вводные (по желанию)
                 <div className="mt-6 text-left">
                   <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
                     Дополнительные вводные (по желанию)
@@ -3225,7 +3225,7 @@ Focus on the key sections and content, making it clean and modern while preservi
                     value={(() => {
                       if (!selectedStyle) return homeContextInput;
                       const additional = homeContextInput.replace(new RegExp('^' + selectedStyle.toLowerCase() + ' theme\\s*,?\\s*', 'i'), '');
-                      return additional;
+                    placeholder="Опишите приоритеты, тон, интеграции или источники контента"
                     })()}
                     onChange={(e) => {
                       const additionalText = e.target.value;
