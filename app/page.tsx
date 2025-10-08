@@ -374,27 +374,25 @@ function AISandboxPageContent() {
 
       
 
+      if (!sandboxIdParam) {
+
+        setLoading(false);
+
+        console.log('[home] No sandbox ID present, waiting for user action.');
+
+        return;
+
+      }
+
       setLoading(true);
 
       try {
 
-        if (sandboxIdParam) {
+        console.log('[home] Attempting to restore sandbox:', sandboxIdParam);
 
-          console.log('[home] Attempting to restore sandbox:', sandboxIdParam);
+        // For now, just create a new sandbox - you could enhance this to restore a specific sandbox if supported
 
-          // For now, just create a new sandbox - you could enhance this to actually restore
-
-          // the specific sandbox if your backend supports it
-
-          await createSandbox(true);
-
-        } else {
-
-          console.log('[home] No sandbox in URL, creating new sandbox automatically...');
-
-          await createSandbox(true);
-
-        }
+        await createSandbox(true);
 
       } catch (error) {
 
