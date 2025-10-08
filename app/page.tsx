@@ -2987,7 +2987,11 @@ Focus on the key sections and content, making it clean and modern while preservi
       
       {/* Home Screen Overlay */}
       {showHomeScreen && (
-        <div className={`fixed inset-0 z-50 transition-opacity duration-500 ${homeScreenFading ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`fixed inset-0 z-50 overflow-y-auto overflow-x-hidden transition-opacity duration-500 ${
+            homeScreenFading ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
           {/* Simple Sun Gradient Background */}
           <div className="absolute inset-0 overflow-hidden bg-[#f8fafc] transition-colors duration-700 dark:bg-[#050816]">
             <div className="absolute inset-0 opacity-70 [mask-image:radial-gradient(circle_at_center,black,transparent_75%)] bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.22),transparent_60%)] dark:bg-[radial-gradient(circle_at_top,_rgba(191,219,254,0.35),transparent_60%)]" />
@@ -3020,7 +3024,7 @@ Focus on the key sections and content, making it clean and modern while preservi
           <HomeScreenHeader />
           
           {/* Main content */}
-          <div className="relative z-10 flex items-center justify-center px-4 py-16 sm:py-20">
+          <div className="relative z-10 flex min-h-full items-start justify-center px-4 py-16 sm:py-20">
             <div className="w-full max-w-4xl mx-auto text-center px-4 sm:px-8">
               {/* Hero */}
               <div className="space-y-6 text-center">
