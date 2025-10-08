@@ -3201,7 +3201,6 @@ Focus on the key sections and content, making it clean and modern while preservi
                     type="text"
                     value={homeIndustryInput}
                     onChange={(e) => setHomeIndustryInput(e.target.value)}
-                    placeholder="e.g. boutique law firm, wellness studio, fintech SaaS"
                     placeholder="Например: бутик-юристы, wellness студия, fintech SaaS"
                     className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 shadow-sm backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/40"
                   />
@@ -3212,8 +3211,8 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 <div className="mt-4 mb-2">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                    Additional instructions (optional)
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Дополнительные вводные (по желанию)</label>
+                    Дополнительные вводные (по желанию)
+                  </label>
                   <input
                     type="text"
                     value={(() => {
@@ -3228,8 +3227,8 @@ Focus on the key sections and content, making it clean and modern while preservi
                       } else {
                         setHomeContextInput(additionalText);
                       }
+                    }}
                     placeholder="Опишите приоритеты, тон, интеграции или источники контента"
-                    placeholder="Highlight priorities, tone, integrations, or content sources"
                     className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm backdrop-blur-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/40 dark:focus-visible:ring-white/40"
                   />
                 </div>
@@ -3237,8 +3236,8 @@ Focus on the key sections and content, making it clean and modern while preservi
                 {homeMode === 'prompt' && (
                   <div className="mt-6">
                     <Button type="submit" className="w-full sm:w-auto">
-                      Generate site
                       Собрать лендинг
+                    </Button>
                   </div>
                 )}
               </form>
