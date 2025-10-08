@@ -2981,7 +2981,7 @@ Focus on the key sections and content, making it clean and modern while preservi
     }, 500);
   };
   return (
-    <div className="font-sans bg-background text-foreground h-screen flex flex-col">
+    <div className="font-sans bg-background text-foreground min-h-screen flex flex-col overflow-y-auto">
       {/* Theme Toggle */}
       <ThemeToggle />
       
@@ -3020,8 +3020,8 @@ Focus on the key sections and content, making it clean and modern while preservi
           <HomeScreenHeader />
           
           {/* Main content */}
-          <div className="relative z-10 h-full flex items-center justify-center px-4">
-            <div className="text-center max-w-4xl min-w-[600px] mx-auto">
+          <div className="relative z-10 flex items-center justify-center px-4 py-16 sm:py-20">
+            <div className="w-full max-w-4xl mx-auto text-center px-4 sm:px-8">
               {/* Hero */}
               <div className="space-y-6 text-center">
                 <span className="inline-flex items-center justify-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-zinc-700 shadow-sm backdrop-blur-sm transition-colors duration-300 dark:border-white/10 dark:bg-white/10 dark:text-white/80">
@@ -3046,12 +3046,15 @@ Focus on the key sections and content, making it clean and modern while preservi
                 </div>
               </div>
               
-              <form onSubmit={handleHomeScreenSubmit} className="mt-8 max-w-3xl mx-auto bg-white/70 backdrop-blur-xl rounded-3xl border border-white/60 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.6)] p-6 dark:bg-white/[0.08] dark:border-white/10">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-6">
+              <form
+                onSubmit={handleHomeScreenSubmit}
+                className="mt-10 w-full max-w-3xl mx-auto bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.6)] p-6 sm:p-8 dark:bg-white/[0.06] dark:border-white/10"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-8">
                   <button
                     type="button"
                     onClick={() => switchHomeMode('url')}
-                    className={`flex-1 rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${
+                    className={`flex-1 rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-all ${
                       homeMode === 'url'
                         ? 'border-transparent bg-zinc-900 text-white shadow-lg shadow-zinc-900/30 dark:bg-white dark:text-zinc-900'
                         : 'border-white/40 bg-white/30 text-zinc-600 hover:bg-white/60 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10'
@@ -3062,7 +3065,7 @@ Focus on the key sections and content, making it clean and modern while preservi
                   <button
                     type="button"
                     onClick={() => switchHomeMode('prompt')}
-                    className={`flex-1 rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-all ${
+                    className={`flex-1 rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-all ${
                       homeMode === 'prompt'
                         ? 'border-transparent bg-zinc-900 text-white shadow-lg shadow-zinc-900/30 dark:bg-white dark:text-zinc-900'
                         : 'border-white/40 bg-white/30 text-zinc-600 hover:bg-white/60 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10'
@@ -3180,22 +3183,22 @@ Focus on the key sections and content, making it clean and modern while preservi
                 ) : (
                   <div className="space-y-3">
                     <Textarea
-                      value={homePromptInput}
-                      onChange={(e) => setHomePromptInput(e.target.value)}
-                      placeholder="Опишите задачу: разделы, тон, ключевая мысль, CTA..."
+                    value={homePromptInput}
+                    onChange={(e) => setHomePromptInput(e.target.value)}
+                    placeholder="Опишите задачу: основной оффер, разделы, аудитории, важные CTA..."
                       rows={5}
                       required
                       className="w-full rounded-3xl border border-white/60 bg-white/80 px-5 py-4 text-sm text-zinc-900 shadow-[0_20px_70px_-35px_rgba(15,23,42,0.45)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/80 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/60"
                     />
-                    <p className="text-xs text-gray-500">
-                      Mention the vibe, key sections, audiences, and any must-have content. I'll handle layout, components, and Tailwind styling automatically.
+                    <p className="text-xs text-zinc-500 text-left sm:text-center">
+                      Расскажите про атмосферу, ключевые блоки, аудитории и обязательный контент — остальное мы оформим за вас.
                     </p>
                   </div>
                 )}
 
-                <div className="mt-4">
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                    Target industry or niche
+                <div className="mt-6 text-left">
+                  <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
+                    Целевая ниша или рынок
                   </label>
                   <input
                     type="text"
@@ -3204,13 +3207,13 @@ Focus on the key sections and content, making it clean and modern while preservi
                     placeholder="Например: бутик-юристы, wellness студия, fintech SaaS"
                     className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 shadow-sm backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/40"
                   />
-                  <p className="mt-1 text-[11px] text-gray-400">
+                  <p className="mt-2 text-[11px] text-zinc-500">
                     Настроим тексты и примеры под вашу нишу, сохранив выбранный стиль.
                   </p>
                 </div>
 
-                <div className="mt-4 mb-2">
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                <div className="mt-6 text-left">
+                  <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
                     Дополнительные вводные (по желанию)
                   </label>
                   <input
@@ -3234,19 +3237,19 @@ Focus on the key sections and content, making it clean and modern while preservi
                 </div>
 
                 {homeMode === 'prompt' && (
-                  <div className="mt-6">
-                    <Button type="submit" className="w-full sm:w-auto">
+                  <div className="mt-8 text-left sm:text-center">
+                    <Button type="submit" className="w-full sm:w-auto px-6 py-3 text-sm font-semibold tracking-[0.18em] uppercase">
                       Собрать лендинг
                     </Button>
                   </div>
                 )}
               </form>
 
-              <div className="mt-10 text-left">
+              <div className="mt-16 text-left px-2 sm:px-0">
                 <p className="text-xs font-semibold uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400">
                   Смыслы лендинга
                 </p>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {[
                     {
                       label: "Смысл 01",
