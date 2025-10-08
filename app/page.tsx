@@ -6884,7 +6884,11 @@ Focus on the key sections and content, making it clean and modern while preservi
 
       
 
-      <div className="bg-card px-4 py-4 border-b border-border flex items-center justify-between">
+      <div
+        className={`flex flex-col flex-1 transition-opacity duration-500 ${showHomeScreen ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}
+        aria-hidden={showHomeScreen}
+      >
+        <div className="bg-card px-4 py-4 border-b border-border flex items-center justify-between">
 
         <div className="flex items-center gap-4">
 
@@ -7014,7 +7018,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
 
 
-      <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex overflow-hidden">
 
         {/* Center Panel - AI Chat (1/3 of remaining width) */}
 
@@ -7316,11 +7320,13 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     </div>
 
-                    </div>
+        </div>
 
-                  </div>
+      </div>
 
-              );
+  </div>
+
+);
 
             })}
 
