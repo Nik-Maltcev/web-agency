@@ -19,27 +19,16 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 // Import icons from centralized module to avoid Turbopack chunk issues
 
 import { 
-
   FiFile, 
-
   FiChevronRight, 
-
   FiChevronDown,
-
   FiGithub,
-
   BsFolderFill, 
-
   BsFolder2Open,
-
   SiJavascript, 
-
   SiReact,
-
   SiCss3, 
-
   SiJson 
-
 } from '@/lib/icons';
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -112,7 +101,7 @@ function AISandboxPageContent() {
 
     {
 
-      content: 'Р вЂќР С•Р В±РЎР‚Р С• Р С—Р С•Р В¶Р В°Р В»Р С•Р Р†Р В°РЎвЂљРЎРЉ! Р Р‡ Р С�Р С•Р С–РЎС“ Р С—Р С•Р С�Р С•РЎвЂЎРЎРЉ Р Р†Р В°Р С� РЎРѓР С–Р ВµР Р…Р ВµРЎР‚Р С‘РЎР‚Р С•Р Р†Р В°РЎвЂљРЎРЉ Р С”Р С•Р Т‘ РЎРѓ Р С—Р С•Р В»Р Р…РЎвЂ№Р С� Р С”Р С•Р Р…РЎвЂљР ВµР С”РЎРѓРЎвЂљР С•Р С� РЎвЂћР В°Р в„–Р В»Р С•Р Р† Р С‘ РЎРѓРЎвЂљРЎР‚РЎС“Р С”РЎвЂљРЎС“РЎР‚РЎвЂ№ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• Р С—РЎР‚Р С•Р ВµР С”РЎвЂљР В°. Р СџРЎР‚Р С•РЎРѓРЎвЂљР С• Р Р…Р В°РЎвЂЎР Р…Р С‘РЎвЂљР Вµ Р С•Р В±РЎвЂ°Р В°РЎвЂљРЎРЉРЎРѓРЎРЏ РІР‚вЂќ РЎРЏ Р В°Р Р†РЎвЂљР С•Р С�Р В°РЎвЂљР С‘РЎвЂЎР ВµРЎРѓР С”Р С‘ РЎРѓР С•Р В·Р Т‘Р В°Р С� Р С—Р ВµРЎРѓР С•РЎвЂЎР Р…Р С‘РЎвЂ РЎС“ Р Т‘Р В»РЎРЏ Р Р†Р В°РЎРѓ, Р ВµРЎРѓР В»Р С‘ РЎРЊРЎвЂљР С• Р С—Р С•РЎвЂљРЎР‚Р ВµР В±РЎС“Р ВµРЎвЂљРЎРѓРЎРЏ.\n\nР РЋР С•Р Р†Р ВµРЎвЂљ: Р вЂўРЎРѓР В»Р С‘ Р Р†РЎвЂ№ Р Р†Р С‘Р Т‘Р С‘РЎвЂљР Вµ Р С•РЎв‚¬Р С‘Р В±Р С”Р С‘ Р С—Р В°Р С”Р ВµРЎвЂљР С•Р Р† РЎвЂљР С‘Р С—Р В° "react-router-dom Р Р…Р Вµ Р Р…Р В°Р в„–Р Т‘Р ВµР Р…", Р С—РЎР‚Р С•РЎРѓРЎвЂљР С• Р Р…Р В°Р С—Р С‘РЎв‚¬Р С‘РЎвЂљР Вµ "npm install" Р С‘Р В»Р С‘ "Р С—РЎР‚Р С•Р Р†Р ВµРЎР‚Р С‘РЎвЂљРЎРЉ Р С—Р В°Р С”Р ВµРЎвЂљРЎвЂ№" Р Т‘Р В»РЎРЏ Р В°Р Р†РЎвЂљР С•Р С�Р В°РЎвЂљР С‘РЎвЂЎР ВµРЎРѓР С”Р С•Р в„– РЎС“РЎРѓРЎвЂљР В°Р Р…Р С•Р Р†Р С”Р С‘ Р Р…Р ВµР Т‘Р С•РЎРѓРЎвЂљР В°РЎР‹РЎвЂ°Р С‘РЎвЂ¦ Р В·Р В°Р Р†Р С‘РЎРѓР С‘Р С�Р С•РЎРѓРЎвЂљР ВµР в„–.',
+      content: 'Добро пожаловать! Я могу помочь вам сгенерировать код с полным контекстом файлов и структуры вашего проекта. Просто начните общаться — я автоматически создам песочницу для вас, если это потребуется.\n\nСовет: Если вы видите ошибки пакетов типа "react-router-dom не найден", просто напишите "npm install" или "проверить пакеты" для автоматической установки недостающих зависимостей.',
 
       type: 'system',
 
@@ -800,7 +789,7 @@ function AISandboxPageContent() {
 
     setShowLoadingBackground(true);
 
-    updateStatus('Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ Р С—Р ВµРЎРѓР С•РЎвЂЎР Р…Р С‘РЎвЂ РЎвЂ№...', false);
+    updateStatus('Создание песочницы...', false);
 
     setResponseArea([]);
 
@@ -834,7 +823,7 @@ function AISandboxPageContent() {
 
         updateStatus('Sandbox active', true);
 
-        log('Р СџР ВµРЎРѓР С•РЎвЂЎР Р…Р С‘РЎвЂ Р В° РЎРѓР С•Р В·Р Т‘Р В°Р Р…Р В° РЎС“РЎРѓР С—Р ВµРЎв‚¬Р Р…Р С•!');
+        log('Песочница создана успешно!');
 
         log(`Sandbox ID: ${data.sandboxId}`);
 
@@ -1572,7 +1561,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
           if (results.packagesFailed?.length > 0) {
 
-            addChatMessage(`Р Р†РЎв„ўР’В Р С—РЎвЂ�Р РЏ Some packages failed to install. Check the error banner above for details.`, 'system');
+            addChatMessage(`✓ Some packages failed to install. Check the error banner above for details.`, 'system');
 
           }
 
@@ -1918,7 +1907,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
         if (data.success) {
 
-          addChatMessage('Р Р†РЎС™РІР‚Сљ Vite dev server restarted successfully!', 'system');
+          addChatMessage('✓ Vite dev server restarted successfully!', 'system');
 
           
 
@@ -2202,7 +2191,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                                           isSelected ? 'bg-blue-400' : 'bg-orange-500 text-white'
 
-                                        }`}>Р Р†РЎС™РІР‚Сљ</span>
+                                        }`}>✓</span>
 
                                       )}
 
@@ -2258,7 +2247,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                         <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse" />
 
-                        Р вЂќРЎС“Р С�Р В°РЎР‹, Р С”Р В°Р С” Р В»РЎС“РЎвЂЎРЎв‚¬Р Вµ Р С—Р С•Р С�Р С•РЎвЂЎРЎРЉ...
+                        Думаю, как лучше помочь...
 
                       </>
 
@@ -2266,7 +2255,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                       <>
 
-                        <span className="text-purple-600">Р В§РЎвЂљР С• Р Т‘Р В°Р В»РЎРЉРЎв‚¬Р Вµ?</span>
+                        <span className="text-purple-600">Что дальше?</span>
 
                         Thought for {generationProgress.thinkingDuration || 0} seconds
 
@@ -2418,9 +2407,9 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                         </div>
 
-                        <h3 className="text-xl font-medium text-white mb-2">Р В�Р В� Р В°Р Р…Р В°Р В»Р С‘Р В·Р С‘РЎР‚РЎС“Р ВµРЎвЂљ Р Р†Р В°РЎв‚¬ Р В·Р В°Р С—РЎР‚Р С•РЎРѓ</h3>
+                        <h3 className="text-xl font-medium text-white mb-2">ИИ анализирует ваш запрос</h3>
 
-                        <p className="text-gray-400 text-sm">{generationProgress.status || 'Р СџР С•Р Т‘Р С–Р С•РЎвЂљР С•Р Р†Р С”Р В° Р С” Р С–Р ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘Р С‘ Р С”Р С•Р Т‘Р В°...'}</p>
+                        <p className="text-gray-400 text-sm">{generationProgress.status || 'Подготовка к генерации кода...'}</p>
 
                       </div>
 
@@ -2436,7 +2425,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                           <div className="w-3 h-3 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
 
-                          <span className="font-mono text-sm">Р СџР С•РЎвЂљР С•Р С”Р С•Р Р†Р В°РЎРЏ Р С–Р ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘РЎРЏ Р С”Р С•Р Т‘Р В°...</span>
+                          <span className="font-mono text-sm">Потоковая генерация кода...</span>
 
                         </div>
 
@@ -2466,7 +2455,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                         >
 
-                          {generationProgress.streamedCode || 'Р СњР В°РЎвЂЎР В°Р В»Р С• Р С–Р ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘Р С‘ Р С”Р С•Р Т‘Р В°...'}
+                          {generationProgress.streamedCode || 'Начало генерации кода...'}
 
                         </SyntaxHighlighter>
 
@@ -2574,7 +2563,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
                           <div className="flex items-center gap-2">
 
-                            <span className="text-green-500">Р Р†РЎС™РІР‚Сљ</span>
+                            <span className="text-green-500">✓</span>
 
                             <span className="font-mono text-sm">{file.path}</span>
 
@@ -2832,21 +2821,21 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
 
-                {loadingStage === 'gathering' && 'Р РЋР В±Р С•РЎР‚ Р С‘Р Р…РЎвЂћР С•РЎР‚Р С�Р В°РЎвЂ Р С‘Р С‘ Р С• Р Р†Р ВµР В±-РЎРѓР В°Р в„–РЎвЂљР Вµ...'}
+                {loadingStage === 'gathering' && 'Сбор информации о веб-сайте...'}
 
-                {loadingStage === 'planning' && 'Р СџР В»Р В°Р Р…Р С‘РЎР‚Р С•Р Р†Р В°Р Р…Р С‘Р Вµ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• Р Т‘Р С‘Р В·Р В°Р в„–Р Р…Р В°...'}
+                {loadingStage === 'planning' && 'Планирование вашего дизайна...'}
 
-                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Р вЂњР ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘РЎРЏ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘РЎРЏ...'}
+                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Генерация вашего приложения...'}
 
               </h3>
 
               <p className="text-gray-600 text-sm">
 
-                {loadingStage === 'gathering' && 'Р С’Р Р…Р В°Р В»Р С‘Р В· РЎРѓРЎвЂљРЎР‚РЎС“Р С”РЎвЂљРЎС“РЎР‚РЎвЂ№ Р С‘ РЎРѓР С•Р Т‘Р ВµРЎР‚Р В¶Р В°Р Р…Р С‘РЎРЏ Р Р†Р ВµР В±-РЎРѓР В°Р в„–РЎвЂљР В°'}
+                {loadingStage === 'gathering' && 'Анализ структуры и содержания веб-сайта'}
 
-                {loadingStage === 'planning' && 'Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ Р С•Р С—РЎвЂљР С‘Р С�Р В°Р В»РЎРЉР Р…Р С•Р в„– Р В°РЎР‚РЎвЂ¦Р С‘РЎвЂљР ВµР С”РЎвЂљРЎС“РЎР‚РЎвЂ№ React Р С”Р С•Р С�Р С—Р С•Р Р…Р ВµР Р…РЎвЂљР С•Р Р†'}
+                {loadingStage === 'planning' && 'Создание оптимальной архитектуры React компонентов'}
 
-                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Р СњР В°Р С—Р С‘РЎРѓР В°Р Р…Р С‘Р Вµ РЎвЂЎР С‘РЎРѓРЎвЂљР С•Р С–Р С•, РЎРѓР С•Р Р†РЎР‚Р ВµР С�Р ВµР Р…Р Р…Р С•Р С–Р С• Р С”Р С•Р Т‘Р В° Р Т‘Р В»РЎРЏ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘РЎРЏ'}
+                {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Написание чистого, современного кода для вашего приложения'}
 
               </p>
 
@@ -2936,7 +2925,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
               <div className="w-12 h-12 border-3 border-gray-600 border-t-white rounded-full animate-spin mx-auto mb-4" />
 
-              <h3 className="text-lg font-medium text-white">Р РЋР В±Р С•РЎР‚ Р С‘Р Р…РЎвЂћР С•РЎР‚Р С�Р В°РЎвЂ Р С‘Р С‘ Р С• Р Р†Р ВµР В±-РЎРѓР В°Р в„–РЎвЂљР Вµ</h3>
+              <h3 className="text-lg font-medium text-white">Сбор информации о веб-сайте</h3>
 
             </div>
 
@@ -2970,7 +2959,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
               <div className="w-8 h-8 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
 
-              <p className="text-sm">Р вЂ”Р В°Р С–РЎР‚РЎС“Р В·Р С”Р В° Р С—РЎР‚Р ВµР Т‘Р Р†Р В°РЎР‚Р С‘РЎвЂљР ВµР В»РЎРЉР Р…Р С•Р С–Р С• Р С—РЎР‚Р С•РЎРѓР С�Р С•РЎвЂљРЎР‚Р В°...</p>
+              <p className="text-sm">Загрузка предварительного просмотра...</p>
 
             </div>
 
@@ -2978,7 +2967,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
             <div className="text-gray-500 text-center">
 
-              <p className="text-sm">Р СњР В°РЎвЂЎР Р…Р С‘РЎвЂљР Вµ Р С•Р В±РЎвЂ°Р ВµР Р…Р С‘Р Вµ, РЎвЂЎРЎвЂљР С•Р В±РЎвЂ№ РЎРѓР С•Р В·Р Т‘Р В°РЎвЂљРЎРЉ Р Р†Р В°РЎв‚¬Р Вµ Р С—Р ВµРЎР‚Р Р†Р С•Р Вµ Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘Р Вµ</p>
+              <p className="text-sm">Начните общение, чтобы создать ваше первое приложение</p>
 
             </div>
 
@@ -3054,7 +3043,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
       sandboxCreating = true;
 
-      addChatMessage('Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ Р С—Р ВµРЎРѓР С•РЎвЂЎР Р…Р С‘РЎвЂ РЎвЂ№ Р Р†Р С• Р Р†РЎР‚Р ВµР С�РЎРЏ Р С—Р В»Р В°Р Р…Р С‘РЎР‚Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘РЎРЏ...', 'system');
+      addChatMessage('Создание песочницы во время планирования вашего приложения...', 'system');
 
       sandboxPromise = createSandbox(true).catch((error: any) => {
 
@@ -4030,7 +4019,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
     setChatMessages([{
 
-      content: 'Р В�РЎРѓРЎвЂљР С•РЎР‚Р С‘РЎРЏ РЎвЂЎР В°РЎвЂљР В° Р С•РЎвЂЎР С‘РЎвЂ°Р ВµР Р…Р В°. Р С™Р В°Р С” РЎРЏ Р С�Р С•Р С–РЎС“ Р С—Р С•Р С�Р С•РЎвЂЎРЎРЉ Р Р†Р В°Р С�?',
+      content: 'История чата очищена. Как я могу помочь вам?',
 
       type: 'system',
 
@@ -4178,7 +4167,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
       if (!sandboxData) {
 
-        addChatMessage('Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ Р С—Р ВµРЎРѓР С•РЎвЂЎР Р…Р С‘РЎвЂ РЎвЂ№ Р Р†Р С• Р Р†РЎР‚Р ВµР С�РЎРЏ Р С–Р ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘Р С‘ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• React Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘РЎРЏ...', 'system');
+        addChatMessage('Создание песочницы во время генерации вашего React приложения...', 'system');
 
         sandboxPromise = createSandbox(true);
 
@@ -4186,7 +4175,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
 
       
 
-      addChatMessage('Р С’Р Р…Р В°Р В»Р С‘Р В· Р С‘ Р С–Р ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘РЎРЏ React Р Р†Р С•РЎРѓРЎРѓР С•Р В·Р Т‘Р В°Р Р…Р С‘РЎРЏ...', 'system');
+      addChatMessage('Анализ и генерация React воссоздания...', 'system');
 
       
 
@@ -4606,7 +4595,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
         addChatMessage(
 
-          `Р Р€РЎРѓР С—Р ВµРЎв‚¬Р Р…Р С• Р Р†Р С•РЎРѓРЎРѓР С•Р В·Р Т‘Р В°Р В» ${url} Р С”Р В°Р С” РЎРѓР С•Р Р†РЎР‚Р ВµР С�Р ВµР Р…Р Р…Р С•Р Вµ React Р С—РЎР‚Р С‘Р В»Р С•Р В¶Р ВµР Р…Р С‘Р Вµ${homeContextInput ? ` РЎРѓ Р Р†Р В°РЎв‚¬Р С‘Р С� Р В·Р В°Р С—РЎР‚Р С•РЎв‚¬Р ВµР Р…Р Р…РЎвЂ№Р С� Р С”Р С•Р Р…РЎвЂљР ВµР С”РЎРѓРЎвЂљР С•Р С�: "${homeContextInput}"` : ''}! Р РЋР С•Р Т‘Р ВµРЎР‚Р В¶Р С‘Р С�Р С•Р Вµ РЎРѓР В°Р в„–РЎвЂљР В° РЎвЂљР ВµР С—Р ВµРЎР‚РЎРЉ Р Р† Р С�Р С•Р ВµР С� Р С”Р С•Р Р…РЎвЂљР ВµР С”РЎРѓРЎвЂљР Вµ, Р С—Р С•РЎРЊРЎвЂљР С•Р С�РЎС“ Р Р†РЎвЂ№ Р С�Р С•Р В¶Р ВµРЎвЂљР Вµ Р С—Р С•Р С—РЎР‚Р С•РЎРѓР С‘РЎвЂљРЎРЉ Р С�Р ВµР Р…РЎРЏ Р С‘Р В·Р С�Р ВµР Р…Р С‘РЎвЂљРЎРЉ Р С•Р С—РЎР‚Р ВµР Т‘Р ВµР В»Р ВµР Р…Р Р…РЎвЂ№Р Вµ РЎР‚Р В°Р В·Р Т‘Р ВµР В»РЎвЂ№ Р С‘Р В»Р С‘ Р Т‘Р С•Р В±Р В°Р Р†Р С‘РЎвЂљРЎРЉ РЎвЂћРЎС“Р Р…Р С”РЎвЂ Р С‘Р С‘ Р Р…Р В° Р С•РЎРѓР Р…Р С•Р Р†Р Вµ Р С•РЎР‚Р С‘Р С–Р С‘Р Р…Р В°Р В»РЎРЉР Р…Р С•Р С–Р С• РЎРѓР В°Р в„–РЎвЂљР В°.`, 
+          `Успешно воссоздал ${url} как современное React приложение${homeContextInput ? ` с вашим запрошенным контекстом: "${homeContextInput}"` : ''}! Содержимое сайта теперь в моем контексте, поэтому вы можете попросить меня изменить определенные разделы или добавить функции на основе оригинального сайта.`,
 
           'ai',
 
@@ -5378,7 +5367,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
         const promptLabel =
 
-          trimmedPrompt.length > 60 ? `${trimmedPrompt.slice(0, 60)}Р Р†Р вЂљР’В¦` : trimmedPrompt;
+          trimmedPrompt.length > 60 ? `${trimmedPrompt.slice(0, 60)}…` : trimmedPrompt;
 
         setConversationContext(prev => ({
 
@@ -6064,7 +6053,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 <h1 className="font-display text-[2.5rem] leading-[1.03] text-zinc-900 transition-colors duration-700 md:text-[3.5rem] lg:text-[4rem] dark:text-white">
 
-                  Р вЂ”Р В°Р С—РЎС“РЎРѓР С”Р В°Р ВµР С� Р В»Р ВµР Р…Р Т‘Р С‘Р Р…Р С–Р С‘ РЎРѓ РЎвЂЎР С‘РЎРѓРЎвЂљР С•Р в„– Р С‘Р Т‘Р ВµР ВµР в„– Р С‘ РЎвЂЎРЎС“Р Р†РЎРѓРЎвЂљР Р†Р С•Р С� Р В±РЎР‚Р ВµР Р…Р Т‘Р В° Р В·Р В° 48 РЎвЂЎР В°РЎРѓР С•Р Р†
+                  Запускаем лендинги с чистой идеей и чувством бренда за 48 часов
 
                 </h1>
 
@@ -6082,17 +6071,17 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 >
 
-                  REBUILDR Р С•Р В±РЎР‰Р ВµР Т‘Р С‘Р Р…РЎРЏР ВµРЎвЂљ Р С–Р ВµР Р…Р ВµРЎР‚Р В°РЎвЂљР С‘Р Р†Р Р…РЎвЂ№Р в„– Р Т‘Р С‘Р В·Р В°Р в„–Р Р…, РЎР‚РЎС“РЎвЂЎР Р…Р С•Р в„– Р В°РЎР‚РЎвЂљ-Р Т‘Р С‘РЎР‚Р ВµР С”РЎв‚¬Р Р… Р С‘ Р С‘РЎРѓРЎРѓР В»Р ВµР Т‘Р С•Р Р†Р В°Р Р…Р С‘Р Вµ РЎРѓР С�РЎвЂ№РЎРѓР В»Р В° РІР‚вЂќ Р Р†РЎвЂ№ Р С—Р С•Р В»РЎС“РЎвЂЎР В°Р ВµРЎвЂљР Вµ Р В¶Р С‘Р Р†Р С•Р в„– Р С—РЎР‚Р С•РЎвЂљР С•РЎвЂљР С‘Р С—, Р С–Р С•РЎвЂљР С•Р Р†РЎвЂ№Р в„– Р С” РЎвЂљР ВµРЎРѓРЎвЂљРЎС“ Р С‘ Р С—РЎР‚Р ВµР В·Р ВµР Р…РЎвЂљР В°РЎвЂ Р С‘Р С‘ Р С‘Р Р…Р Р†Р ВµРЎРѓРЎвЂљР С•РЎР‚Р В°Р С�.
+                  REBUILDR объединяет генеративный дизайн, ручной арт-дирекшн и исследование смысла — вы получаете живой прототип, готовый к тесту и презентации инвесторам.
 
                 </motion.p>
 
                 <div className="flex flex-wrap justify-center gap-3 text-xs font-medium uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
 
-                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">Р СљР С’Р В Р С™Р вЂўР СћР В�Р СњР вЂњ Р вЂ�Р вЂўР вЂ” Р РЋР вЂєР С’Р в„ўР вЂќР С›Р вЂ™</span>
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МАРКЕТИНГ БЕЗ ШАБЛОНОВ</span>
 
-                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">AI + Р ТђР В®Р СљР С’Р Сњ-Р С™Р С›Р СњР СћР В Р С›Р вЂєР В¬</span>
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">AI + HUMAN-КОНТРОЛЬ</span>
 
-                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">Р СљР вЂўР СћР В Р В�Р С™Р В� Р РЋ Р СџР вЂўР В Р вЂ™Р С›Р вЂњР С› Р вЂќР СњР Р‡</span>
+                  <span className="rounded-full border border-zinc-200/70 bg-white/70 px-4 py-2 backdrop-blur-sm dark:border-white/10 dark:bg-white/5">МЕТРИКИ С ПЕРВОГО ДНЯ</span>
 
                 </div>
 
@@ -6128,7 +6117,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                   >
 
-                    Р СџР С•Р Т‘РЎвЂљРЎРЏР Р…РЎС“РЎвЂљРЎРЉ РЎР‚Р ВµРЎвЂћР ВµРЎР‚Р ВµР Р…РЎРѓ
+                    Подтянуть референс
 
                   </button>
 
@@ -6150,7 +6139,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                   >
 
-                    Р РЋР С–Р ВµР Р…Р ВµРЎР‚Р С‘РЎР‚Р С•Р Р†Р В°РЎвЂљРЎРЉ Р С—Р С• Р С•Р С—Р С‘РЎРѓР В°Р Р…Р С‘РЎР‹
+                    Сгенерировать по описанию
 
                   </button>
 
@@ -6232,11 +6221,11 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                         className="absolute top-1/2 right-3 flex h-[2.6rem] -translate-y-1/2 items-center gap-2 rounded-xl bg-zinc-900 px-4 text-sm font-semibold text-white shadow-lg shadow-zinc-900/25 transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-zinc-900/20 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-zinc-900 dark:focus-visible:ring-white/60"
 
-                        title={selectedStyle ? `Р РЋР С•Р В±РЎР‚Р В°РЎвЂљРЎРЉ РЎРѓ РЎРЊРЎРѓРЎвЂљР ВµРЎвЂљР С‘Р С”Р С•Р в„– ${selectedStyle}` : "Р вЂ”Р В°Р С—РЎС“РЎРѓРЎвЂљР С‘РЎвЂљРЎРЉ REBUILDR"}
+                        title={selectedStyle ? `Собрать с эстетикой ${selectedStyle}` : "Запустить REBUILDR"}
 
                       >
 
-                        <span className="hidden sm:inline">Р вЂ”Р В°Р С—РЎС“РЎРѓРЎвЂљР С‘РЎвЂљРЎРЉ</span>
+                        <span className="hidden sm:inline">Запустить</span>
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
 
@@ -6264,7 +6253,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           <div className="rounded-2xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.4)] backdrop-blur-xl dark:border-white/10 dark:bg-white/10">
 
-                            <p className="text-sm text-gray-600 mb-3 font-medium">Р вЂ™РЎвЂ№Р В±Р ВµРЎР‚Р С‘РЎвЂљР Вµ Р Р†Р С‘Р В·РЎС“Р В°Р В»РЎРЉР Р…РЎвЂ№Р в„– РЎРѓРЎвЂљР С‘Р В»РЎРЉ (Р С•Р С—РЎвЂ Р С‘Р С•Р Р…Р В°Р В»РЎРЉР Р…Р С•):</p>
+                            <p className="text-sm text-gray-600 mb-3 font-medium">Выберите визуальный стиль (опционально):</p>
 
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
 
@@ -6378,7 +6367,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     onChange={(e) => setHomePromptInput(e.target.value)}
 
-                    placeholder="Р С›Р С—Р С‘РЎв‚¬Р С‘РЎвЂљР Вµ Р В·Р В°Р Т‘Р В°РЎвЂЎРЎС“: Р С•РЎРѓР Р…Р С•Р Р†Р Р…Р С•Р в„– Р С•РЎвЂћРЎвЂћР ВµРЎР‚, РЎР‚Р В°Р В·Р Т‘Р ВµР В»РЎвЂ№, Р В°РЎС“Р Т‘Р С‘РЎвЂљР С•РЎР‚Р С‘Р С‘, Р Р†Р В°Р В¶Р Р…РЎвЂ№Р Вµ CTA..."
+                    placeholder="Опишите задачу: основной оффер, разделы, аудитории, важные CTA..."
 
                       rows={5}
 
@@ -6390,7 +6379,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     <p className="text-xs text-zinc-500 text-left sm:text-center">
 
-                      Р В Р В°РЎРѓРЎРѓР С”Р В°Р В¶Р С‘РЎвЂљР Вµ Р С—РЎР‚Р С• Р В°РЎвЂљР С�Р С•РЎРѓРЎвЂћР ВµРЎР‚РЎС“, Р С”Р В»РЎР‹РЎвЂЎР ВµР Р†РЎвЂ№Р Вµ Р В±Р В»Р С•Р С”Р С‘, Р В°РЎС“Р Т‘Р С‘РЎвЂљР С•РЎР‚Р С‘Р С‘ Р С‘ Р С•Р В±РЎРЏР В·Р В°РЎвЂљР ВµР В»РЎРЉР Р…РЎвЂ№Р в„– Р С”Р С•Р Р…РЎвЂљР ВµР Р…РЎвЂљ РІР‚вЂќ Р С•РЎРѓРЎвЂљР В°Р В»РЎРЉР Р…Р С•Р Вµ Р С�РЎвЂ№ Р С•РЎвЂћР С•РЎР‚Р С�Р С‘Р С� Р В·Р В° Р Р†Р В°РЎРѓ.
+                      Расскажите про атмосферу, ключевые блоки, аудиторию и обязательный контент — остальное мы оформим за вас.
 
                     </p>
 
@@ -6404,7 +6393,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                   <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
 
-                    Р В¦Р ВµР В»Р ВµР Р†Р В°РЎРЏ Р Р…Р С‘РЎв‚¬Р В° Р С‘Р В»Р С‘ РЎР‚РЎвЂ№Р Р…Р С•Р С”
+                    Целевая ниша или рынок
 
                   </label>
 
@@ -6416,7 +6405,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     onChange={(e) => setHomeIndustryInput(e.target.value)}
 
-                    placeholder="Р СњР В°Р С—РЎР‚Р С‘Р С�Р ВµРЎР‚: Р В±РЎС“РЎвЂљР С‘Р С”-РЎР‹РЎР‚Р С‘РЎРѓРЎвЂљРЎвЂ№, wellness РЎРѓРЎвЂљРЎС“Р Т‘Р С‘РЎРЏ, fintech SaaS"
+                    placeholder="Например: бутик-юристы, wellness студия, fintech SaaS"
 
                     className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 shadow-sm backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:focus-visible:ring-white/40"
 
@@ -6424,7 +6413,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                   <p className="mt-2 text-[11px] text-zinc-500">
 
-                    Р СњР В°РЎРѓРЎвЂљРЎР‚Р С•Р С‘Р С� РЎвЂљР ВµР С”РЎРѓРЎвЂљРЎвЂ№ Р С‘ Р С—РЎР‚Р С‘Р С�Р ВµРЎР‚РЎвЂ№ Р С—Р С•Р Т‘ Р Р†Р В°РЎв‚¬РЎС“ Р Р…Р С‘РЎв‚¬РЎС“, РЎРѓР С•РЎвЂ¦РЎР‚Р В°Р Р…Р С‘Р Р† Р Р†РЎвЂ№Р В±РЎР‚Р В°Р Р…Р Р…РЎвЂ№Р в„– РЎРѓРЎвЂљР С‘Р В»РЎРЉ.
+                    Настроим тексты и примеры под вашу нишу, сохранив выбранный стиль.
 
                   </p>
 
@@ -6436,7 +6425,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                   <label className="block text-sm font-semibold text-zinc-700 tracking-[0.18em] uppercase mb-2 dark:text-zinc-200">
 
-                    Р вЂќР С•Р С—Р С•Р В»Р Р…Р С‘РЎвЂљР ВµР В»РЎРЉР Р…РЎвЂ№Р Вµ Р Р†Р Р†Р С•Р Т‘Р Р…РЎвЂ№Р Вµ (Р С—Р С• Р В¶Р ВµР В»Р В°Р Р…Р С‘РЎР‹)
+                    Дополнительные вводные (по желанию)
 
                   </label>
 
@@ -6470,7 +6459,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     }}
 
-                    placeholder="Р С›Р С—Р С‘РЎв‚¬Р С‘РЎвЂљР Вµ Р С—РЎР‚Р С‘Р С•РЎР‚Р С‘РЎвЂљР ВµРЎвЂљРЎвЂ№, РЎвЂљР С•Р Р…, Р С‘Р Р…РЎвЂљР ВµР С–РЎР‚Р В°РЎвЂ Р С‘Р С‘ Р С‘Р В»Р С‘ Р С‘РЎРѓРЎвЂљР С•РЎвЂЎР Р…Р С‘Р С”Р С‘ Р С”Р С•Р Р…РЎвЂљР ВµР Р…РЎвЂљР В°"
+                    placeholder="Опишите приоритеты, тон, интеграции или источники контента"
 
                     className="w-full rounded-2xl border border-white/50 bg-white/70 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm backdrop-blur-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder-white/40 dark:focus-visible:ring-white/40"
 
@@ -6486,7 +6475,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     <Button type="submit" className="w-full sm:w-auto px-6 py-3 text-sm font-semibold tracking-[0.18em] uppercase">
 
-                      Р РЋР С•Р В±РЎР‚Р В°РЎвЂљРЎРЉ Р В»Р ВµР Р…Р Т‘Р С‘Р Р…Р С–
+                      Собрать лендинг
 
                     </Button>
 
@@ -6502,7 +6491,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 <p className="text-xs font-semibold uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400">
 
-                  Р РЋР С�РЎвЂ№РЎРѓР В»РЎвЂ№ Р В»Р ВµР Р…Р Т‘Р С‘Р Р…Р С–Р В°
+                  Смыслы лендинга
 
                 </p>
 
@@ -6512,37 +6501,37 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     {
 
-                      label: "Р РЋР С�РЎвЂ№РЎРѓР В» 01",
+                      label: "Смысл 01",
 
-                      title: "Р СџРЎР‚Р С•Р Т‘РЎС“Р С”РЎвЂљР С•Р Р†Р В°РЎРЏ Р С–Р С‘Р С—Р С•РЎвЂљР ВµР В·Р В° Р В±Р ВµР В· Р Р†Р С•Р Т‘РЎвЂ№",
+                      title: "Продуктовая гипотеза без воды",
 
                       copy:
 
-                        "Р СџРЎР‚Р С•Р Р†Р С•Р Т‘Р С‘Р С� РЎРЊР С”РЎРѓР С—РЎР‚Р ВµРЎРѓРЎРѓ-Р С‘Р Р…РЎвЂљР ВµРЎР‚Р Р†РЎРЉРЎР‹, РЎвЂћР С•РЎР‚Р С�РЎС“Р В»Р С‘РЎР‚РЎС“Р ВµР С� Р С•РЎвЂћРЎвЂћР ВµРЎР‚ Р С‘ РЎРѓРЎвЂ Р ВµР Р…Р В°РЎР‚Р С‘Р в„–, РЎвЂЎРЎвЂљР С•Р В±РЎвЂ№ Р В»Р ВµР Р…Р Т‘Р С‘Р Р…Р С– Р С–Р С•Р Р†Р С•РЎР‚Р С‘Р В» РЎРѓ Р В°РЎС“Р Т‘Р С‘РЎвЂљР С•РЎР‚Р С‘Р ВµР в„– Р Р…Р В° Р ВµРЎвЂ� РЎРЏР В·РЎвЂ№Р С”Р Вµ.",
+                        "Проводим экспресс-интервью, формулируем оффер и сценарий, чтобы лендинг говорил с аудиторией на её языке.",
 
                     },
 
                     {
 
-                      label: "Р РЋР С�РЎвЂ№РЎРѓР В» 02",
+                      label: "Смысл 02",
 
-                      title: "Р вЂњР С‘Р В±РЎР‚Р С‘Р Т‘ AI + Р В°РЎР‚РЎвЂљ-Р Т‘Р С‘РЎР‚Р ВµР С”РЎв‚¬Р Р…",
+                      title: "Гибрид AI + арт-дирекшн",
 
                       copy:
 
-                        "Р С’Р В»Р С–Р С•РЎР‚Р С‘РЎвЂљР С�РЎвЂ№ Р С–Р ВµР Р…Р ВµРЎР‚Р С‘РЎР‚РЎС“РЎР‹РЎвЂљ Р Т‘Р ВµРЎРѓРЎРЏРЎвЂљР С”Р С‘ Р Р†Р В°РЎР‚Р С‘Р В°Р Р…РЎвЂљР С•Р Р†, Р С”Р С•Р С�Р В°Р Р…Р Т‘Р В° Р Р†РЎвЂ№РЎРѓРЎвЂљРЎР‚Р В°Р С‘Р Р†Р В°Р ВµРЎвЂљ Р С”Р С•Р С�Р С—Р С•Р В·Р С‘РЎвЂ Р С‘РЎР‹, Р С—РЎР‚Р В°Р Р†Р С‘РЎвЂљ UI Р С‘ Р Р…Р В°Р С—Р С•Р В»Р Р…РЎРЏР ВµРЎвЂљ Р ВµР С–Р С• Р Р†РЎР‚РЎС“РЎвЂЎР Р…РЎС“РЎР‹.",
+                        "Алгоритмы генерируют десятки вариантов, команда выстраивает композицию, правит UI и наполняет его вручную.",
 
                     },
 
                     {
 
-                      label: "Р РЋР С�РЎвЂ№РЎРѓР В» 03",
+                      label: "Смысл 03",
 
-                      title: "Р вЂ”Р В°Р С—РЎС“РЎРѓР С” РЎРѓ Р В°Р Р…Р В°Р В»Р С‘РЎвЂљР С‘Р С”Р С•Р в„–",
+                      title: "Запуск с аналитикой",
 
                       copy:
 
-                        "Р вЂ™РЎРѓРЎвЂљРЎР‚Р В°Р С‘Р Р†Р В°Р ВµР С� Р С�Р ВµРЎвЂљРЎР‚Р С‘Р С”Р С‘, РЎвЂљР ВµР С—Р В»Р С•Р Р†РЎвЂ№Р Вµ Р С”Р В°РЎР‚РЎвЂљРЎвЂ№ Р С‘ РЎвЂљР ВµРЎРѓРЎвЂљР С•Р Р†РЎвЂ№Р Вµ РЎРѓРЎвЂ Р ВµР Р…Р В°РЎР‚Р С‘Р С‘, РЎвЂЎРЎвЂљР С•Р В±РЎвЂ№ Р С”Р В°Р В¶Р Т‘Р С•Р Вµ РЎР‚Р ВµРЎв‚¬Р ВµР Р…Р С‘Р Вµ Р В±РЎвЂ№Р В»Р С• Р С—Р С•Р Т‘Р С”РЎР‚Р ВµР С—Р В»Р ВµР Р…Р С• Р Т‘Р В°Р Р…Р Р…РЎвЂ№Р С�Р С‘.",
+                        "Встраиваем метрики, тепловые карты и тестовые сценарии, чтобы каждое решение было подкреплено данными.",
 
                     },
 
@@ -6644,31 +6633,31 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 <h2 className="text-2xl font-semibold text-center text-[#36322F] mb-8">
 
-                  Р СћР В°РЎР‚Р С‘РЎвЂћРЎвЂ№
+                  Тарифы
 
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
 
-                  {/* Р В Р В°Р В·Р С•Р Р†РЎвЂ№Р в„– РЎвЂљР В°РЎР‚Р С‘РЎвЂћ */}
+                  {/* Разовый тариф */}
 
                   <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-orange-200">
 
                     <div className="text-center">
 
-                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Р В Р В°Р В·Р С•Р Р†РЎвЂ№Р в„–</h3>
+                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Разовый</h3>
 
                       <div className="mb-4">
 
                         <span className="text-3xl font-bold text-[#36322F]">299</span>
 
-                        <span className="text-gray-500 ml-1">РІвЂљР…</span>
+                        <span className="text-gray-500 ml-1">₽</span>
 
                       </div>
 
                       <div className="text-sm text-gray-600 mb-6">
 
-                        5 Р В·Р В°Р С—РЎР‚Р С•РЎРѓР С•Р Р† - РЎвЂ¦Р Р†Р В°РЎвЂљР С‘РЎвЂљ Р Р…Р В° Р С—Р С•Р В»Р Р…Р С•РЎвЂ Р ВµР Р…Р Р…РЎвЂ№Р в„– РЎРѓР В°Р в„–РЎвЂљ
+                        5 запросов - хватит на полноценный сайт
 
                       </div>
 
@@ -6682,7 +6671,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ РЎРѓР В°Р в„–РЎвЂљР В° РЎРѓ AI
+                          Создание сайта с AI
 
                         </li>
 
@@ -6694,7 +6683,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р РЋР С”Р В°РЎвЂЎР В°РЎвЂљРЎРЉ Р С”Р С•Р Т‘ РЎРѓР В°Р в„–РЎвЂљР В°
+                          Скачать код сайта
 
                         </li>
 
@@ -6706,7 +6695,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р СћР ВµРЎРѓРЎвЂљР С•Р Р†РЎвЂ№Р в„– Р Т‘Р С•Р С�Р ВµР Р… Р В±Р ВµРЎРѓР С—Р В»Р В°РЎвЂљР Р…Р С•
+                          Тестовый домен бесплатно
 
                         </li>
 
@@ -6718,7 +6707,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р вЂ�Р ВµРЎРѓР С—Р В»Р В°РЎвЂљР Р…РЎвЂ№Р в„– РЎвЂ¦Р С•РЎРѓРЎвЂљР С‘Р Р…Р С–
+                          Бесплатный хостинг
 
                         </li>
 
@@ -6730,7 +6719,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                         className="w-full bg-[#36322F] text-white px-6 py-3 rounded-[10px] font-medium hover:bg-[#2a2520] transition-colors duration-200 [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)]">
 
-                        Р вЂ™РЎвЂ№Р В±РЎР‚Р В°РЎвЂљРЎРЉ Р С—Р В»Р В°Р Р…
+                        Выбрать план
 
                       </button>
 
@@ -6740,7 +6729,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                   
 
-                  {/* Р СџРЎР‚Р С•РЎвЂћР ВµРЎРѓРЎРѓР С‘Р С•Р Р…Р В°Р В»РЎРЉР Р…РЎвЂ№Р в„– РЎвЂљР В°РЎР‚Р С‘РЎвЂћ */}
+                  {/* Профессиональный тариф */}
 
                   <div className="bg-white rounded-2xl p-6 border-2 border-orange-300 shadow-xl relative hover:shadow-2xl transition-all duration-300">
 
@@ -6748,7 +6737,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                       <span className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-1 rounded-full text-xs font-medium">
 
-                        Р СџР С•Р С—РЎС“Р В»РЎРЏРЎР‚Р Р…РЎвЂ№Р в„–
+                        Популярный
 
                       </span>
 
@@ -6756,19 +6745,19 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     <div className="text-center">
 
-                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Р СџРЎР‚Р С•РЎвЂћР ВµРЎРѓРЎРѓР С‘Р С•Р Р…Р В°Р В»РЎРЉР Р…РЎвЂ№Р в„–</h3>
+                      <h3 className="text-xl font-semibold text-[#36322F] mb-2">Профессиональный</h3>
 
                       <div className="mb-4">
 
                         <span className="text-3xl font-bold text-[#36322F]">499</span>
 
-                        <span className="text-gray-500 ml-1">РІвЂљР…</span>
+                        <span className="text-gray-500 ml-1">₽</span>
 
                       </div>
 
                       <div className="text-sm text-gray-600 mb-6">
 
-                        15 Р В·Р В°Р С—РЎР‚Р С•РЎРѓР С•Р Р† РІР‚вЂќ РЎвЂ¦Р Р†Р В°РЎвЂљР С‘РЎвЂљ Р Р…Р В° Р С�Р Р…Р С•Р С–Р С•РЎРѓРЎвЂљРЎР‚Р В°Р Р…Р С‘РЎвЂЎР Р…РЎвЂ№Р в„– РЎРѓР В°Р в„–РЎвЂљ
+                        15 запросов — хватит на многостраничный сайт
 
                       </div>
 
@@ -6782,7 +6771,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р РЋР С•Р В·Р Т‘Р В°Р Р…Р С‘Р Вµ РЎРѓР В»Р С•Р В¶Р Р…РЎвЂ№РЎвЂ¦ РЎРѓР В°Р в„–РЎвЂљР С•Р Р†
+                          Создание сложных сайтов
 
                         </li>
 
@@ -6794,7 +6783,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р РЋР С”Р В°РЎвЂЎР В°РЎвЂљРЎРЉ Р С”Р С•Р Т‘ РЎРѓР В°Р в„–РЎвЂљР В°
+                          Скачать код сайта
 
                         </li>
 
@@ -6806,7 +6795,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р СћР ВµРЎРѓРЎвЂљР С•Р Р†РЎвЂ№Р в„– Р Т‘Р С•Р С�Р ВµР Р… Р В±Р ВµРЎРѓР С—Р В»Р В°РЎвЂљР Р…Р С•
+                          Тестовый домен бесплатно
 
                         </li>
 
@@ -6818,7 +6807,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р вЂ�Р ВµРЎРѓР С—Р В»Р В°РЎвЂљР Р…РЎвЂ№Р в„– РЎвЂ¦Р С•РЎРѓРЎвЂљР С‘Р Р…Р С–
+                          Бесплатный хостинг
 
                         </li>
 
@@ -6830,7 +6819,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                           </svg>
 
-                          Р РЋР Р†Р С•Р в„– Р Т‘Р С•Р С�Р ВµР Р… (+100РІвЂљР…/Р С�Р ВµРЎРѓ)
+                          Свой домен (+100₽/мес)
 
                         </li>
 
@@ -6842,7 +6831,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                         className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-[10px] font-medium hover:from-orange-500 hover:to-orange-600 transition-all duration-200 [box-shadow:inset_0px_-2px_0px_0px_#ea580c,_0px_1px_6px_0px_rgba(234,_88,_12,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#ea580c,_0px_1px_3px_0px_rgba(234,_88,_12,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#ea580c,_0px_1px_2px_0px_rgba(234,_88,_12,_30%)]">
 
-                        Р вЂ™РЎвЂ№Р В±РЎР‚Р В°РЎвЂљРЎРЉ Р С—Р В»Р В°Р Р…
+                        Выбрать план
 
                       </button>
 
@@ -6854,19 +6843,19 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 
 
-                {/* Р вЂќР С•Р С—Р С•Р В»Р Р…Р С‘РЎвЂљР ВµР В»РЎРЉР Р…Р В°РЎРЏ Р С‘Р Р…РЎвЂћР С•РЎР‚Р С�Р В°РЎвЂ Р С‘РЎРЏ */}
+                {/* Дополнительная информация */}
 
                 <div className="mt-8 text-center text-sm text-gray-500 max-w-2xl mx-auto">
 
                   <p className="mb-2">
 
-                    СЂСџвЂњР‰ <strong>Р РЋР Р†Р С•Р в„– Р Т‘Р С•Р С�Р ВµР Р…:</strong> Р СџР С•Р Т‘Р С”Р В»РЎР‹РЎвЂЎР С‘РЎвЂљР Вµ РЎРѓР Р†Р С•Р в„– Р Т‘Р С•Р С�Р ВµР Р… Р В·Р В° 100РІвЂљР…/Р С�Р ВµРЎРѓ
+                    👉 <strong>Свой домен:</strong> Подключите свой домен за 100₽/мес
 
                   </p>
 
                   <p>
 
-                    СЂСџС™Р‚ <strong>Р вЂ�Р ВµРЎРѓР С—Р В»Р В°РЎвЂљР Р…РЎвЂ№Р в„– РЎвЂ¦Р С•РЎРѓРЎвЂљР С‘Р Р…Р С–:</strong> Р В Р В°Р В·Р С�Р ВµРЎвЂ°Р ВµР Р…Р С‘Р Вµ Р Р†Р В°РЎв‚¬Р ВµР С–Р С• РЎРѓР В°Р в„–РЎвЂљР В° Р Р† Р С‘Р Р…РЎвЂљР ВµРЎР‚Р Р…Р ВµРЎвЂљР Вµ Р В±Р ВµР В· Р Т‘Р С•Р С—Р С•Р В»Р Р…Р С‘РЎвЂљР ВµР В»РЎРЉР Р…РЎвЂ№РЎвЂ¦ Р В·Р В°РЎвЂљРЎР‚Р В°РЎвЂљ
+                    🚀 <strong>Бесплатный хостинг:</strong> Размещение вашего сайта в интернете без дополнительных затрат
 
                   </p>
 
@@ -7102,7 +7091,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
               // Check if this message is from a successful generation
 
-              const isGenerationComplete = msg.content.includes('Р Р€РЎРѓР С—Р ВµРЎв‚¬Р Р…Р С• Р Р†Р С•РЎРѓРЎРѓР С•Р В·Р Т‘Р В°Р В»') || 
+              const isGenerationComplete = msg.content.includes('Успешно воссоздал') ||
 
                                          msg.content.includes('AI recreation generated!') ||
 
@@ -7212,7 +7201,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                       <div className="text-xs font-medium mb-1 text-gray-700">
 
-                        {msg.content.includes('Applied') ? 'Р В¤Р В°Р в„–Р В»РЎвЂ№ Р С•Р В±Р Р…Р С•Р Р†Р В»Р ВµР Р…РЎвЂ№:' : 'Р РЋР С–Р ВµР Р…Р ВµРЎР‚Р С‘РЎР‚Р С•Р Р†Р В°Р Р…Р Р…РЎвЂ№Р Вµ РЎвЂћР В°Р в„–Р В»РЎвЂ№:'}
+                        {msg.content.includes('Applied') ? 'Файлы обновлены:' : 'Сгенерированные файлы:'}
 
                       </div>
 
@@ -7278,7 +7267,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                     <div className="mt-2 inline-block bg-gray-100 rounded-[10px] p-3">
 
-                      <div className="text-xs font-medium mb-1 text-gray-700">Р РЋР С–Р ВµР Р…Р ВµРЎР‚Р С‘РЎР‚Р С•Р Р†Р В°Р Р…Р Р…РЎвЂ№Р Вµ РЎвЂћР В°Р в„–Р В»РЎвЂ№:</div>
+                      <div className="text-xs font-medium mb-1 text-gray-700">Сгенерированные файлы:</div>
 
                       <div className="flex flex-wrap items-start gap-1">
 
@@ -7642,7 +7631,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
 
-                        {generationProgress.isEdit ? 'Р В Р ВµР Т‘Р В°Р С”РЎвЂљР С‘РЎР‚Р С•Р Р†Р В°Р Р…Р С‘Р Вµ Р С”Р С•Р Т‘Р В°' : 'Р вЂњР ВµР Р…Р ВµРЎР‚Р В°РЎвЂ Р С‘РЎРЏ Р С”Р С•Р Т‘Р В° Р Р† РЎР‚Р ВµР В°Р В»РЎРЉР Р…Р С•Р С� Р Р†РЎР‚Р ВµР С�Р ВµР Р…Р С‘'}
+                        {generationProgress.isEdit ? 'Редактирование кода' : 'Генерация кода в реальном времени'}
 
                       </>
 
@@ -7733,9 +7722,8 @@ Focus on the key sections and content, making it clean and modern while preservi
 
 export default function AISandboxPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Р вЂ”Р В°Р С–РЎР‚РЎС“Р В·Р С”Р В°...</div>}>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Загрузка...</div>}>
       <AISandboxPageContent />
     </Suspense>
   );
 }
-
