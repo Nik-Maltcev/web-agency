@@ -149,7 +149,7 @@ function buildFileStructureSection(manifest: FileManifest): string {
       type: info.type,
     }));
   
-  return `## 🚨 EXISTING PROJECT FILES - DO NOT CREATE NEW FILES WITH SIMILAR NAMES 🚨
+  return `## рџљЁ EXISTING PROJECT FILES - DO NOT CREATE NEW FILES WITH SIMILAR NAMES рџљЁ
 
 ### ALL PROJECT FILES (${allFiles.length} files)
 \`\`\`
@@ -158,16 +158,16 @@ ${allFiles.join('\n')}
 
 ### Component Files (USE THESE EXACT NAMES)
 ${componentFiles.map(f => 
-  `- ${f.name} → ${f.path} (${f.type})`
+  `- ${f.name} в†’ ${f.path} (${f.type})`
 ).join('\n')}
 
 ### CRITICAL: Component Relationships
 **ALWAYS CHECK App.jsx FIRST** to understand what components exist and how they're imported!
 
 Common component overlaps to watch for:
-- "nav" or "navigation" → Often INSIDE Header.jsx, not a separate file
-- "menu" → Usually part of Header/Nav, not separate
-- "logo" → Typically in Header, not standalone
+- "nav" or "navigation" в†’ Often INSIDE Header.jsx, not a separate file
+- "menu" в†’ Usually part of Header/Nav, not separate
+- "logo" в†’ Typically in Header, not standalone
 
 When user says "nav" or "navigation":
 1. First check if Header.jsx exists
@@ -178,7 +178,7 @@ Entry Point: ${manifest.entryPoint}
 
 ### Routes
 ${manifest.routes.map(r => 
-  `- ${r.path} → ${r.component.split('/').pop()}`
+  `- ${r.path} в†’ ${r.component.split('/').pop()}`
 ).join('\n') || 'No routes detected'}`;
 }
 
@@ -313,8 +313,8 @@ export function formatFilesForAI(
   
   // Add primary files
   sections.push('## Files to Edit (ONLY OUTPUT THESE FILES)\n');
-  sections.push('🚨 You MUST ONLY generate the files listed below. Do NOT generate any other files! 🚨\n');
-  sections.push('⚠️ CRITICAL: Return the COMPLETE file - NEVER truncate with "..." or skip any lines! ⚠️\n');
+  sections.push('рџљЁ You MUST ONLY generate the files listed below. Do NOT generate any other files! рџљЁ\n');
+  sections.push('вљ пёЏ CRITICAL: Return the COMPLETE file - NEVER truncate with "..." or skip any lines! вљ пёЏ\n');
   sections.push('The file MUST include ALL imports, ALL functions, ALL JSX, and ALL closing tags.\n\n');
   for (const [path, content] of Object.entries(primaryFiles)) {
     sections.push(`### ${path}

@@ -237,9 +237,9 @@ installed = []
 for pkg in ${JSON.stringify(packagesToInstall)}:
     if pkg in package_json.get('dependencies', {}):
         installed.append(pkg)
-        print(f"✓ Verified {pkg}")
+        print(f"вњ“ Verified {pkg}")
     else:
-        print(f"✗ Package {pkg} not found in dependencies")
+        print(f"вњ— Package {pkg} not found in dependencies")
         
 print(f"\\nVerified installed packages: {installed}")
         `, { timeout: 60000 }); // 60 second timeout for npm install
@@ -315,7 +315,7 @@ process = subprocess.Popen(
     env=env
 )
 
-print(f'✓ Vite dev server restarted with PID: {process.pid}')
+print(f'вњ“ Vite dev server restarted with PID: {process.pid}')
 
 # Store process info for later
 with open('/tmp/vite-process.pid', 'w') as f:

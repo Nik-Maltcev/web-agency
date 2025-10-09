@@ -179,7 +179,7 @@ export default function Hero() {
 }
 </file>
 
-NOTICE: Everything remains EXACTLY the same except 'bg-gray-900' → 'bg-blue-500'. 
+NOTICE: Everything remains EXACTLY the same except 'bg-gray-900' в†’ 'bg-blue-500'. 
 - The button still has bg-blue-600 (unchanged)
 - All text, structure, imports are identical
 - No reformatting, no "improvements", no cleanup
@@ -194,13 +194,13 @@ NOTICE: Everything remains EXACTLY the same except 'bg-gray-900' → 'bg-blue-50
 
 ## File Identification Patterns
 
-- "header" → src/components/Header.jsx
-- "navigation" → src/components/Nav.jsx or Header.jsx
-- "footer" → src/components/Footer.jsx
-- "home page" → src/App.jsx or src/pages/Home.jsx
-- "styling" → Component files (Tailwind) or index.css
-- "routing" → App.jsx or Router component
-- "layout" → Layout components or App.jsx
+- "header" в†’ src/components/Header.jsx
+- "navigation" в†’ src/components/Nav.jsx or Header.jsx
+- "footer" в†’ src/components/Footer.jsx
+- "home page" в†’ src/App.jsx or src/pages/Home.jsx
+- "styling" в†’ Component files (Tailwind) or index.css
+- "routing" в†’ App.jsx or Router component
+- "layout" в†’ Layout components or App.jsx
 
 ## Edit Intent Classification
 
@@ -245,8 +245,8 @@ Based on your file structure, here are the patterns to follow:
 5. Main app entry is: src/App.jsx
 
 When the user mentions a component by name, look for:
-- Exact matches first (Header → Header.jsx)
-- Partial matches (nav → Navigation.jsx, NavBar.jsx)
-- Semantic matches (top bar → Header.jsx)
+- Exact matches first (Header в†’ Header.jsx)
+- Partial matches (nav в†’ Navigation.jsx, NavBar.jsx)
+- Semantic matches (top bar в†’ Header.jsx)
 `;
 }

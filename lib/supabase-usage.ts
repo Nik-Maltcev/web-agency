@@ -230,12 +230,12 @@ export function getTierLimits(tier: SubscriptionTier): number {
 export function getTierName(tier: SubscriptionTier): string {
   switch (tier) {
     case 'basic':
-      return 'Базовый';
+      return 'Р‘Р°Р·РѕРІС‹Р№';
     case 'professional':
-      return 'Профессиональный';
+      return 'РџСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅС‹Р№';
     case 'free':
     default:
-      return 'Бесплатный';
+      return 'Р‘РµСЃРїР»Р°С‚РЅС‹Р№';
   }
 }
 
@@ -244,12 +244,12 @@ export function getTierName(tier: SubscriptionTier): string {
  */
 export function formatRemainingRequests(remaining: number, limit: number): string {
   if (limit === 0) {
-    return 'Нет активной подписки';
+    return 'РќРµС‚ Р°РєС‚РёРІРЅРѕР№ РїРѕРґРїРёСЃРєРё';
   }
   
   if (remaining === 0) {
-    return 'Лимит исчерпан';
+    return 'Р›РёРјРёС‚ РёСЃС‡РµСЂРїР°РЅ';
   }
   
-  return `Осталось ${remaining} из ${limit} запросов`;
+  return `РћСЃС‚Р°Р»РѕСЃСЊ ${remaining} РёР· ${limit} Р·Р°РїСЂРѕСЃРѕРІ`;
 }

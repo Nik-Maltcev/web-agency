@@ -168,7 +168,7 @@ export async function POST(request: NextRequest) {
           const manifest: FileManifest | undefined = global.sandboxState?.fileCache?.manifest;
           
           if (manifest) {
-            await sendProgress({ type: 'status', message: '🔍 Creating search plan...' });
+            await sendProgress({ type: 'status', message: 'рџ”Ќ Creating search plan...' });
             
             const fileCache = global.sandboxState?.fileCache;
             if (!fileCache) {
@@ -192,7 +192,7 @@ export async function POST(request: NextRequest) {
                 
                 await sendProgress({ 
                   type: 'status', 
-                  message: `🔎 Searching for: "${searchPlan.searchTerms.join('", "')}"`
+                  message: `рџ”Ћ Searching for: "${searchPlan.searchTerms.join('", "')}"`
                 });
                 
                 // STEP 2: Execute the search plan
@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
                   if (target) {
                     await sendProgress({ 
                       type: 'status', 
-                      message: `✅ Found code in ${target.filePath.split('/').pop()} at line ${target.lineNumber}`
+                      message: `вњ… Found code in ${target.filePath.split('/').pop()} at line ${target.lineNumber}`
                     });
                     
                     console.log('[generate-ai-code-stream] Target selected:', target);
@@ -262,7 +262,7 @@ User request: "${prompt}"`;
                   console.warn('[generate-ai-code-stream] Search found no results, falling back to broader context');
                   await sendProgress({ 
                     type: 'status', 
-                    message: '⚠️ Could not find exact match, using broader search...'
+                    message: 'вљ пёЏ Could not find exact match, using broader search...'
                   });
                 }
               } else {
@@ -272,7 +272,7 @@ User request: "${prompt}"`;
               console.error('[generate-ai-code-stream] Error in agentic search workflow:', error);
               await sendProgress({ 
                 type: 'status', 
-                message: '⚠️ Search workflow error, falling back to keyword method...'
+                message: 'вљ пёЏ Search workflow error, falling back to keyword method...'
               });
               // Fall back to old method on any error if we have a manifest
               if (manifest) {
@@ -288,7 +288,7 @@ User request: "${prompt}"`;
               console.log('[generate-ai-code-stream] No manifest available for fallback');
               await sendProgress({ 
                 type: 'status', 
-                message: '⚠️ No file manifest available, will use broad context'
+                message: 'вљ пёЏ No file manifest available, will use broad context'
               });
             }
           }
@@ -499,7 +499,7 @@ Remember: You are a SURGEON making a precise incision, not an artist repainting 
             console.log('[generate-ai-code-stream] Including', recentEdits.length, 'recent edits in context');
             conversationContext += `\n### Recent Edits:\n`;
             recentEdits.forEach(edit => {
-              conversationContext += `- "${edit.userRequest}" → ${edit.editType} (${edit.targetFiles.map(f => f.split('/').pop()).join(', ')})\n`;
+              conversationContext += `- "${edit.userRequest}" в†’ ${edit.editType} (${edit.targetFiles.map(f => f.split('/').pop()).join(', ')})\n`;
             });
           }
           
@@ -514,7 +514,7 @@ Remember: You are a SURGEON making a precise incision, not an artist repainting 
           
           if (recentlyCreatedFiles.length > 0) {
             const uniqueFiles = [...new Set(recentlyCreatedFiles)];
-            conversationContext += `\n### 🚨 RECENTLY CREATED/EDITED FILES (DO NOT RECREATE THESE):\n`;
+            conversationContext += `\n### рџљЁ RECENTLY CREATED/EDITED FILES (DO NOT RECREATE THESE):\n`;
             uniqueFiles.forEach(file => {
               conversationContext += `- ${file}\n`;
             });
@@ -559,7 +559,7 @@ Remember: You are a SURGEON making a precise incision, not an artist repainting 
         const systemPrompt = `You are an expert React developer with perfect memory of the conversation. You maintain context across messages and remember scraped websites, generated components, and applied code. Generate clean, modern React code for Vite applications.
 ${conversationContext}
 
-🚨 CRITICAL RULES - YOUR MOST IMPORTANT INSTRUCTIONS:
+рџљЁ CRITICAL RULES - YOUR MOST IMPORTANT INSTRUCTIONS:
 1. **DO EXACTLY WHAT IS ASKED - NOTHING MORE, NOTHING LESS**
    - Don't add features not requested
    - Don't fix unrelated issues
@@ -567,8 +567,8 @@ ${conversationContext}
 2. **CHECK App.jsx FIRST** - ALWAYS see what components exist before creating new ones
 3. **NAVIGATION LIVES IN Header.jsx** - Don't create Nav.jsx if Header exists with nav
 4. **USE STANDARD TAILWIND CLASSES ONLY**:
-   - ✅ CORRECT: bg-white, text-black, bg-blue-500, bg-gray-100, text-gray-900
-   - ❌ WRONG: bg-background, text-foreground, bg-primary, bg-muted, text-secondary
+   - вњ… CORRECT: bg-white, text-black, bg-blue-500, bg-gray-100, text-gray-900
+   - вќЊ WRONG: bg-background, text-foreground, bg-primary, bg-muted, text-secondary
    - Use ONLY classes from the official Tailwind CSS documentation
 5. **FILE COUNT LIMITS**:
    - Simple style/text change = 1 file ONLY
@@ -646,7 +646,7 @@ TARGETED EDIT MODE ACTIVE
 - Confidence: ${editContext.editIntent.confidence}
 - Files to Edit: ${editContext.primaryFiles.join(', ')}
 
-🚨 CRITICAL RULE - VIOLATION WILL RESULT IN FAILURE 🚨
+рџљЁ CRITICAL RULE - VIOLATION WILL RESULT IN FAILURE рџљЁ
 YOU MUST ***ONLY*** GENERATE THE FILES LISTED ABOVE!
 
 ABSOLUTE REQUIREMENTS:
@@ -660,18 +660,18 @@ ABSOLUTE REQUIREMENTS:
 8. DO NOT add bonus features
 
 EXAMPLE VIOLATIONS (THESE ARE FAILURES):
-❌ User says "update the hero" → You update Hero, Header, Footer, and App.jsx
-❌ User says "change header color" → You redesign the entire header
-❌ User says "fix the button" → You update multiple components
-❌ Files to Edit shows "Hero.jsx" → You also generate App.jsx "to integrate it"
-❌ Files to Edit shows "Header.jsx" → You also update Footer.jsx "for consistency"
+вќЊ User says "update the hero" в†’ You update Hero, Header, Footer, and App.jsx
+вќЊ User says "change header color" в†’ You redesign the entire header
+вќЊ User says "fix the button" в†’ You update multiple components
+вќЊ Files to Edit shows "Hero.jsx" в†’ You also generate App.jsx "to integrate it"
+вќЊ Files to Edit shows "Header.jsx" в†’ You also update Footer.jsx "for consistency"
 
 CORRECT BEHAVIOR (THIS IS SUCCESS):
-✅ User says "update the hero" → You ONLY edit Hero.jsx with the requested change
-✅ User says "change header color" → You ONLY change the color in Header.jsx
-✅ User says "fix the button" → You ONLY fix the specific button issue
-✅ Files to Edit shows "Hero.jsx" → You generate ONLY Hero.jsx
-✅ Files to Edit shows "Header.jsx, Nav.jsx" → You generate EXACTLY 2 files: Header.jsx and Nav.jsx
+вњ… User says "update the hero" в†’ You ONLY edit Hero.jsx with the requested change
+вњ… User says "change header color" в†’ You ONLY change the color in Header.jsx
+вњ… User says "fix the button" в†’ You ONLY fix the specific button issue
+вњ… Files to Edit shows "Hero.jsx" в†’ You generate ONLY Hero.jsx
+вњ… Files to Edit shows "Header.jsx, Nav.jsx" в†’ You generate EXACTLY 2 files: Header.jsx and Nav.jsx
 
 THE AI INTENT ANALYZER HAS ALREADY DETERMINED THE FILES.
 DO NOT SECOND-GUESS IT.
@@ -763,9 +763,9 @@ CRITICAL STRING AND SYNTAX RULES:
 - ALWAYS escape quotes properly in JSX attributes
 - NEVER use curly quotes or smart quotes ('' "" '' "") - only straight quotes (' ")
 - ALWAYS convert smart/curly quotes to straight quotes:
-  - ' and ' → '
-  - " and " → "
-  - Any other Unicode quotes → straight quotes
+  - ' and ' в†’ '
+  - " and " в†’ "
+  - Any other Unicode quotes в†’ straight quotes
 - When strings contain apostrophes, either:
   1. Use double quotes: "you're" instead of 'you're'
   2. Escape the apostrophe: 'you\'re'
@@ -813,9 +813,9 @@ WHEN WORKING WITH SCRAPED CONTENT:
 - ALWAYS sanitize all text content before using in code
 - Convert ALL smart quotes to straight quotes
 - Example transformations:
-  - "Firecrawl's API" → "Firecrawl's API" or "Firecrawl\\'s API"
-  - 'It's amazing' → "It's amazing" or 'It\\'s amazing'
-  - "Best tool ever" → "Best tool ever"
+  - "Firecrawl's API" в†’ "Firecrawl's API" or "Firecrawl\\'s API"
+  - 'It's amazing' в†’ "It's amazing" or 'It\\'s amazing'
+  - "Best tool ever" в†’ "Best tool ever"
 - When in doubt, use double quotes for strings containing apostrophes
 - For testimonials or quotes from scraped content, ALWAYS clean the text:
   - Bad: content: 'Moved our internal agent's web scraping...'
@@ -860,13 +860,13 @@ CRITICAL COMPLETION RULES:
 With 16,000 tokens available, you have plenty of space to generate a complete application. Use it!
 
 UNDERSTANDING USER INTENT FOR INCREMENTAL VS FULL GENERATION:
-- "add/create/make a [specific feature]" → Add ONLY that feature to existing app
-- "add a videos page" → Create ONLY Videos.jsx and update routing
-- "update the header" → Modify ONLY header component
-- "fix the styling" → Update ONLY the affected components
-- "change X to Y" → Find the file containing X and modify it
-- "make the header black" → Find Header component and change its color
-- "rebuild/recreate/start over" → Full regeneration
+- "add/create/make a [specific feature]" в†’ Add ONLY that feature to existing app
+- "add a videos page" в†’ Create ONLY Videos.jsx and update routing
+- "update the header" в†’ Modify ONLY header component
+- "fix the styling" в†’ Update ONLY the affected components
+- "change X to Y" в†’ Find the file containing X and modify it
+- "make the header black" в†’ Find Header component and change its color
+- "rebuild/recreate/start over" в†’ Full regeneration
 - Default to incremental updates when working on an existing app
 
 SURGICAL EDIT RULES (CRITICAL FOR PERFORMANCE):
@@ -882,11 +882,11 @@ SURGICAL EDIT RULES (CRITICAL FOR PERFORMANCE):
 - If you're editing >3 files for a simple request, STOP - you're doing too much
 
 EXAMPLES OF CORRECT SURGICAL EDITS:
-✅ "change header to black" → Find className="..." in Header.jsx, change ONLY color classes
-✅ "update hero text" → Find the <h1> or <p> in Hero.jsx, change ONLY the text inside
-✅ "add a button to hero" → Find the return statement, ADD button, keep everything else
-❌ WRONG: Regenerating entire Header.jsx to change one color
-❌ WRONG: Rewriting Hero.jsx to add one button
+вњ… "change header to black" в†’ Find className="..." in Header.jsx, change ONLY color classes
+вњ… "update hero text" в†’ Find the <h1> or <p> in Hero.jsx, change ONLY the text inside
+вњ… "add a button to hero" в†’ Find the return statement, ADD button, keep everything else
+вќЊ WRONG: Regenerating entire Header.jsx to change one color
+вќЊ WRONG: Rewriting Hero.jsx to add one button
 
 NAVIGATION/HEADER INTELLIGENCE:
 - ALWAYS check App.jsx imports first
@@ -1055,7 +1055,7 @@ CRITICAL: When files are provided in the context:
                 }
               }
               
-              contextParts.push('\n🚨 CRITICAL INSTRUCTIONS - VIOLATION = FAILURE 🚨');
+              contextParts.push('\nрџљЁ CRITICAL INSTRUCTIONS - VIOLATION = FAILURE рџљЁ');
               contextParts.push('1. Analyze the user request: "' + prompt + '"');
               contextParts.push('2. Identify the MINIMUM number of files that need editing (usually just ONE)');
               contextParts.push('3. PRESERVE ALL EXISTING CONTENT in those files');
@@ -1063,19 +1063,19 @@ CRITICAL: When files are provided in the context:
               contextParts.push('5. DO NOT regenerate entire components from scratch');
               contextParts.push('6. DO NOT change unrelated parts of any file');
               contextParts.push('7. Generate ONLY the files that MUST be changed - NO EXTRAS');
-              contextParts.push('\n⚠️ FILE COUNT RULE:');
+              contextParts.push('\nвљ пёЏ FILE COUNT RULE:');
               contextParts.push('- Simple change (color, text, spacing) = 1 file ONLY');
               contextParts.push('- Adding new component = 2 files MAX (new component + parent that imports it)');
               contextParts.push('- DO NOT exceed these limits unless absolutely necessary');
               contextParts.push('\nEXAMPLES OF CORRECT BEHAVIOR:');
-              contextParts.push('✅ "add a chart to the hero" → Edit ONLY Hero.jsx, ADD the chart, KEEP everything else');
-              contextParts.push('✅ "change header to black" → Edit ONLY Header.jsx, change ONLY the color');
-              contextParts.push('✅ "fix spacing in footer" → Edit ONLY Footer.jsx, adjust ONLY spacing');
+              contextParts.push('вњ… "add a chart to the hero" в†’ Edit ONLY Hero.jsx, ADD the chart, KEEP everything else');
+              contextParts.push('вњ… "change header to black" в†’ Edit ONLY Header.jsx, change ONLY the color');
+              contextParts.push('вњ… "fix spacing in footer" в†’ Edit ONLY Footer.jsx, adjust ONLY spacing');
               contextParts.push('\nEXAMPLES OF FAILURES:');
-              contextParts.push('❌ "change header color" → You edit Header, Footer, and App "for consistency"');
-              contextParts.push('❌ "add chart to hero" → You regenerate the entire Hero component');
-              contextParts.push('❌ "fix button" → You update 5 different component files');
-              contextParts.push('\n⚠️ FINAL WARNING:');
+              contextParts.push('вќЊ "change header color" в†’ You edit Header, Footer, and App "for consistency"');
+              contextParts.push('вќЊ "add chart to hero" в†’ You regenerate the entire Hero component');
+              contextParts.push('вќЊ "fix button" в†’ You update 5 different component files');
+              contextParts.push('\nвљ пёЏ FINAL WARNING:');
               contextParts.push('If you generate MORE files than necessary, you have FAILED');
               contextParts.push('If you DELETE or REWRITE existing functionality, you have FAILED');
               contextParts.push('ONLY change what was EXPLICITLY requested - NOTHING MORE');
@@ -1101,7 +1101,7 @@ CRITICAL: When files are provided in the context:
             contextParts.push('This is an incremental update to an existing application.');
             contextParts.push('DO NOT regenerate App.jsx, index.css, or other core files unless explicitly requested.');
             contextParts.push('ONLY create or modify the specific files needed for the user\'s request.');
-            contextParts.push('\n⚠️ CRITICAL FILE OUTPUT FORMAT - VIOLATION = FAILURE:');
+            contextParts.push('\nвљ пёЏ CRITICAL FILE OUTPUT FORMAT - VIOLATION = FAILURE:');
             contextParts.push('YOU MUST OUTPUT EVERY FILE IN THIS EXACT XML FORMAT:');
             contextParts.push('<file path="src/components/ComponentName.jsx">');
             contextParts.push('// Complete file content here');
@@ -1109,13 +1109,13 @@ CRITICAL: When files are provided in the context:
             contextParts.push('<file path="src/index.css">');
             contextParts.push('/* CSS content here */');
             contextParts.push('</file>');
-            contextParts.push('\n❌ NEVER OUTPUT: "Generated Files: index.css, App.jsx"');
-            contextParts.push('❌ NEVER LIST FILE NAMES WITHOUT CONTENT');
-            contextParts.push('✅ ALWAYS: One <file> tag per file with COMPLETE content');
-            contextParts.push('✅ ALWAYS: Include EVERY file you modified');
+            contextParts.push('\nвќЊ NEVER OUTPUT: "Generated Files: index.css, App.jsx"');
+            contextParts.push('вќЊ NEVER LIST FILE NAMES WITHOUT CONTENT');
+            contextParts.push('вњ… ALWAYS: One <file> tag per file with COMPLETE content');
+            contextParts.push('вњ… ALWAYS: Include EVERY file you modified');
           } else if (!hasBackendFiles) {
             // First generation mode - make it beautiful!
-            contextParts.push('\n🎨 FIRST GENERATION MODE - CREATE SOMETHING BEAUTIFUL!');
+            contextParts.push('\nрџЋЁ FIRST GENERATION MODE - CREATE SOMETHING BEAUTIFUL!');
             contextParts.push('\nThis is the user\'s FIRST experience. Make it impressive:');
             contextParts.push('1. **USE TAILWIND PROPERLY** - Use standard Tailwind color classes');
             contextParts.push('2. **NO PLACEHOLDERS** - Use real content, not lorem ipsum');
@@ -1123,7 +1123,7 @@ CRITICAL: When files are provided in the context:
             contextParts.push('4. **VISUAL POLISH** - Shadows, hover states, transitions');
             contextParts.push('5. **STANDARD CLASSES** - bg-white, text-gray-900, bg-blue-500, NOT bg-background');
             contextParts.push('\nCreate a polished, professional application that works perfectly on first load.');
-            contextParts.push('\n⚠️ OUTPUT FORMAT:');
+            contextParts.push('\nвљ пёЏ OUTPUT FORMAT:');
             contextParts.push('Use <file path="...">content</file> tags for EVERY file');
             contextParts.push('NEVER output "Generated Files:" as plain text');
           }
@@ -1190,7 +1190,7 @@ CRITICAL: When files are provided in the context:
               role: 'system', 
               content: systemPrompt + `
 
-🚨 CRITICAL CODE GENERATION RULES - VIOLATION = FAILURE 🚨:
+рџљЁ CRITICAL CODE GENERATION RULES - VIOLATION = FAILURE рџљЁ:
 1. NEVER truncate ANY code - ALWAYS write COMPLETE files
 2. NEVER use "..." anywhere in your code - this causes syntax errors
 3. NEVER cut off strings mid-sentence - COMPLETE every string
@@ -1211,16 +1211,16 @@ PACKAGE RULES:
 - NEVER install packages like @mendable/firecrawl-js unless explicitly requested
 
 Examples of SYNTAX ERRORS (NEVER DO THIS):
-❌ className="px-4 py-2 bg-blue-600 hover:bg-blue-7...
-❌ <button className="btn btn-primary btn-...
-❌ const title = "Welcome to our...
-❌ import { useState, useEffect, ... } from 'react'
+вќЊ className="px-4 py-2 bg-blue-600 hover:bg-blue-7...
+вќЊ <button className="btn btn-primary btn-...
+вќЊ const title = "Welcome to our...
+вќЊ import { useState, useEffect, ... } from 'react'
 
 Examples of CORRECT CODE (ALWAYS DO THIS):
-✅ className="px-4 py-2 bg-blue-600 hover:bg-blue-700"
-✅ <button className="btn btn-primary btn-large">
-✅ const title = "Welcome to our application"
-✅ import { useState, useEffect, useCallback } from 'react'
+вњ… className="px-4 py-2 bg-blue-600 hover:bg-blue-700"
+вњ… <button className="btn btn-primary btn-large">
+вњ… const title = "Welcome to our application"
+вњ… import { useState, useEffect, useCallback } from 'react'
 
 REMEMBER: It's better to generate fewer COMPLETE files than many INCOMPLETE files.`
             },
@@ -1235,11 +1235,11 @@ You MUST include the closing </file> tag and ALL the code in between.
 
 NEVER write partial code like:
 <h1>Build and deploy on the AI Cloud.</h1>
-<p>Some text...</p>  ❌ WRONG
+<p>Some text...</p>  вќЊ WRONG
 
 ALWAYS write complete code:
 <h1>Build and deploy on the AI Cloud.</h1>
-<p>Some text here with full content</p>  ✅ CORRECT
+<p>Some text here with full content</p>  вњ… CORRECT
 
 If you're running out of space, generate FEWER files but make them COMPLETE.
 It's better to have 3 complete files than 10 incomplete files.`

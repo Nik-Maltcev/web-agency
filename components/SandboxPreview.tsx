@@ -48,7 +48,7 @@ export default function SandboxPreview({
       <div className="flex items-center justify-between bg-gray-800 rounded-lg p-3 border border-gray-700">
         <div className="flex items-center gap-3">
           <span className="text-sm text-gray-400">
-            {type === 'vite' ? '⚡ Vite' : '▲ Next.js'} Preview
+            {type === 'vite' ? 'вљЎ Vite' : 'в–І Next.js'} Preview
           </span>
           <code className="text-xs bg-gray-900 px-2 py-1 rounded text-blue-400">
             {previewUrl}

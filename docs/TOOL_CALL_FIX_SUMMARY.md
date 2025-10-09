@@ -44,24 +44,24 @@ while ((packageMatch = packageRegex.exec(searchText)) !== null) {
     await sendProgress({ 
       type: 'package', 
       name: packageName,
-      message: `📦 Package detected: ${packageName}`
+      message: `рџ“¦ Package detected: ${packageName}`
     });
   }
 }
 ```
 
 ## Results
-- ✅ Package detection now works reliably
-- ✅ Real-time UI feedback shows packages as they're detected
-- ✅ No more tool validation errors
-- ✅ Compatible with all Groq models
+- вњ… Package detection now works reliably
+- вњ… Real-time UI feedback shows packages as they're detected
+- вњ… No more tool validation errors
+- вњ… Compatible with all Groq models
 
 ## UI Feedback
 Users now see:
 ```
-📦 Package detected: three
-📦 Package detected: @react-three/fiber
-📦 Package detected: @react-three/drei
+рџ“¦ Package detected: three
+рџ“¦ Package detected: @react-three/fiber
+рџ“¦ Package detected: @react-three/drei
 ```
 
 As packages are detected in the AI's response, providing immediate feedback about dependencies that will be installed.

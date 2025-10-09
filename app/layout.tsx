@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
-  title: "REBUILDR — AI Web Agency",
-  description: "REBUILDR создаёт выразительные цифровые лендинги и прототипы, превращая сырые идеи в продукт с ясным смыслом.",
+  title: "REBUILDR вЂ” AI Web Agency",
+  description: "REBUILDR СЃРѕР·РґР°С‘С‚ РІС‹СЂР°Р·РёС‚РµР»СЊРЅС‹Рµ С†РёС„СЂРѕРІС‹Рµ Р»РµРЅРґРёРЅРіРё Рё РїСЂРѕС‚РѕС‚РёРїС‹, РїСЂРµРІСЂР°С‰Р°СЏ СЃС‹СЂС‹Рµ РёРґРµРё РІ РїСЂРѕРґСѓРєС‚ СЃ СЏСЃРЅС‹Рј СЃРјС‹СЃР»РѕРј.",
 };
 
 export default function RootLayout({

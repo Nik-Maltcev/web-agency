@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       data[key] = value.toString();
     }
 
-    // Проверяем подпись
+    // РџСЂРѕРІРµСЂСЏРµРј РїРѕРґРїРёСЃСЊ
     const expectedSignature = crypto
       .createHash('md5')
       .update(`${data.MNT_ID}${data.MNT_TRANSACTION_ID}${data.MNT_OPERATION_ID}${data.MNT_AMOUNT}${data.MNT_CURRENCY_CODE}${data.MNT_SUBSCRIBER_ID || ''}${data.MNT_TEST_MODE}${MNT_INTEGRITY_CODE}`)
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       return new Response('FAIL', { status: 200 });
     }
 
-    // Логируем успешный платеж
+    // Р›РѕРіРёСЂСѓРµРј СѓСЃРїРµС€РЅС‹Р№ РїР»Р°С‚РµР¶
     console.log('Payment received:', {
       transactionId: data.MNT_TRANSACTION_ID,
       amount: data.MNT_AMOUNT,
@@ -33,28 +33,28 @@ export async function POST(request: NextRequest) {
       customFields: data.MNT_CUSTOM1 // plan tier
     });
 
-    // Определяем тариф по сумме или custom полю
+    // РћРїСЂРµРґРµР»СЏРµРј С‚Р°СЂРёС„ РїРѕ СЃСѓРјРјРµ РёР»Рё custom РїРѕР»СЋ
     let tier: SubscriptionTier = 'basic';
     const amount = parseFloat(data.MNT_AMOUNT);
     
-    // Если передан тариф в custom поле
+    // Р•СЃР»Рё РїРµСЂРµРґР°РЅ С‚Р°СЂРёС„ РІ custom РїРѕР»Рµ
     if (data.MNT_CUSTOM1) {
       tier = data.MNT_CUSTOM1 as SubscriptionTier;
     } else {
-      // Определяем по сумме (настройте под ваши цены)
-      if (amount >= 1000) { // Пример: >= 1000 руб = professional
+      // РћРїСЂРµРґРµР»СЏРµРј РїРѕ СЃСѓРјРјРµ (РЅР°СЃС‚СЂРѕР№С‚Рµ РїРѕРґ РІР°С€Рё С†РµРЅС‹)
+      if (amount >= 1000) { // РџСЂРёРјРµСЂ: >= 1000 СЂСѓР± = professional
         tier = 'professional';
       } else {
         tier = 'basic';
       }
     }
 
-    // Получаем user_id из custom поля или subscriber_id
+    // РџРѕР»СѓС‡Р°РµРј user_id РёР· custom РїРѕР»СЏ РёР»Рё subscriber_id
     const userId = data.MNT_CUSTOM2 || data.MNT_SUBSCRIBER_ID;
     
     if (userId) {
       try {
-        // Устанавливаем подписку на 30 дней
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїРѕРґРїРёСЃРєСѓ РЅР° 30 РґРЅРµР№
         await setSubscriptionTier(userId, tier, 30);
         
         console.log('Subscription activated:', {
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         });
       } catch (error) {
         console.error('Error setting subscription:', error);
-        // Продолжаем, чтобы вернуть SUCCESS для PayAnyWay
+        // РџСЂРѕРґРѕР»Р¶Р°РµРј, С‡С‚РѕР±С‹ РІРµСЂРЅСѓС‚СЊ SUCCESS РґР»СЏ PayAnyWay
       }
     } else {
       console.warn('No user ID provided in payment data');

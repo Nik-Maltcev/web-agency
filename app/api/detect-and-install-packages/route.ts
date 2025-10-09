@@ -184,7 +184,7 @@ for package in packages_to_install:
     
     if os.path.exists(package_path):
         installed.append(package)
-        print(f"✓ Verified installation of {package}")
+        print(f"вњ“ Verified installation of {package}")
     else:
         # Check if it's a submodule of an installed package
         base_package = package.split('/')[0]
@@ -195,10 +195,10 @@ for package in packages_to_install:
         base_path = f"/home/user/app/node_modules/{base_package}"
         if os.path.exists(base_path):
             installed.append(package)
-            print(f"✓ Verified installation of {package} (via {base_package})")
+            print(f"вњ“ Verified installation of {package} (via {base_package})")
         else:
             failed.append(package)
-            print(f"✗ Failed to verify installation of {package}")
+            print(f"вњ— Failed to verify installation of {package}")
 
 result_data = {
     'installed': installed,

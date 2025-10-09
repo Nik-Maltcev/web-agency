@@ -86,7 +86,7 @@ package_json = {
 
 with open('/home/user/app/package.json', 'w') as f:
     json.dump(package_json, f, indent=2)
-print('✓ package.json')
+print('вњ“ package.json')
 
 # Vite config for E2B - with allowedHosts
 vite_config = """import { defineConfig } from 'vite'
@@ -106,7 +106,7 @@ export default defineConfig({
 
 with open('/home/user/app/vite.config.js', 'w') as f:
     f.write(vite_config)
-print('✓ vite.config.js')
+print('вњ“ vite.config.js')
 
 # Tailwind config - standard without custom design tokens
 tailwind_config = """/** @type {import('tailwindcss').Config} */
@@ -123,7 +123,7 @@ export default {
 
 with open('/home/user/app/tailwind.config.js', 'w') as f:
     f.write(tailwind_config)
-print('✓ tailwind.config.js')
+print('вњ“ tailwind.config.js')
 
 # PostCSS config
 postcss_config = """export default {
@@ -135,7 +135,7 @@ postcss_config = """export default {
 
 with open('/home/user/app/postcss.config.js', 'w') as f:
     f.write(postcss_config)
-print('✓ postcss.config.js')
+print('вњ“ postcss.config.js')
 
 # Index.html
 index_html = """<!DOCTYPE html>
@@ -153,7 +153,7 @@ index_html = """<!DOCTYPE html>
 
 with open('/home/user/app/index.html', 'w') as f:
     f.write(index_html)
-print('✓ index.html')
+print('вњ“ index.html')
 
 # Main.jsx
 main_jsx = """import React from 'react'
@@ -169,7 +169,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 with open('/home/user/app/src/main.jsx', 'w') as f:
     f.write(main_jsx)
-print('✓ src/main.jsx')
+print('вњ“ src/main.jsx')
 
 # App.jsx with explicit Tailwind test
 app_jsx = """function App() {
@@ -189,7 +189,7 @@ export default App"""
 
 with open('/home/user/app/src/App.jsx', 'w') as f:
     f.write(app_jsx)
-print('✓ src/App.jsx')
+print('вњ“ src/App.jsx')
 
 # Index.css with explicit Tailwind directives
 index_css = """@tailwind base;
@@ -220,7 +220,7 @@ body {
 
 with open('/home/user/app/src/index.css', 'w') as f:
     f.write(index_css)
-print('✓ src/index.css')
+print('вњ“ src/index.css')
 
 print('\\nAll files created successfully!')
 `;
@@ -243,9 +243,9 @@ result = subprocess.run(
 )
 
 if result.returncode == 0:
-    print('✓ Dependencies installed successfully')
+    print('вњ“ Dependencies installed successfully')
 else:
-    print(f'⚠ Warning: npm install had issues: {result.stderr}')
+    print(f'вљ  Warning: npm install had issues: {result.stderr}')
     # Continue anyway as it might still work
     `);
     
@@ -273,7 +273,7 @@ process = subprocess.Popen(
     env=env
 )
 
-print(f'✓ Vite dev server started with PID: {process.pid}')
+print(f'вњ“ Vite dev server started with PID: {process.pid}')
 print('Waiting for server to be ready...')
     `);
     
@@ -289,11 +289,11 @@ import time
 css_file = '/home/user/app/src/index.css'
 if os.path.exists(css_file):
     os.utime(css_file, None)
-    print('✓ Triggered CSS rebuild')
+    print('вњ“ Triggered CSS rebuild')
     
 # Also ensure PostCSS processes it
 time.sleep(2)
-print('✓ Tailwind CSS should be loaded')
+print('вњ“ Tailwind CSS should be loaded')
     `);
 
     // Store sandbox globally

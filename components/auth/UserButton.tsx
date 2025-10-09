@@ -24,7 +24,7 @@ export default function UserButton() {
           onClick={() => setShowAuthModal(true)}
           className="px-6 py-2"
         >
-          Войти
+          Р’РѕР№С‚Рё
         </Button>
         <AuthModal
           isOpen={showAuthModal}
@@ -57,7 +57,7 @@ export default function UserButton() {
           <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-20">
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
               <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {user.user_metadata?.full_name || 'Пользователь'}
+                {user.user_metadata?.full_name || 'РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ'}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                 {user.email}
@@ -70,7 +70,7 @@ export default function UserButton() {
                 onClick={() => setShowDropdown(false)}
               >
                 <Settings size={16} />
-                Личный кабинет
+                Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚
               </a>
               <button
                 onClick={async () => {
@@ -80,7 +80,7 @@ export default function UserButton() {
                 className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
               >
                 <LogOut size={16} />
-                Выйти
+                Р’С‹Р№С‚Рё
               </button>
             </div>
           </div>

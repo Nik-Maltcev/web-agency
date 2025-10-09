@@ -1,8 +1,8 @@
-# 🚀 Supabase Quick Start
+# рџљЂ Supabase Quick Start
 
-## Шаг 1: Добавьте переменные окружения
+## РЁР°Рі 1: Р”РѕР±Р°РІСЊС‚Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ РѕРєСЂСѓР¶РµРЅРёСЏ
 
-Создайте или обновите файл `.env.local`:
+РЎРѕР·РґР°Р№С‚Рµ РёР»Рё РѕР±РЅРѕРІРёС‚Рµ С„Р°Р№Р» `.env.local`:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://lyuxhqhusukvpvwtkkum.supabase.co
@@ -10,15 +10,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5dXhocWh1c3VrdnB2d3Rra3VtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTE3MzQyMCwiZXhwIjoyMDc0NzQ5NDIwfQ.LkxzPWN_T0jMmwJGwdkYs1Pkw01cYzf_4g4oSdxQcaE
 ```
 
-## Шаг 2: Перезапустите сервер
+## РЁР°Рі 2: РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ СЃРµСЂРІРµСЂ
 
 ```bash
 npm run dev
 ```
 
-## Шаг 3: Используйте Supabase
+## РЁР°Рі 3: РСЃРїРѕР»СЊР·СѓР№С‚Рµ Supabase
 
-### В клиентских компонентах:
+### Р’ РєР»РёРµРЅС‚СЃРєРёС… РєРѕРјРїРѕРЅРµРЅС‚Р°С…:
 
 ```typescript
 import { useSupabaseAuth, useSupabaseQuery } from '@/lib/hooks/useSupabase';
@@ -27,11 +27,11 @@ export default function MyComponent() {
   const { user } = useSupabaseAuth();
   const { data, loading } = useSupabaseQuery('my_table');
   
-  return <div>{/* ваш код */}</div>;
+  return <div>{/* РІР°С€ РєРѕРґ */}</div>;
 }
 ```
 
-### В API routes:
+### Р’ API routes:
 
 ```typescript
 import { executeServerOperation } from '@/lib/supabase-helpers';
@@ -46,12 +46,12 @@ export async function GET() {
 }
 ```
 
-## Шаг 4: Создайте таблицы в Supabase
+## РЁР°Рі 4: РЎРѕР·РґР°Р№С‚Рµ С‚Р°Р±Р»РёС†С‹ РІ Supabase
 
-Перейдите в [Supabase Dashboard](https://supabase.com/dashboard/project/lyuxhqhusukvpvwtkkum) и создайте таблицы через SQL Editor:
+РџРµСЂРµР№РґРёС‚Рµ РІ [Supabase Dashboard](https://supabase.com/dashboard/project/lyuxhqhusukvpvwtkkum) Рё СЃРѕР·РґР°Р№С‚Рµ С‚Р°Р±Р»РёС†С‹ С‡РµСЂРµР· SQL Editor:
 
 ```sql
--- Пример таблицы пользователей
+-- РџСЂРёРјРµСЂ С‚Р°Р±Р»РёС†С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   email TEXT UNIQUE NOT NULL,
@@ -59,32 +59,32 @@ CREATE TABLE users (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Включить RLS
+-- Р’РєР»СЋС‡РёС‚СЊ RLS
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
--- Политика доступа
+-- РџРѕР»РёС‚РёРєР° РґРѕСЃС‚СѓРїР°
 CREATE POLICY "Users can view own data" ON users
   FOR SELECT USING (auth.uid() = id);
 ```
 
-## 📚 Полная документация
+## рџ“љ РџРѕР»РЅР°СЏ РґРѕРєСѓРјРµРЅС‚Р°С†РёСЏ
 
-См. `SUPABASE_SETUP.md` для подробных примеров и всех доступных функций.
+РЎРј. `SUPABASE_SETUP.md` РґР»СЏ РїРѕРґСЂРѕР±РЅС‹С… РїСЂРёРјРµСЂРѕРІ Рё РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… С„СѓРЅРєС†РёР№.
 
-## 🧪 Тестирование подключения
+## рџ§Є РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РїРѕРґРєР»СЋС‡РµРЅРёСЏ
 
-Откройте в браузере:
+РћС‚РєСЂРѕР№С‚Рµ РІ Р±СЂР°СѓР·РµСЂРµ:
 ```
 http://localhost:3000/api/supabase-example
 ```
 
-Или используйте пример компонента:
+РР»Рё РёСЃРїРѕР»СЊР·СѓР№С‚Рµ РїСЂРёРјРµСЂ РєРѕРјРїРѕРЅРµРЅС‚Р°:
 ```typescript
 import SupabaseExample from '@/components/SupabaseExample';
 ```
 
-## 🔗 Полезные ссылки
+## рџ”— РџРѕР»РµР·РЅС‹Рµ СЃСЃС‹Р»РєРё
 
-- **Ваш проект**: https://supabase.com/dashboard/project/lyuxhqhusukvpvwtkkum
-- **Документация**: https://supabase.com/docs
+- **Р’Р°С€ РїСЂРѕРµРєС‚**: https://supabase.com/dashboard/project/lyuxhqhusukvpvwtkkum
+- **Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ**: https://supabase.com/docs
 - **SQL Editor**: https://supabase.com/dashboard/project/lyuxhqhusukvpvwtkkum/editor

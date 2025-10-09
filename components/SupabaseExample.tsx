@@ -166,7 +166,7 @@ export default function SupabaseExample() {
       )}
 
       <div className="mt-8 p-4 bg-blue-50 rounded">
-        <h3 className="font-semibold mb-2">📚 Documentation</h3>
+        <h3 className="font-semibold mb-2">рџ“љ Documentation</h3>
         <p className="text-sm text-gray-700">
           See <code className="bg-white px-1 rounded">SUPABASE_SETUP.md</code> for complete documentation and examples.
         </p>

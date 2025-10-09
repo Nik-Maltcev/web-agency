@@ -8,35 +8,35 @@ This document demonstrates the new real-time feedback mechanism for package inst
 
 When packages are detected and installed from XML tags, users now see:
 
-- 🔍 **Initial Analysis**: "Analyzing code and detecting dependencies..."
-- 📦 **Package Detection**: "Step 1: Installing X packages..."
+- рџ”Ќ **Initial Analysis**: "Analyzing code and detecting dependencies..."
+- рџ“¦ **Package Detection**: "Step 1: Installing X packages..."
 - **NPM Output**: Real-time npm install output with proper formatting
   - Blue text for commands (`$ npm install react-router-dom`)
   - Gray text for standard output
   - Red text for errors
-- ✅ **Success Messages**: Clear confirmation when packages are installed
+- вњ… **Success Messages**: Clear confirmation when packages are installed
 
 ### 2. File Creation Progress
 
-- 📝 **File Creation Start**: "Creating X files..."
+- рџ“ќ **File Creation Start**: "Creating X files..."
 - **Individual File Updates**: Progress for each file being created/updated
-- ✅ **Completion Status**: Visual confirmation for each file
+- вњ… **Completion Status**: Visual confirmation for each file
 
 ### 3. Command Execution Feedback
 
 When `<command>` tags are executed:
 
-- ⚡ **Command Start**: Shows the command being executed
+- вљЎ **Command Start**: Shows the command being executed
 - **Real-time Output**: Displays stdout/stderr as it happens
-- ✅/❌ **Exit Status**: Clear success/failure indicators
+- вњ…/вќЊ **Exit Status**: Clear success/failure indicators
 
 ## Example Flow
 
 Here's what users see when applying code with packages and commands:
 
 ```
-🔍 Analyzing code and detecting dependencies...
-📦 Starting code application...
+рџ”Ќ Analyzing code and detecting dependencies...
+рџ“¦ Starting code application...
 Step 1: Installing 3 packages...
 $ npm install react-router-dom
 > added 3 packages in 2.3s
@@ -44,17 +44,17 @@ $ npm install axios
 > added 1 package in 1.1s
 $ npm install @heroicons/react
 > added 1 package in 0.9s
-✅ Successfully installed: react-router-dom, axios, @heroicons/react
+вњ… Successfully installed: react-router-dom, axios, @heroicons/react
 
 Step 2: Creating 5 files...
-📝 Creating 5 files...
+рџ“ќ Creating 5 files...
 
 Step 3: Executing 1 commands...
-⚡ executing command: npm run dev
+вљЎ executing command: npm run dev
 > app@0.0.0 dev
 > vite
 > VITE ready in 523ms
-✅ Command completed successfully
+вњ… Command completed successfully
 ```
 
 ## UI Components
@@ -80,13 +80,13 @@ The UI now supports these message types with distinct styling:
 
 ### Visual Indicators
 
-- 🔍 Analyzing/Detection phase
-- 📦 Package operations
-- 📝 File operations
-- ⚡ Command execution
-- ✅ Success states
-- ❌ Error states
-- ⚠️ Warnings
+- рџ”Ќ Analyzing/Detection phase
+- рџ“¦ Package operations
+- рџ“ќ File operations
+- вљЎ Command execution
+- вњ… Success states
+- вќЊ Error states
+- вљ пёЏ Warnings
 
 ## Implementation Details
 

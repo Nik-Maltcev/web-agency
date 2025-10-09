@@ -31,21 +31,21 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'signin' }: A
     try {
       if (mode === 'signup') {
         await signUp(email, password, { full_name: fullName });
-        setSuccess('Регистрация успешна! Проверьте email для подтверждения.');
+        setSuccess('Р РµРіРёСЃС‚СЂР°С†РёСЏ СѓСЃРїРµС€РЅР°! РџСЂРѕРІРµСЂСЊС‚Рµ email РґР»СЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ.');
         setTimeout(() => {
           setMode('signin');
           setSuccess(null);
         }, 3000);
       } else {
         await signIn(email, password);
-        setSuccess('Вход выполнен успешно!');
+        setSuccess('Р’С…РѕРґ РІС‹РїРѕР»РЅРµРЅ СѓСЃРїРµС€РЅРѕ!');
         setTimeout(() => {
           onClose();
           window.location.reload();
         }, 1000);
       }
     } catch (err: any) {
-      setError(err.message || 'Произошла ошибка');
+      setError(err.message || 'РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°');
     } finally {
       setLoading(false);
     }
@@ -65,12 +65,12 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'signin' }: A
         {/* Header */}
         <div className="mb-6">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            {mode === 'signin' ? 'Вход' : 'Регистрация'}
+            {mode === 'signin' ? 'Р’С…РѕРґ' : 'Р РµРіРёСЃС‚СЂР°С†РёСЏ'}
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
             {mode === 'signin'
-              ? 'Войдите в свой аккаунт'
-              : 'Создайте новый аккаунт'}
+              ? 'Р’РѕР№РґРёС‚Рµ РІ СЃРІРѕР№ Р°РєРєР°СѓРЅС‚'
+              : 'РЎРѕР·РґР°Р№С‚Рµ РЅРѕРІС‹Р№ Р°РєРєР°СѓРЅС‚'}
           </p>
         </div>
 
@@ -91,14 +91,14 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'signin' }: A
           {mode === 'signup' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Полное имя
+                РџРѕР»РЅРѕРµ РёРјСЏ
               </label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                placeholder="Иван Иванов"
+                placeholder="РРІР°РЅ РРІР°РЅРѕРІ"
                 required
               />
             </div>
@@ -120,20 +120,20 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'signin' }: A
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Пароль
+              РџР°СЂРѕР»СЊ
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              placeholder="••••••••"
+              placeholder="вЂўвЂўвЂўвЂўвЂўвЂўвЂўвЂў"
               required
               minLength={6}
             />
             {mode === 'signup' && (
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                Минимум 6 символов
+                РњРёРЅРёРјСѓРј 6 СЃРёРјРІРѕР»РѕРІ
               </p>
             )}
           </div>
@@ -143,7 +143,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'signin' }: A
             disabled={loading}
             className="w-full py-3 text-lg font-semibold"
           >
-            {loading ? 'Загрузка...' : mode === 'signin' ? 'Войти' : 'Зарегистрироваться'}
+            {loading ? 'Р—Р°РіСЂСѓР·РєР°...' : mode === 'signin' ? 'Р’РѕР№С‚Рё' : 'Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ'}
           </Button>
         </form>
 
@@ -158,8 +158,8 @@ export default function AuthModal({ isOpen, onClose, defaultMode = 'signin' }: A
             className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
           >
             {mode === 'signin'
-              ? 'Нет аккаунта? Зарегистрируйтесь'
-              : 'Уже есть аккаунт? Войдите'}
+              ? 'РќРµС‚ Р°РєРєР°СѓРЅС‚Р°? Р—Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ'
+              : 'РЈР¶Рµ РµСЃС‚СЊ Р°РєРєР°СѓРЅС‚? Р’РѕР№РґРёС‚Рµ'}
           </button>
         </div>
       </div>

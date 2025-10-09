@@ -173,7 +173,7 @@ export function formatSearchResultsForAI(results: SearchResult[]): string {
 
   const sections: string[] = [];
   
-  sections.push('🔍 SEARCH RESULTS - EXACT LOCATIONS FOUND:\n');
+  sections.push('рџ”Ќ SEARCH RESULTS - EXACT LOCATIONS FOUND:\n');
   
   // Group by file for better readability
   const resultsByFile = new Map<string, SearchResult[]>();
@@ -185,10 +185,10 @@ export function formatSearchResultsForAI(results: SearchResult[]): string {
   }
 
   for (const [filePath, fileResults] of resultsByFile) {
-    sections.push(`\n📄 FILE: ${filePath}`);
+    sections.push(`\nрџ“„ FILE: ${filePath}`);
     
     for (const result of fileResults) {
-      sections.push(`\n  📍 Line ${result.lineNumber} (${result.confidence} confidence)`);
+      sections.push(`\n  рџ“Ќ Line ${result.lineNumber} (${result.confidence} confidence)`);
       
       if (result.matchedTerm) {
         sections.push(`     Matched: "${result.matchedTerm}"`);
@@ -203,7 +203,7 @@ export function formatSearchResultsForAI(results: SearchResult[]): string {
         for (const line of result.contextBefore) {
           sections.push(`       ${line}`);
         }
-        sections.push(`     → ${result.lineContent}`);
+        sections.push(`     в†’ ${result.lineContent}`);
         for (const line of result.contextAfter) {
           sections.push(`       ${line}`);
         }
@@ -211,7 +211,7 @@ export function formatSearchResultsForAI(results: SearchResult[]): string {
     }
   }
 
-  sections.push('\n\n🎯 RECOMMENDED ACTION:');
+  sections.push('\n\nрџЋЇ RECOMMENDED ACTION:');
   
   // Recommend the highest confidence result
   const bestResult = results[0];

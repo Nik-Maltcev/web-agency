@@ -11,7 +11,7 @@ export default function UsageLimitBadge() {
     return (
       <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm">
         <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-        <span className="text-gray-600 dark:text-gray-400">Загрузка...</span>
+        <span className="text-gray-600 dark:text-gray-400">Р—Р°РіСЂСѓР·РєР°...</span>
       </div>
     );
   }
@@ -36,7 +36,7 @@ export default function UsageLimitBadge() {
     <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium ${getStatusColor()}`}>
       {getIcon()}
       <span>
-        {usage.requests_remaining} / {usage.requests_limit} запросов
+        {usage.requests_remaining} / {usage.requests_limit} Р·Р°РїСЂРѕСЃРѕРІ
       </span>
       {usage.subscription_tier !== 'free' && (
         <span className="text-xs opacity-75">

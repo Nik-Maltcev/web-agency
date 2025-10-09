@@ -119,7 +119,7 @@ function parseAIResponse(response: string): ParsedResponse {
     for (const pkg of filePackages) {
       if (!sections.packages.includes(pkg)) {
         sections.packages.push(pkg);
-        console.log(`[apply-ai-code-stream] 📦 Package detected from imports: ${pkg}`);
+        console.log(`[apply-ai-code-stream] рџ“¦ Package detected from imports: ${pkg}`);
       }
     }
   }
@@ -139,7 +139,7 @@ function parseAIResponse(response: string): ParsedResponse {
     for (const pkg of filePackages) {
       if (!sections.packages.includes(pkg)) {
         sections.packages.push(pkg);
-        console.log(`[apply-ai-code-stream] 📦 Package detected from imports: ${pkg}`);
+        console.log(`[apply-ai-code-stream] рџ“¦ Package detected from imports: ${pkg}`);
       }
     }
   }
