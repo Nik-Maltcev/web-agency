@@ -7726,25 +7726,16 @@ Focus on the key sections and content, making it clean and modern while preservi
 
 
 
+      </div>
     </div>
-
   );
-
 }
 
-
-
 export default function AISandboxPage() {
-
   return (
-
     <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Р—Р°РіСЂСѓР·РєР°...</div>}>
-
       <AISandboxPageContent />
-
     </Suspense>
-
   );
-
 }
 
