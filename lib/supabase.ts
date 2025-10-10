@@ -1,8 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Supabase client configuration
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+
+// Debug log (only in development)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  console.log('Supabase URL:', supabaseUrl);
+  console.log('Has Anon Key:', !!supabaseAnonKey && supabaseAnonKey !== 'placeholder-key');
+}
 
 if (!supabaseUrl || !supabaseAnonKey) {
   if (typeof window !== 'undefined' || process.env.NODE_ENV !== 'production') {
@@ -11,10 +17,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // Create Supabase client for client-side operations
-// Use placeholder values if not configured to avoid build errors
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co', 
-  supabaseAnonKey || 'placeholder-key',
+  supabaseUrl, 
+  supabaseAnonKey,
   {
     auth: {
       persistSession: true,
