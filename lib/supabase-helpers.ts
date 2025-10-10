@@ -12,10 +12,6 @@ import { supabase, createServerSupabaseClient } from './supabase';
  * Sign up a new user
  */
 export async function signUp(email: string, password: string, metadata?: Record<string, any>) {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder')) {
-    throw new Error('Supabase не настроен. Добавьте NEXT_PUBLIC_SUPABASE_URL и NEXT_PUBLIC_SUPABASE_ANON_KEY в .env.local');
-  }
-  
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -36,10 +32,6 @@ export async function signUp(email: string, password: string, metadata?: Record<
  * Sign in an existing user
  */
 export async function signIn(email: string, password: string) {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder')) {
-    throw new Error('Supabase не настроен. Добавьте NEXT_PUBLIC_SUPABASE_URL и NEXT_PUBLIC_SUPABASE_ANON_KEY в .env.local');
-  }
-  
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,

@@ -10,19 +10,11 @@ export default function UserButton() {
   const { user, loading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  
-  const isSupabaseConfigured = typeof window !== 'undefined' && 
-    process.env.NEXT_PUBLIC_SUPABASE_URL && 
-    !process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder');
 
   if (loading) {
     return (
       <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
     );
-  }
-  
-  if (!isSupabaseConfigured) {
-    return null;
   }
 
   if (!user) {
