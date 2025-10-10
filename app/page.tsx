@@ -6051,10 +6051,8 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                 </span>
 
-                <h1 className="font-display text-[2.5rem] leading-[1.03] text-zinc-900 transition-colors duration-700 md:text-[3.5rem] lg:text-[4rem] dark:text-white">
-
+                <h1 className="font-sans text-[2.5rem] leading-[1.03] text-zinc-900 transition-colors duration-700 md:text-[3.5rem] lg:text-[4rem] dark:text-white">
                   Запускаем лендинги с чистой идеей и чувством бренда за 48 часов
-
                 </h1>
 
                 <motion.p 
@@ -6551,7 +6549,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 
                       </p>
 
-                      <h3 className="mt-3 font-display text-xl text-zinc-900 transition-colors duration-300 group-hover:text-zinc-950 dark:text-white">
+                      <h3 className="mt-3 font-sans text-xl text-zinc-900 transition-colors duration-300 group-hover:text-zinc-950 dark:text-white">
 
                         {item.title}
 
@@ -7723,6 +7721,7 @@ Focus on the key sections and content, making it clean and modern while preservi
 export default function AISandboxPage() {
   return (
     <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Загрузка...</div>}>
+
       <AISandboxPageContent />
     </Suspense>
   );
