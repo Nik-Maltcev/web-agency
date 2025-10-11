@@ -43,7 +43,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Р—Р°РіСЂСѓР·РєР°...</p>
+          <p className="text-gray-600 dark:text-gray-400">Загрузка...</p>
         </div>
       </div>
     );
@@ -57,10 +57,10 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚
+                Личный кабинет
               </h1>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ, {user.user_metadata?.full_name || user.email}!
+                Добро пожаловать, {user.user_metadata?.full_name || user.email}!
               </p>
             </div>
             <Button
@@ -68,7 +68,7 @@ export default function DashboardPage() {
               className="flex items-center gap-2"
             >
               <Plus size={20} />
-              РЎРѕР·РґР°С‚СЊ РїСЂРѕРµРєС‚
+              Создать проект
             </Button>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg p-6 border border-gray-200 dark:border-gray-800">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Р’СЃРµРіРѕ РїСЂРѕРµРєС‚РѕРІ</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Всего проектов</p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                   {projects.length}
                 </p>
@@ -95,7 +95,7 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg p-6 border border-gray-200 dark:border-gray-800">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">РђРєС‚РёРІРЅС‹С…</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Активных</p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                   {projects.filter(p => p.status === 'active').length}
                 </p>
@@ -109,7 +109,7 @@ export default function DashboardPage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg p-6 border border-gray-200 dark:border-gray-800">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Р’ Р°СЂС…РёРІРµ</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">В архиве</p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                   {projects.filter(p => p.status === 'archived').length}
                 </p>
@@ -125,14 +125,14 @@ export default function DashboardPage() {
         <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800">
           <div className="p-6 border-b border-gray-200 dark:border-gray-800">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-              РњРѕРё РїСЂРѕРµРєС‚С‹
+              Мои проекты
             </h2>
           </div>
 
           {loading ? (
             <div className="p-12 text-center">
               <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">Р—Р°РіСЂСѓР·РєР° РїСЂРѕРµРєС‚РѕРІ...</p>
+              <p className="text-gray-600 dark:text-gray-400">Загрузка проектов...</p>
             </div>
           ) : error ? (
             <div className="p-12 text-center">
@@ -142,14 +142,14 @@ export default function DashboardPage() {
             <div className="p-12 text-center">
               <Folder className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                РќРµС‚ РїСЂРѕРµРєС‚РѕРІ
+                Нет проектов
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                РЎРѕР·РґР°Р№С‚Рµ СЃРІРѕР№ РїРµСЂРІС‹Р№ РїСЂРѕРµРєС‚ СЃ РїРѕРјРѕС‰СЊСЋ AI
+                Создайте свой первый проект с помощью AI
               </p>
               <Button onClick={() => router.push('/')}>
                 <Plus size={20} className="mr-2" />
-                РЎРѕР·РґР°С‚СЊ РїСЂРѕРµРєС‚
+                Создать проект
               </Button>
             </div>
           ) : (
@@ -171,12 +171,12 @@ export default function DashboardPage() {
                       )}
                       <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                         <span>
-                          РЎРѕР·РґР°РЅ: {new Date(project.created_at).toLocaleDateString('ru-RU')}
+                          Создан: {new Date(project.created_at).toLocaleDateString('ru-RU')}
                         </span>
                         {project.sandbox_id && (
                           <span className="flex items-center gap-1">
                             <span className="w-2 h-2 bg-green-500 rounded-full" />
-                            Sandbox Р°РєС‚РёРІРµРЅ
+                            Sandbox активен
                           </span>
                         )}
                       </div>
